@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.zyrs.mapper.OrderDetailMapper" >
+	
+	<resultMap id="OrderDetailMap" type="com.cn.zyrs.domain.OrderDetail" >
+		<id column="DETAILCODE" property="detailcode" />
+		<result column="ORDERCODE" property="ordercode" />
+		<result column="PRODUCTSTYLE" property="productstyle" />
+		<result column="COUNT" property="count" />
+		<result column="PRICE" property="price" />
+		<result column="BOMCODE" property="bomcode" />
+	</resultMap>
+	<sql id="Base_Column_List" >
+    DETAILCODE, ORDERCODE, PRODUCTTYPE, PRODUCTSTYLE, COUNT, BOMCOUNT, BOMCODE, ISGIFT, 
+    BATCH, ISURGENT, ISMASTERMEASURE, PRICE, REMARK
+	</sql>
+	<select id="selectByOrderCode" resultType="com.cn.zyrs.domain.OrderDetail" parameterType="java.lang.String" >
+    select 
+		<include refid="Base_Column_List" />
+    from OD_OrderDetail
+    where ORDERCODE = #{ordercode,jdbcType=VARCHAR} ORDER BY DETAILCODE DESC
+	</select>
+	<select id="getDetail" resultType="com.cn.zyrs.domain.OrderDetail">
+	SELECT
+	a.DETAILCODE, 
+	a.ORDERCODE,
+	a.PRODUCTTYPE,
+	a.ISGIFT,
+	a.BATCH,
+	a.ISURGENT,
+	a.DISCOUNT,
+	a.ISMASTERMEASURE,
+	c.STYLENAME AS PRODUCTSTYLE,
+	a. COUNT,
+	a.PRICE,
+	a.BOMCODE,
+	b.fabricNAME AS bomname
+FROM
+	OD_ORDERDETAIL a
+LEFT JOIN BOM_fabric b ON a.BOMCODE = b.fabricCODE
+LEFT JOIN BOM_Style c ON a.productstyle = c.STYLECODE
+WHERE
+a.ORDERCODE =#{ordercode}
+AND
+b.ownerdeptid =#{ownerdeptid}
+	</select>
+	<select id="selectDetailCountByOrderCode" resultType="int" parameterType="java.lang.String">
+	select count(1) from OD_OrderDetail where ORDERCODE =#{ordercode ,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from OD_OrderDetail
+    where DETAILCODE = #{detailcode ,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.cn.zyrs.domain.OrderDetail" >
+    insert into OD_OrderDetail (DETAILCODE, ORDERCODE, PRODUCTTYPE, 
+      PRODUCTSTYLE, COUNT, BOMCOUNT, 
+      BOMCODE, ISGIFT, BATCH, 
+      ISURGENT, ISMASTERMEASURE, PRICE, REMARK
+      )
+    values (#{detailcode,jdbcType=VARCHAR}, #{ordercode,jdbcType=VARCHAR}, #{producttype,jdbcType=VARCHAR}, 
+      #{productstyle,jdbcType=VARCHAR}, #{count,jdbcType=DECIMAL}, #{bomcount,jdbcType=DECIMAL}, 
+      #{bomcode,jdbcType=VARCHAR}, #{isgift,jdbcType=INTEGER}, #{batch,jdbcType=INTEGER}, 
+      #{isurgent,jdbcType=INTEGER}, #{ismastermeasure,jdbcType=INTEGER}, #{price,jdbcType=DECIMAL}, #{remark,jdbcType=VARCHAR}
+      )
+	</insert>
+	<insert id="insertSelective" parameterType="com.cn.zyrs.domain.OrderDetail" >
+    insert into OD_OrderDetail
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="orderdetail.detailcode != null" >
+        DETAILCODE,
+			</if>
+			<if test="orderdetail.ordercode != null" >
+        ORDERCODE,
+			</if>
+			<if test="orderdetail.producttype != null" >
+        PRODUCTTYPE,
+			</if>
+			<if test="orderdetail.productstyle != null" >
+        PRODUCTSTYLE,
+			</if>
+			<if test="orderdetail.count != null" >
+        COUNT,
+			</if>
+			<if test="orderdetail.bomcount != null" >
+        BOMCOUNT,
+			</if>
+			<if test="orderdetail.bomcode != null" >
+        BOMCODE,
+			</if>
+			<if test="orderdetail.isgift != null" >
+        ISGIFT,
+			</if>
+			<if test="orderdetail.batch != null" >
+        BATCH,
+			</if>
+			<if test="orderdetail.isurgent != null" >
+        ISURGENT,
+			</if>
+			<if test="orderdetail.ismastermeasure != null" >
+        ISMASTERMEASURE,
+			</if>
+			<if test="orderdetail.price != null" >
+        PRICE,
+			</if>
+			<if test="orderdetail.remark != null" >
+        REMARK
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="orderdetail.detailcode != null" >
+        #{orderdetail.detailcode,jdbcType=VARCHAR},
+			</if>
+			<if test="orderdetail.ordercode != null" >
+        #{orderdetail.ordercode,jdbcType=VARCHAR},
+			</if>
+			<if test="orderdetail.producttype != null" >
+        #{orderdetail.producttype,jdbcType=VARCHAR},
+			</if>
+			<if test="orderdetail.productstyle != null" >
+        #{orderdetail.productstyle,jdbcType=VARCHAR},
+			</if>
+			<if test="orderdetail.count != null" >
+        #{orderdetail.count,jdbcType=DECIMAL},
+			</if>
+			<if test="orderdetail.bomcount != null" >
+        #{orderdetail.bomcount,jdbcType=DECIMAL},
+			</if>
+			<if test="orderdetail.bomcode != null" >
+        #{orderdetail.bomcode,jdbcType=VARCHAR},
+			</if>
+			<if test="orderdetail.isgift != null" >
+        #{orderdetail.isgift,jdbcType=INTEGER},
+			</if>
+			<if test="orderdetail.batch != null" >
+        #{orderdetail.batch,jdbcType=INTEGER},
+			</if>
+			<if test="orderdetail.isurgent != null" >
+        #{orderdetail.isurgent,jdbcType=INTEGER},
+			</if>
+			<if test="orderdetail.ismastermeasure != null" >
+        #{orderdetail.ismastermeasure,jdbcType=INTEGER},
+			</if>
+			<if test="orderdetail.price != null" >
+        #{orderdetail.price,jdbcType=DECIMAL},
+			</if>
+			<if test="orderdetail.remark != null" >
+        #{orderdetail.remark,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+</mapper>

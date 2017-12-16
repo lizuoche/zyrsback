@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.zyrs.mapper.CustomerAddressesMapper" >
+  <resultMap id="BaseResultMap" type="com.cn.zyrs.domain.CustomerAddresses" >
+    <id column="ADDRESSID" property="addressid" jdbcType="VARCHAR" />
+    <result column="ADDRESSNAME" property="addressname" jdbcType="VARCHAR" />
+    <result column="CUSTOMERID" property="customerid" jdbcType="VARCHAR" />
+    <result column="CUSTONERCODE" property="custonercode" jdbcType="VARCHAR" />
+    <result column="ISDEFAULT" property="isdefault" jdbcType="INTEGER" />
+    <result column="PROVINCE" property="province" jdbcType="VARCHAR" />
+    <result column="CITY" property="city" jdbcType="VARCHAR" />
+    <result column="AREA" property="area" jdbcType="VARCHAR" />
+    <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+    <result column="RECEIVER" property="receiver" jdbcType="VARCHAR" />
+    <result column="TEL" property="tel" jdbcType="VARCHAR" />
+    <result column="ISVALID" property="isvalid" jdbcType="INTEGER" />
+    <result column="DELFLAG" property="delflag" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="DeptResultMap" type="com.cn.zyrs.domain.DeptAddresses" >
+    <id column="STOREID" property="storeid" jdbcType="VARCHAR" />
+    <result column="STORECOMPANYID" property="storecompanyid" jdbcType="VARCHAR" />
+    <result column="TEL" property="tel" jdbcType="VARCHAR" />
+    <result column="SHOPOWNER" property="shopowner" jdbcType="VARCHAR" />
+    <result column="SALESMANID" property="salesmanid" jdbcType="VARCHAR" />
+    <result column="FABRICCOMPANYID" property="fbriccompanyid" jdbcType="VARCHAR" />
+    <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="INTEGER" />
+    <result column="ISVALID" property="isvalid" jdbcType="INTEGER" />
+    <result column="DELFLAG" property="delflag" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ADDRESSID, ADDRESSNAME, CUSTOMERID, CUSTONERCODE, PROVINCE, CITY, ADDRESS, TEL, ISDEFAULT, 
+    ISVALID, DELFLAG, RECEIVER, AREA
+  </sql>
+  <sql id="Dept_Column_List" >
+    STOREID, STORECOMPANYID, TEL, SHOPOWNER, SALESMANID, FABRICCOMPANYID, ADDRESS, REMARK, ISVALID, DELFLAG
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from CUM_CustomerAddresses
+    where ADDRESSID = #{addressid,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 根据客户ID查询客户所有收货地址  -->
+  <select id="selectByCustomerID" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from CUM_CustomerAddresses
+    where CUSTOMERID = #{customerid,jdbcType=VARCHAR} and delflag=0 and isvalid =1
+  </select>
+  
+  <!-- 根据门店ID查询门店所有收货地址  -->
+  <select id="selectByDeptID" resultMap="DeptResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Dept_Column_List" />
+    from STORE
+    where STOREID = #{deptid,jdbcType=VARCHAR} and delflag=0 and isvalid =1
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from CUM_CustomerAddresses
+    where ADDRESSID = #{addressid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.cn.zyrs.domain.CustomerAddresses" >
+    insert into CUM_CustomerAddresses (ADDRESSID, ADDRESSNAME, CUSTOMERID, 
+      CUSTONERCODE, PROVINCE, CITY, 
+      ADDRESS, TEL, ISDEFAULT, 
+      ISVALID, DELFLAG, RECEIVER, 
+      AREA)
+    values (#{addressid,jdbcType=VARCHAR}, #{addressname,jdbcType=VARCHAR}, #{customerid,jdbcType=VARCHAR}, 
+      #{custonercode,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, #{isdefault,jdbcType=INTEGER}, 
+      #{isvalid,jdbcType=INTEGER}, #{delflag,jdbcType=INTEGER}, #{receiver,jdbcType=VARCHAR}, 
+      #{area,jdbcType=VARCHAR})
+  </insert>
+  <!-- 新增客户收货地址  -->
+  <insert id="insertSelective" parameterType="com.cn.zyrs.domain.CustomerAddresses" >
+    insert into CUM_CustomerAddresses
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+        ADDRESSID,
+      <if test="customeraddress.addressname != null" >
+        ADDRESSNAME,
+      </if>
+      <if test="customeraddress.customerid != null" >
+        CUSTOMERID,
+      </if>
+      <if test="customeraddress.custonercode != null" >
+        CUSTONERCODE,
+      </if>
+      <if test="customeraddress.province != null" >
+        PROVINCE,
+      </if>
+      <if test="customeraddress.city != null" >
+        CITY,
+      </if>
+      <if test="customeraddress.address != null" >
+        ADDRESS,
+      </if>
+      <if test="customeraddress.tel != null" >
+        TEL,
+      </if>
+      <if test="customeraddress.isdefault != null" >
+        ISDEFAULT,
+      </if>
+      <if test="customeraddress.isvalid != null" >
+        ISVALID,
+      </if>
+      <if test="customeraddress.delflag != null" >
+        DELFLAG,
+      </if>
+      <if test="customeraddress.receiver != null" >
+        RECEIVER,
+      </if>
+      <if test="customeraddress.area != null" >
+        AREA,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+    	newID(),
+      <if test="customeraddress.addressname != null" >
+        #{customeraddress.addressname,jdbcType=VARCHAR},
+      </if>
+      <if test="customeraddress.customerid != null" >
+        #{customeraddress.customerid,jdbcType=VARCHAR},
+      </if>
+      <if test="customeraddress.custonercode != null" >
+        #{customeraddress.custonercode,jdbcType=VARCHAR},
+      </if>
+      <if test="customeraddress.province != null" >
+        #{customeraddress.province,jdbcType=VARCHAR},
+      </if>
+      <if test="customeraddress.city != null" >
+        #{customeraddress.city,jdbcType=VARCHAR},
+      </if>
+      <if test="customeraddress.address != null" >
+        #{customeraddress.address,jdbcType=VARCHAR},
+      </if>
+      <if test="customeraddress.tel != null" >
+        #{customeraddress.tel,jdbcType=VARCHAR},
+      </if>
+      <if test="customeraddress.isdefault != null" >
+        #{customeraddress.isdefault,jdbcType=INTEGER},
+      </if>
+      <if test="customeraddress.isvalid != null" >
+        #{customeraddress.isvalid,jdbcType=INTEGER},
+      </if>
+      <if test="customeraddress.delflag != null" >
+        #{customeraddress.delflag,jdbcType=INTEGER},
+      </if>
+      <if test="customeraddress.receiver != null" >
+        #{customeraddress.receiver,jdbcType=VARCHAR},
+      </if>
+      <if test="customeraddress.area != null" >
+        #{customeraddress.area,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <!-- 更新客户收获地址信息   -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn.zyrs.domain.CustomerAddresses" >
+    update CUM_CustomerAddresses
+    <set >
+      <if test="customeraddress.addressname != null" >
+        ADDRESSNAME = #{customeraddress.addressname,jdbcType=VARCHAR},
+      </if>
+      <if test="customeraddress.customerid != null" >
+        CUSTOMERID = #{customeraddress.customerid,jdbcType=VARCHAR},
+      </if>
+      <if test="customeraddress.custonercode != null" >
+        CUSTONERCODE = #{customeraddress.custonercode,jdbcType=VARCHAR},
+      </if>
+      <if test="customeraddress.province != null" >
+        PROVINCE = #{customeraddress.province,jdbcType=VARCHAR},
+      </if>
+      <if test="customeraddress.city != null" >
+        CITY = #{customeraddress.city,jdbcType=VARCHAR},
+      </if>
+      <if test="customeraddress.address != null" >
+        ADDRESS = #{customeraddress.address,jdbcType=VARCHAR},
+      </if>
+      <if test="customeraddress.tel != null" >
+        TEL = #{customeraddress.tel,jdbcType=VARCHAR},
+      </if>
+      <if test="customeraddress.isdefault != null" >
+        ISDEFAULT = #{customeraddress.isdefault,jdbcType=INTEGER},
+      </if>
+      <if test="customeraddress.isvalid != null" >
+        ISVALID = #{customeraddress.isvalid,jdbcType=INTEGER},
+      </if>
+      <if test="customeraddress.delflag != null" >
+        DELFLAG = #{customeraddress.delflag,jdbcType=INTEGER},
+      </if>
+      <if test="customeraddress.receiver != null" >
+        RECEIVER = #{customeraddress.receiver,jdbcType=VARCHAR},
+      </if>
+      <if test="customeraddress.area != null" >
+        AREA = #{customeraddress.area,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ADDRESSID = #{customeraddress.addressid,jdbcType=VARCHAR}
+  </update>
+  <!-- 重置默认地址 -->
+  <update id="resetIsdefault" parameterType="java.lang.String" >
+  	 update CUM_CustomerAddresses
+   	 set ISDEFAULT = 0 
+    	where ISDEFAULT = 1 and CUSTOMERID = #{customerid,jdbcType=VARCHAR} and ISVALID = 1 and DELFLAG = 0
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cn.zyrs.domain.CustomerAddresses" >
+    update CUM_CustomerAddresses
+    set ADDRESSNAME = #{addressname,jdbcType=VARCHAR},
+      CUSTOMERID = #{customerid,jdbcType=VARCHAR},
+      CUSTONERCODE = #{custonercode,jdbcType=VARCHAR},
+      PROVINCE = #{province,jdbcType=VARCHAR},
+      CITY = #{city,jdbcType=VARCHAR},
+      ADDRESS = #{address,jdbcType=VARCHAR},
+      TEL = #{tel,jdbcType=VARCHAR},
+      ISDEFAULT = #{isdefault,jdbcType=INTEGER},
+      ISVALID = #{isvalid,jdbcType=INTEGER},
+      DELFLAG = #{delflag,jdbcType=INTEGER},
+      RECEIVER = #{receiver,jdbcType=VARCHAR},
+      AREA = #{area,jdbcType=VARCHAR}
+    where ADDRESSID = #{addressid,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,47 @@
+*{margin:0; padding:0; font-family:"微软雅黑"; /* color:#323232; */font-weight:normal;}
+ol,ul{list-style:none}
+a{text-decoration:none;}
+blockquote,q{quotes:none}
+blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}
+ins{text-decoration:none}
+del{text-decoration:line-through}
+table{border-collapse:collapse;border-spacing:0}
+/*header*/
+.header{ height:200px; width:1400px;margin:0 auto;}
+.header .logo{ width:1400; height:160px;}
+.header .nav{ width:1400; height:40px;background-color: #0f55aa;}
+.header .nav div{ width:1400px;height:40px;overflow:hidden;}
+.header .nav div span{display:inline-block;width:138px;height:40px;overflow:hidden;font-size:18px;text-align:center;border-right:1px solid #D5D5D5;padding-left: 0px;padding-right:0px;}
+.header .nav div span a{color:#fff;line-height:40px;}
+/* .header .nav div span:hover{background-color:#6dcdf3 ;box-shadow: 0 0 1px #000;} */
+.header .nav div span:hover{background-color:#fff ;box-shadow: 0 0 1px #000;}
+.header .nav div span:hover > a{color:#003f98;}
+/* body */
+body{
+	background-color:#e5f2f5;
+}
+.body{width:1400px;margin:0 auto;background-color:#e5f2f5;}
+.body .left{width:20%;float:left;height:800px;text-align:center;line-height:40px;margin-top:20px;}
+.body .left a{display:block;width:180px;height:40px;margin:0 auto;background-image:url(../images/menumiddle.png);}
+.secondClass{color:#fff;font-size:18px;}
+.secondClass1{color:#fff;font-size:18px;background-image:url(../images/pxjt.png);}
+.secondClass2{color:#fff;font-size:18px;background-image:url(../images/pyjt.png);}
+.threeClass{color:#fff;font-size:14px;}
+.body .right{width:80%;float:left;height:800px;}
+/* index */
+.index{width:1400px;height:800px;margin:0 auto;}
+.index .box1{width:330px;height:100%;float:left;margin-top:20px;}
+.index .box1 .box11{width:330px;height:40%;}
+.box111{width:330px;height:30px;border:1px soild #47a8dc;background-image:url(../images/titlebar.png);color:#fff;font-size:18px;}
+.index .box1 .box12{width:330px;height:60%;margin-top:10px;}
+.index .box2{width:700px;height:100%;float:left;margin-left:20px;margin-top:20px;}
+.box211{width:700px;height:30px;border:1px soild #47a8dc;background-image:url(../images/titlebar.png);color:#fff;font-size:18px;}
+/* .index .box2 .box21{width:700px;height:28.8%;} */
+.index .box2 .box22{width:700px;height:30%;margin-top:20px;}
+.index .box2 .box23{width:700px;height:40%;margin-top:20px;}
+.index .box3{width:330px;height:100%;float:left;margin-left:20px;margin-top:20px;}
+.index .box3 .box31{width:330px;height:28.8%;background-image:url(../images/mrtb.png);color:#fff;font-size:18px;text-align:center;}
+.index .box3 .box32{width:330px;height:30%;margin-top:20px;}
+.index .box3 .box32 .box321{width:36px;height:82%;float:left;background-image:url(../images/mrcy.png);}
+.index .box3 .box33{width:330px;;margin-top:25px;}
+

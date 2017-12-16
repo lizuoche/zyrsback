@@ -1,0 +1,364 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.zyrs.mapper.OrderMapper" >
+	<resultMap id="BaseResultMap" type="com.cn.zyrs.domain.Order" >
+		<id column="ORDERCODE" property="ordercode" jdbcType="VARCHAR" />
+		<result column="CUSTOMERID" property="customerid" jdbcType="VARCHAR" />
+		<result column="CUSTOMERNAME" property="customername" jdbcType="VARCHAR" />
+		<result column="TEL" property="tel" jdbcType="VARCHAR" />
+		<result column="ORDERDATE" property="orderdate" jdbcType="VARCHAR" />
+		<result column="ORDERDATEUNIX" property="orderDateUnix" jdbcType="VARCHAR" />
+		<result column="SERVICER" property="servicer" jdbcType="VARCHAR" />
+		<result column="ORDERSTATUS" property="orderstatus" jdbcType="VARCHAR" />
+		<result column="AMOUNT" property="amount" jdbcType="VARCHAR" />
+		<result column="ORDERAMOUNT" property="orderamount" jdbcType="VARCHAR" />
+		<result column="ISVALID" property="isvalid" jdbcType="VARCHAR" />
+		<result column="DELFLAG" property="delflag" jdbcType="VARCHAR" />
+		<result column="SERVICESHOP" property="serviceshop" jdbcType="VARCHAR" />
+		<result column="ISURGENT" property="isurgent" jdbcType="VARCHAR" />
+		<!--<result column="OWNERDEPTID" property="ownerdeptid" jdbcType="VARCHAR" /> -->
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" />
+		<!--<collection property="orderdetail"  javaType="ArrayList" column="{ordercode=ORDERCODE,ownerdeptid=OWNERDEPTID}"
+			ofType="com.cn.zyrs.domain.OrderDetail" select="com.cn.zyrs.mapper.OrderDetailMapper.getDetail">
+		</collection>-->
+		<!--<collection property="customerdata"  javaType="ArrayList" column="ORDERCODE"
+				ofType="com.cn.zyrs.domain.CustomerData" select="com.cn.zyrs.mapper.CustomerDataMapper.getCustomerData">
+			</collection>-->
+	</resultMap>
+	<sql id="Base_Column_List" >
+    t.ORDERCODE, t.CUSTOMERID, t.CUSTOMERNAME, t.TEL, t.ORDERDATE,CONVERT(varchar(100), t.ORDERDATE,20) as ORDERDATEUNIX, f.USERNAME as SERVICER, t.ORDERSTATUS, t.ORDERAMOUNT, 
+    t.ISVALID, t.DELFLAG, t.SERVICESHOP, t.ISURGENT, t.OWNERDEPTID, t.REMARK
+	</sql>
+	<!-- 查询工艺信息 -->
+	<select id="getCraft" resultType="com.cn.zyrs.domain.Craft" parameterType="java.lang.String" >
+	select 
+		CRAFTID,CRAFTNAME,STYLE,PRICE,COMPANYID,DEPTID,TIMENEED,ISVALID,DELEFLAG 
+	FROM PRO_CRAFT
+	where STYLE = #{type,jdbcType=VARCHAR} and deleflag = 0 and isvalid = 1
+	</select>
+	<!-- 查询特殊工艺信息 -->
+	<select id="getSpecialCraft" resultType="com.cn.zyrs.domain.SpecialCraft" parameterType="java.lang.String" >
+	select 
+		SPECIALCRAFTID,SPECIALCRAFTNAME,STYLE,PRICE,COMPANYID,DEPTID,TIMENEED,ISVALID,DELEFLAG 
+	FROM PRO_SPECIALCRAFT
+	where STYLE = #{type,jdbcType=VARCHAR} and deleflag = 0 and isvalid = 1
+	</select>
+	<!-- 新增订单工艺信息 -->
+	<insert id="addOrderCraft" parameterType="com.cn.zyrs.domain.OrderCraft">
+	insert into 
+		OD_OrderCraft  
+	values (
+		#{oc.id,jdbcType=VARCHAR},
+		#{oc.ordercode,jdbcType=VARCHAR},
+		#{oc.detailcode,jdbcType=VARCHAR},
+		#{oc.craftid,jdbcType=VARCHAR},
+		#{oc.price,jdbcType=VARCHAR}
+		)
+	</insert>
+	<!-- 新增订单特殊工艺信息 -->
+	<insert id="addOrderSpecialCraft" parameterType="com.cn.zyrs.domain.OrderSpecialCraft">
+	insert into 
+		OD_OrderSpecialCraft  
+	values (
+		#{osc.id,jdbcType=VARCHAR},
+		#{osc.ordercode,jdbcType=VARCHAR},
+		#{osc.detailcode,jdbcType=VARCHAR},
+		#{osc.specialcraftid,jdbcType=VARCHAR},
+		#{osc.price,jdbcType=VARCHAR}
+		)
+	</insert>
+	<select id="getOrderByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+	select *
+	from OD_Order 
+	where ORDERCODE = #{ordercode,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="getOrderBase" resultMap="BaseResultMap" parameterType="java.lang.String" >
+	SELECT
+	g.ORDERCODE,
+	g.SETTLEMENTCODE,
+	g.CUSTOMERNAME,
+	g.ORDERDATE,
+	SUM (g.amount) AS AMOUNT,
+	g.ORDERAMOUNT,
+	g.SERVICER,
+	g.ORDERSTATUS
+FROM
+	(
+		SELECT
+			f.ORDERCODE,
+			d.SETTLEMENTCODE AS SETTLEMENTCODE,
+			f.CUSTOMERNAME,
+			f.ORDERDATE,
+			e.amount AS amount,
+			f.ORDERAMOUNT,
+			b.USERNAME AS SERVICER,
+			c.BASICNAME AS ORDERSTATUS
+		FROM
+			(
+				SELECT
+					a.ORDERCODE,
+					a.CUSTOMERNAME,
+					CONVERT (
+						VARCHAR (100),
+						a.ORDERDATE,
+						20
+					) AS ORDERDATE,
+					a.ORDERAMOUNT,
+					a.SERVICER,
+					a.ORDERSTATUS
+				FROM
+					OD_Order a
+				WHERE
+					a.SERVICESHOP = #{di,jdbcType=VARCHAR}
+			) f
+		LEFT JOIN US_UserInfo b ON f.SERVICER = b.USERID
+		LEFT JOIN SYS_BasicData c ON f.ORDERSTATUS = c.BASICVALUE
+		AND c.BASICCODE = 'ORDERSTATUS'
+		LEFT JOIN OD_SettleMent d ON f.ORDERCODE = d.ORDERCODE
+		LEFT JOIN OD_SettlementType e ON d.SETTLEMENTCODE = e.SETTLEMENTCODE
+	) g
+GROUP BY
+	g.ORDERCODE,
+	g.SETTLEMENTCODE,
+	g.CUSTOMERNAME,
+	g.ORDERDATE,
+	g.ORDERAMOUNT,
+	g.SERVICER,
+	g.ORDERSTATUS;
+	</select>
+	
+	<select id="getOrder" resultMap="BaseResultMap" parameterType="map" >
+	select top 10 a.ORDERCODE, a.CUSTOMERID, a.CUSTOMERNAME, a.TEL, a.ORDERDATE, a.ORDERDATEUNIX, a.SERVICER, a.ORDERSTATUS, a.ORDERAMOUNT, 
+    a.ISVALID, a.DELFLAG, a.SERVICESHOP, a.ISURGENT, a.OWNERDEPTID, a.REMARK
+	from(
+    select 
+		<include refid="Base_Column_List" />
+    from OD_Order t,US_UserInfo f
+    where t.SERVICER = f.USERID  and t.DELFLAG = 0
+		<if test="ordercode =='' or ordercode == null">
+    and 1=1
+		</if>
+		<if test="ordercode !='' and ordercode != null">
+			and t.ORDERCODE = #{ordercode,jdbcType=VARCHAR} <!--and t.ORDERCODE =k.ORDERCODE -->
+		</if>
+		<if test="customername !='' and customername != null">
+    and t.CUSTOMERNAME = #{customername,jdbcType=VARCHAR}
+		</if>
+		<if test="servicer !='' and servicer != null">
+    and t.USERNAME = #{servicer,jdbcType=VARCHAR}
+		</if>
+		<if test="orderstatus !='' and orderstatus != null">
+    and t.ORDERSTATUS = #{orderstatus,jdbcType=VARCHAR}
+		</if>
+		<if test="odpid !='' and odpid != null">
+    and t.OWNERDEPTID = #{odpid,jdbcType=VARCHAR}
+		</if>
+		<if test="start !='' and start != null">
+    and t.ORDERDATE >= #{start,jdbcType=VARCHAR} 
+		</if>
+		<if test="end !='' and end != null">
+    and  #{end,jdbcType=VARCHAR} >=t.ORDERDATE 
+		</if>
+	and t.ORDERCODE NOT IN (
+	select top  (#{num}) t.ORDERCODE
+	FROM OD_Order t,US_UserInfo f  where t.SERVICER = f.USERID  and t.DELFLAG = 0
+		<if test="ordercode =='' or ordercode == null">
+    and 1=1
+		</if>
+		<if test="ordercode !='' and ordercode != null">
+			and t.ORDERCODE = #{ordercode,jdbcType=VARCHAR} <!--and t.ORDERCODE =k.ORDERCODE -->
+		</if>
+		<if test="customername !='' and customername != null">
+    and t.CUSTOMERNAME = #{customername,jdbcType=VARCHAR}
+		</if>
+		<if test="servicer !='' and servicer != null">
+    and t.USERNAME = #{servicer,jdbcType=VARCHAR}
+		</if>
+		<if test="orderstatus !='' and orderstatus != null">
+    and t.ORDERSTATUS = #{orderstatus,jdbcType=VARCHAR}
+		</if>
+		<if test="odpid !='' and odpid != null">
+    and t.OWNERDEPTID = #{odpid,jdbcType=VARCHAR}
+		</if>
+		<if test="start !='' and start != null">
+    and t.ORDERDATE >= #{start,jdbcType=VARCHAR} 
+		</if>
+		<if test="end !='' and end != null">
+    and  #{end,jdbcType=VARCHAR} >=t.ORDERDATE 
+		</if>
+	order by t.orderdate desc
+	)
+	)a order by a.orderdate desc
+	</select>
+	<select id="getOrder1" resultMap="BaseResultMap" parameterType="map" >
+		select 
+		<include refid="Base_Column_List" />
+    from OD_Order t,US_UserInfo f
+    where t.SERVICER = f.USERID  and t.DELFLAG = 0
+		<if test="ordercode =='' or ordercode == null">
+    and 1=1
+		</if>
+		<if test="ordercode !='' and ordercode != null">
+			and t.ORDERCODE = #{ordercode,jdbcType=VARCHAR} <!--and t.ORDERCODE =k.ORDERCODE -->
+		</if>
+		<if test="customername !='' and customername != null">
+    and t.CUSTOMERNAME = #{customername,jdbcType=VARCHAR}
+		</if>
+		<if test="servicer !='' and servicer != null">
+    and t.USERNAME = #{servicer,jdbcType=VARCHAR}
+		</if>
+		<if test="orderstatus !='' and orderstatus != null">
+    and t.ORDERSTATUS = #{orderstatus,jdbcType=VARCHAR}
+		</if>
+		<if test="odpid !='' and odpid != null">
+    and t.OWNERDEPTID = #{odpid,jdbcType=VARCHAR}
+		</if>
+		<if test="start !='' and start != null">
+    and t.ORDERDATE >= #{start,jdbcType=VARCHAR} 
+		</if>
+		<if test="end !='' and end != null">
+    and  #{end,jdbcType=VARCHAR} >=t.ORDERDATE 
+		</if>
+	ORDER BY ORDERDATE DESC
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from OD_Order
+    where ORDERCODE = #{ordercode,jdbcType=VARCHAR} 
+	</delete>
+	<insert id="insert" parameterType="com.cn.zyrs.domain.Order" >
+    insert into OD_Order (ORDERCODE, CUSTOMERID, CUSTOMERNAME, 
+      TEL, ORDERDATE, SERVICER, 
+      ORDERSTATUS, ORDERAMOUNT, ISVALID, 
+      DELFLAG, SERVICESHOP, ISURGENT, 
+      OWNERDEPTID, REMARK)
+    values (#{ordercode,jdbcType=VARCHAR}, #{customerid,jdbcType=VARCHAR}, #{customername,jdbcType=VARCHAR}, 
+      #{tel,jdbcType=VARCHAR}, #{orderdate,jdbcType=TIMESTAMP}, #{servicer,jdbcType=VARCHAR}, 
+      #{orderstatus,jdbcType=VARCHAR}, #{orderamount,jdbcType=DECIMAL}, #{isvalid,jdbcType=INTEGER}, 
+      #{delflag,jdbcType=INTEGER}, #{serviceshop,jdbcType=VARCHAR}, #{isurgent,jdbcType=INTEGER}, 
+      #{ownerdeptid,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.cn.zyrs.domain.Order" >
+    insert into OD_Order
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+        ORDERCODE,CUSTOMERNAME,TEL,ORDERDATE,SERVICER,SERVICESHOP,OWNERDEPTID,	
+			<if test="order.customerid != null" >
+        CUSTOMERID,
+			</if>			
+			<if test="order.orderstatus != null" >
+        ORDERSTATUS,
+			</if>
+			<if test="order.orderamount != null" >
+        ORDERAMOUNT,
+			</if>
+			<if test="order.isvalid != null" >
+        ISVALID,
+			</if>
+			<if test="order.delflag != null" >
+        DELFLAG,
+			</if>
+			<if test="order.isurgent != null" >
+        ISURGENT,
+			</if>
+			<if test="order.remark != null" >
+        REMARK,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+        #{order.ordercode,jdbcType=VARCHAR},#{order.customername,jdbcType=VARCHAR},#{order.tel,jdbcType=VARCHAR},getdate(),#{order.servicer,jdbcType=VARCHAR},#{order.serviceshop,jdbcType=VARCHAR},#{order.ownerdeptid,jdbcType=VARCHAR},
+			<if test="order.customerid != null" >
+        #{order.customerid,jdbcType=VARCHAR},
+			</if>
+			<if test="order.orderstatus != null" >
+        #{order.orderstatus,jdbcType=VARCHAR},
+			</if>
+			<if test="order.orderamount != null" >
+        #{order.orderamount,jdbcType=DECIMAL},
+			</if>
+			<if test="order.isvalid != null" >
+        #{order.isvalid,jdbcType=INTEGER},
+			</if>
+			<if test="order.delflag != null" >
+        #{order.delflag,jdbcType=INTEGER},
+			</if>
+			<if test="order.isurgent != null" >
+        #{order.isurgent,jdbcType=INTEGER},
+			</if>
+			<if test="order.remark != null" >
+        #{order.remark,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<insert id="addBomOrder" parameterType="com.cn.zyrs.domain.BomOrder">
+		insert into ORDER_FABRICORDER (ORDERCODE,ORDERCOMPANY,ORDERDATE,STATE) values (#{bomorder.ordercode,jdbcType=VARCHAR},#{bomorder.ordercompany,jdbcType=VARCHAR},getdate(),'15')
+	</insert>
+	<insert id="addBomOrder1" parameterType="com.cn.zyrs.domain.BomOrder">
+		insert into ORDER_EXPRESS values(#{bomorder.ordercode,jdbcType=VARCHAR},#{bomorder.address,jdbcType=VARCHAR},#{bomorder.tel,jdbcType=VARCHAR},#{bomorder.contacts,jdbcType=VARCHAR})
+	</insert>
+	<insert id="addBomOrder2" parameterType="com.cn.zyrs.domain.BomOrder">
+		insert into ORDER_FABRICORDERDETAIL values(#{bomorder.ordercode,jdbcType=VARCHAR},#{bomorder.bomcode,jdbcType=VARCHAR},#{bomorder.num,jdbcType=VARCHAR})
+	</insert>
+		
+	<update id="updateOrder" parameterType="com.cn.zyrs.domain.Order" >
+    update OD_Order
+		<set >
+			<if test="order.customerid != null" >
+        CUSTOMERID = #{order.customerid,jdbcType=VARCHAR},
+			</if>
+			<if test="order.customername != null" >
+        CUSTOMERNAME = #{order.customername,jdbcType=VARCHAR},
+			</if>
+			<if test="order.tel != null" >
+        TEL = #{order.tel,jdbcType=VARCHAR},
+			</if>
+			<if test="order.orderdate != null" >
+        ORDERDATE = #{order.orderdate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="order.servicer != null" >
+        SERVICER = #{order.servicer,jdbcType=VARCHAR},
+			</if>
+			<if test="order.orderstatus != null" >
+        ORDERSTATUS = #{order.orderstatus,jdbcType=VARCHAR},
+			</if>
+			<if test="order.orderamount != null" >
+        ORDERAMOUNT = #{order.orderamount,jdbcType=DECIMAL},
+			</if>
+			<if test="order.isvalid != null" >
+        ISVALID = #{order.isvalid,jdbcType=INTEGER},
+			</if>
+			<if test="order.delflag != null" >
+        DELFLAG = #{order.delflag,jdbcType=INTEGER},
+			</if>
+			<if test="order.serviceshop != null" >
+        SERVICESHOP = #{order.serviceshop,jdbcType=VARCHAR},
+			</if>
+			<if test="order.isurgent != null" >
+        ISURGENT = #{order.isurgent,jdbcType=INTEGER},
+			</if>
+			<if test="order.ownerdeptid != null" >
+        OWNERDEPTID = #{order.ownerdeptid,jdbcType=VARCHAR},
+			</if>
+			<if test="order.remark != null" >
+        REMARK = #{order.remark,jdbcType=VARCHAR},
+			</if>
+		</set>
+    where ORDERCODE = #{order.ordercode,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.cn.zyrs.domain.Order" >
+    update OD_Order
+    set CUSTOMERID = #{order.customerid,jdbcType=VARCHAR},
+      CUSTOMERNAME = #{order.customername,jdbcType=VARCHAR},
+      TEL = #{order.tel,jdbcType=VARCHAR},
+      ORDERDATE = #{order.orderdate,jdbcType=TIMESTAMP},
+      SERVICER = #{order.servicer,jdbcType=VARCHAR},
+      ORDERSTATUS = #{order.orderstatus,jdbcType=VARCHAR},
+      ORDERAMOUNT = #{order.orderamount,jdbcType=DECIMAL},
+      ISVALID = #{order.isvalid,jdbcType=INTEGER},
+      DELFLAG = #{order.delflag,jdbcType=INTEGER},
+      SERVICESHOP = #{order.serviceshop,jdbcType=VARCHAR},
+      ISURGENT = #{order.isurgent,jdbcType=INTEGER},
+      OWNERDEPTID = #{order.ownerdeptid,jdbcType=VARCHAR},
+      REMARK = #{order.remark,jdbcType=VARCHAR}
+    where ORDERCODE = #{order.ordercode,jdbcType=VARCHAR}
+	</update>
+</mapper>

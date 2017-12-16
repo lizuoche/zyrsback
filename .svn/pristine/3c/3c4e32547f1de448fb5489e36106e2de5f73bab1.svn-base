@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.zyrs.mapper.UserMapper" >
+	<!-- 员工基本信息返回结果集  -->
+	<resultMap id="UserInfoBaseMap" type="com.cn.zyrs.domain.UserBaseInfo" >
+		<id column="USERID" property="userid" jdbcType="VARCHAR" />
+		<result column="USERNAME" property="username" jdbcType="VARCHAR" />
+		<result column="POSITION" property="position" jdbcType="VARCHAR" />
+		<result column="TEL" property="tel" jdbcType="VARCHAR" />
+	</resultMap>
+  
+  	<!-- 员工详细信息返回结果集  -->
+	<resultMap id="UserInfoDetailMap" type="com.cn.zyrs.domain.User" >
+		<id column="USERID" property="userid" jdbcType="VARCHAR" />
+		<result column="USERCODE" property="usercode" jdbcType="VARCHAR" />
+		<result column="USERNAME" property="username" jdbcType="VARCHAR" />
+		<result column="DEPARTID" property="departid" jdbcType="VARCHAR" />
+		<result column="OWNERDEPARTID" property="ownerdepartid" jdbcType="VARCHAR" />
+		<result column="POSITION" property="position" jdbcType="VARCHAR" />
+		<result column="GENDER" property="gender" jdbcType="VARCHAR" />
+		<result column="BIRTHDAY" property="birthday" jdbcType="VARCHAR" />
+		<result column="CARDTYPE" property="cardtype" jdbcType="VARCHAR" />
+		<result column="CARDID" property="cardid" jdbcType="VARCHAR" />
+		<result column="TEL" property="tel" jdbcType="VARCHAR" />
+		<result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+		<result column="EMPLOTMENTDATE" property="emplotmentdate" jdbcType="VARCHAR" />
+		<result column="PAYTYPE" property="paytype" jdbcType="VARCHAR" />
+		<result column="BASEPAY" property="basepay" jdbcType="VARCHAR" />
+		<result column="ISSERVICE" property="isservice" jdbcType="VARCHAR" />
+		<result column="DEPARTUREDATE" property="departuredate" jdbcType="VARCHAR" />
+		<result column="ISVALID" property="isvalid" jdbcType="VARCHAR" />
+		<result column="DELFLAG" property="delflag" jdbcType="VARCHAR" />
+		<result column="CREATER" property="creater" jdbcType="VARCHAR" />
+		<result column="CREATEDATE" property="createdate" jdbcType="VARCHAR" />
+		<result column="MODIFIER" property="modifier" jdbcType="VARCHAR" />
+		<result column="MODIFYDATE" property="modifydate" jdbcType="VARCHAR" />
+		<result column="PHOTO" property="photo" jdbcType="VARCHAR" />
+		<result column="REMARK" property="remark" jdbcType="VARCHAR" />
+	</resultMap>
+  
+  	<!-- 员工详细信息 -->
+	<sql id="UserINfoDetail_Column_List" >
+    USERID, USERCODE, USERNAME, DEPARTID, OWNERDEPARTID, POSITION, GENDER, 
+    CONVERT (VARCHAR(10), BIRTHDAY, 120) AS BIRTHDAY, 
+    CONVERT (VARCHAR(20), EMPLOTMENTDATE, 120) AS EMPLOTMENTDATE,
+    CONVERT (VARCHAR(20), DEPARTUREDATE, 120) AS DEPARTUREDATE,
+    CONVERT (VARCHAR(20), CREATEDATE, 120) AS CREATEDATE,
+    CONVERT (VARCHAR(20), MODIFYDATE, 120) AS MODIFYDATE,
+    CARDTYPE, CARDID, TEL, ADDRESS, PAYTYPE, BASEPAY, ISSERVICE, 
+    ISVALID, DELFLAG, CREATER, 
+    MODIFIER, 
+    PHOTO, REMARK
+	</sql>
+	
+	<!-- 门店详细信息  -->
+	<sql id="DeptINfoDetail_Column_List" >
+	DEPTID,PARENTNAME,DEPTNAME,OWNERDEPTNAME,parentid,ownerdept,TEL,CREATER,CREATEDATE,MODIFIER,MODIFYDATE,ISREALITY,
+	DEPTCODE,ADDRESS,PICTURE,PROVINCE,CITY,AREA
+	</sql>
+	
+	<!-- 获取门店密钥 -->
+	<select id="getDeptKey" resultType="java.lang.String" parameterType="java.lang.String" >
+    select deptkey from US_DeptKey where deptid = #{di,jdbcType=VARCHAR}
+	</select>
+  
+	<!-- 新版本查询门店信息 -->
+	<select id="getDeptInfo" resultType="com.cn.zyrs.domain.DeptLoginInfo" parameterType="java.lang.String" >
+    SELECT
+		<include refid="DeptINfoDetail_Column_List" />
+	FROM
+		V_DEPTINFO 
+	WHERE 
+		DEPTID = #{di,jdbcType=VARCHAR}
+	</select>
+  
+	<!-- 查询门店员工基本信息 -->
+	<select id="getUserInfoBase" resultMap="UserInfoBaseMap" parameterType="java.lang.String" >
+    SELECT
+		c.USERID,
+		c.USERNAME,
+		b.[POSITIONNAME] AS POSITION,
+		c.TEL
+	FROM
+		(
+			SELECT
+				a.USERID,
+				a.USERNAME,
+				a.[POSITION],
+				a.TEL
+			FROM
+				US_UserInfo a
+			WHERE
+				a.DEPARTID =  #{di,jdbcType=VARCHAR} AND ISVALID = 1 AND DELFLAG = 0
+		) c
+	LEFT JOIN US_Position b ON c.[POSITION] = b.POSITIONId
+	</select>
+	
+	<!-- 查询门店员工详细信息 -->
+	<select id="getUserInfoDetail" resultMap="UserInfoDetailMap" parameterType="java.lang.String" >
+	SELECT 
+		<include refid="UserINfoDetail_Column_List" /> 
+	FROM 
+		V_WORKERINFO 
+	where 
+		USERID = #{ui,jdbcType=VARCHAR}
+	</select>
+</mapper>

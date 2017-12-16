@@ -1,0 +1,2299 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.zyrs.mapper.SuitPartsMapper" >
+  <resultMap id="BaseResultMap" type="com.cn.zyrs.domain.SuitParts" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="STYLE" property="style" jdbcType="VARCHAR" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="WORKSHOPNAME" property="workshopname" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="MODELNAME" property="modelname" jdbcType="VARCHAR" />
+    <result column="IMAGE" property="image" jdbcType="VARCHAR" />
+    <result column="IMAGE1" property="image1" jdbcType="VARCHAR" />
+    <result column="IMAGE2" property="image2" jdbcType="VARCHAR" />
+    <result column="IMAGE3" property="image3" jdbcType="VARCHAR" />
+    <result column="ISSELL" property="issell" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, STYLE, TYPE, NAME, WORKSHOPNAME, REMARK, MODELNAME, IMAGE, IMAGE1, IMAGE2, IMAGE3
+  </sql>
+  
+  <!-- 查询西服配件信息 -->
+  <select id="getParts" resultMap="BaseResultMap" parameterType="java.lang.String" >
+  	select 
+  	<include refid="Base_Column_List" />
+  	from V_PL_Parts
+  	where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 查询西服配件信息 -->
+  <select id="getSuitPartsBySelective" resultMap="BaseResultMap" parameterType="com.cn.zyrs.domain.SuitParts" >
+    select 
+    <include refid="Base_Column_List" />
+    from PL_Parts_Suit
+    where 1=1
+    <if test="sp.id != null" >
+       and ID = #{sp.id,jdbcType=VARCHAR}
+      </if>
+      <if test="sp.style != null" >
+        and style = #{sp.style,jdbcType=VARCHAR}
+      </if>
+      <if test="sp.type != null" >
+        and type = #{sp.type,jdbcType=VARCHAR}
+      </if>
+      <if test="sp.name != null" >
+       and name = #{sp.name,jdbcType=VARCHAR}
+      </if>
+      <if test="sp.workshopname != null" >
+        and workshopname = #{sp.workshopname,jdbcType=VARCHAR}
+      </if>
+      <if test="sp.remark != null" >
+       and remark = #{sp.remark,jdbcType=VARCHAR}
+      </if>
+      <if test="sp.modelname != null" >
+        and modelname = #{sp.modelname,jdbcType=VARCHAR}
+      </if>
+      <if test="sp.image != null" >
+       and image = #{sp.image,jdbcType=VARCHAR}
+      </if>
+      <if test="sp.image1 != null" >
+        and image1 = #{sp.image1,jdbcType=VARCHAR}
+      </if>
+      <if test="sp.image2 != null" >
+        and image2 = #{sp.image2,jdbcType=VARCHAR}
+      </if>
+      <if test="sp.image3 != null" >
+        and image3 = #{sp.image3,jdbcType=VARCHAR}
+      </if>
+  </select>
+   <!-- 查询裤子配件信息 -->
+  <select id="getTrousersPartsBySelective" resultMap="BaseResultMap" parameterType="com.cn.zyrs.domain.SuitParts" >
+    select 
+    <include refid="Base_Column_List" />
+    from PL_Parts_Trousers
+    where 1=1
+    <if test="sp.id != null" >
+       and ID = #{sp.id,jdbcType=VARCHAR}
+      </if>
+      <if test="sp.style != null" >
+        and style = #{sp.style,jdbcType=VARCHAR}
+      </if>
+      <if test="sp.type != null" >
+        and type = #{sp.type,jdbcType=VARCHAR}
+      </if>
+      <if test="sp.name != null" >
+       and name = #{sp.name,jdbcType=VARCHAR}
+      </if>
+      <if test="sp.workshopname != null" >
+        and workshopname = #{sp.workshopname,jdbcType=VARCHAR}
+      </if>
+      <if test="sp.remark != null" >
+       and remark = #{sp.remark,jdbcType=VARCHAR}
+      </if>
+      <if test="sp.modelname != null" >
+        and modelname = #{sp.modelname,jdbcType=VARCHAR}
+      </if>
+      <if test="sp.image != null" >
+       and image = #{sp.image,jdbcType=VARCHAR}
+      </if>
+      <if test="sp.image1 != null" >
+        and image1 = #{sp.image1,jdbcType=VARCHAR}
+      </if>
+      <if test="sp.image2 != null" >
+        and image2 = #{sp.image2,jdbcType=VARCHAR}
+      </if>
+      <if test="sp.image3 != null" >
+        and image3 = #{sp.image3,jdbcType=VARCHAR}
+      </if>
+  </select>
+  <!-- 查询衬衫配件信息 -->
+  <select id="getShirtPartsBySelective" resultMap="BaseResultMap" parameterType="com.cn.zyrs.domain.SuitParts" >
+    select 
+    <include refid="Base_Column_List" />
+    from PL_Parts_Shirt
+    where 1=1
+    <if test="sp.id != null" >
+       and ID = #{sp.id,jdbcType=VARCHAR}
+      </if>
+      <if test="sp.style != null" >
+        and style = #{sp.style,jdbcType=VARCHAR}
+      </if>
+      <if test="sp.type != null" >
+        and type = #{sp.type,jdbcType=VARCHAR}
+      </if>
+      <if test="sp.name != null" >
+       and name = #{sp.name,jdbcType=VARCHAR}
+      </if>
+      <if test="sp.workshopname != null" >
+        and workshopname = #{sp.workshopname,jdbcType=VARCHAR}
+      </if>
+      <if test="sp.remark != null" >
+       and remark = #{sp.remark,jdbcType=VARCHAR}
+      </if>
+      <if test="sp.modelname != null" >
+        and modelname = #{sp.modelname,jdbcType=VARCHAR}
+      </if>
+      <if test="sp.image != null" >
+       and image = #{sp.image,jdbcType=VARCHAR}
+      </if>
+      <if test="sp.image1 != null" >
+        and image1 = #{sp.image1,jdbcType=VARCHAR}
+      </if>
+      <if test="sp.image2 != null" >
+        and image2 = #{sp.image2,jdbcType=VARCHAR}
+      </if>
+      <if test="sp.image3 != null" >
+        and image3 = #{sp.image3,jdbcType=VARCHAR}
+      </if>
+  </select>
+  <!-- 查询马甲配件信息 -->
+  <select id="getVestPartsBySelective" resultMap="BaseResultMap" parameterType="com.cn.zyrs.domain.SuitParts" >
+    select 
+    <include refid="Base_Column_List" />
+    from PL_Parts_Vest
+    where 1=1
+    <if test="sp.id != null" >
+       and ID = #{sp.id,jdbcType=VARCHAR}
+      </if>
+      <if test="sp.style != null" >
+        and style = #{sp.style,jdbcType=VARCHAR}
+      </if>
+      <if test="sp.type != null" >
+        and type = #{sp.type,jdbcType=VARCHAR}
+      </if>
+      <if test="sp.name != null" >
+       and name = #{sp.name,jdbcType=VARCHAR}
+      </if>
+      <if test="sp.workshopname != null" >
+        and workshopname = #{sp.workshopname,jdbcType=VARCHAR}
+      </if>
+      <if test="sp.remark != null" >
+       and remark = #{sp.remark,jdbcType=VARCHAR}
+      </if>
+      <if test="sp.modelname != null" >
+        and modelname = #{sp.modelname,jdbcType=VARCHAR}
+      </if>
+      <if test="sp.image != null" >
+       and image = #{sp.image,jdbcType=VARCHAR}
+      </if>
+      <if test="sp.image1 != null" >
+        and image1 = #{sp.image1,jdbcType=VARCHAR}
+      </if>
+      <if test="sp.image2 != null" >
+        and image2 = #{sp.image2,jdbcType=VARCHAR}
+      </if>
+      <if test="sp.image3 != null" >
+        and image3 = #{sp.image3,jdbcType=VARCHAR}
+      </if>
+  </select>
+  
+  <!-- 查询面料配件信息 -->
+  <select id="getBomPartsBySelective" resultType="com.cn.zyrs.domain.BomParts" parameterType="com.cn.zyrs.domain.BomParts" >
+    select 
+    	ID,
+		STYLE,
+		ENGLISH_BRAND_NAME,
+		CHINA_BRAND_NAME,
+		NAME,
+		CODE,
+		SMALL_IMAGE,
+		BIG_IMAGE,
+		NORMAL_IMAGE,
+		SALECODE,
+		REMARK
+    from PL_Parts_Bom
+    where 1=1
+    <if test="bp.id != null" >
+     and id = #{bp.id,jdbcType=VARCHAR}
+      </if>
+      <if test="bp.style != null" >
+     and style =    #{bp.style,jdbcType=VARCHAR}
+      </if>
+      <if test="bp.english_brand_name != null" >
+     and english_brand_name =    #{bp.english_brand_name,jdbcType=VARCHAR}
+      </if>
+      <if test="bp.china_brand_name != null" >
+     and china_brand_name =    #{bp.china_brand_name,jdbcType=VARCHAR}
+      </if>
+      <if test="bp.name != null" >
+     and name =    #{bp.name,jdbcType=VARCHAR}
+      </if>
+      <if test="bp.code != null" >
+      and code =   #{bp.code,jdbcType=VARCHAR}
+      </if>
+      <if test="bp.small_image != null" >
+      and small_image =   #{bp.small_image,jdbcType=VARCHAR}
+      </if>
+      <if test="bp.big_image != null" >
+      and bigImage =   #{bp.bigImage,jdbcType=VARCHAR}
+      </if>
+      <if test="bp.normal_image != null" >
+      and normal_image =   #{bp.normal_image,jdbcType=VARCHAR}
+      </if>
+      <if test="bp.salecode != null" >
+      and salecode =   #{bp.salecode,jdbcType=VARCHAR}
+      </if>
+      <if test="bp.remark != null" >
+       and remark =  #{bp.remark,jdbcType=VARCHAR}
+      </if>
+  </select>
+  
+  
+  <!-- 查询商品配件信息 -->
+  <select id="getCommodityParts" resultType="com.cn.zyrs.domain.CommodityParts" parameterType="com.cn.zyrs.domain.CommodityParts" >
+    select 
+   		ID,
+		STYLE,
+		ENGLISH_BRAND_NAME,
+		CHINA_BRAND_NAME,
+		NAME,
+		CODE,
+		MODELNAME,
+		SMALL_IMAGE,
+		SALECODE,
+		REMARK
+    from PL_Parts_Commodity
+    where 1=1
+    <if test="cp.id != null" >
+     and id = #{cp.id,jdbcType=VARCHAR}
+      </if>
+      <if test="cp.style != null" >
+     and style =    #{cp.style,jdbcType=VARCHAR}
+      </if>
+      <if test="cp.english_brand_name != null" >
+     and english_brand_name =    #{cp.english_brand_name,jdbcType=VARCHAR}
+      </if>
+      <if test="cp.china_brand_name != null" >
+     and china_brand_name =    #{cp.china_brand_name,jdbcType=VARCHAR}
+      </if>
+      <if test="cp.name != null" >
+     and name =    #{cp.name,jdbcType=VARCHAR}
+      </if>
+      <if test="cp.code != null" >
+      and code =   #{cp.code,jdbcType=VARCHAR}
+      </if>
+      <if test="cp.modelname != null" >
+      and modelname =   #{cp.modelname,jdbcType=VARCHAR}
+      </if>
+      <if test="cp.small_image != null" >
+      and small_image =   #{cp.small_image,jdbcType=VARCHAR}
+      </if>
+      <if test="cp.salecode != null" >
+      and salecode =   #{cp.salecode,jdbcType=VARCHAR}
+      </if>
+      <if test="cp.remark != null" >
+       and remark =  #{cp.remark,jdbcType=VARCHAR}
+      </if>
+  </select>
+  
+   <!-- 查询面料品牌信息 -->
+  <select id="getBomBrand" resultType="java.lang.String" parameterType="java.lang.String" >
+    select china_brand_name from PL_Parts_Bom where style =  #{type,jdbcType=VARCHAR} group by china_brand_name 
+    
+  </select>
+  
+   <!-- 查询商品品牌信息 -->
+  <select id="getGoodsBrand" resultType="java.lang.String" parameterType="java.lang.String" >
+    select china_brand_name from PL_Parts_Commodity where style =  #{type,jdbcType=VARCHAR} group by china_brand_name 
+    
+  </select>
+  
+  <!-- 查询商品配件信息 -->
+  <select id="getGoodsPartsBySelective" resultType="com.cn.zyrs.domain.GoodsParts" parameterType="com.cn.zyrs.domain.GoodsParts" >
+    select * from PL_Parts_Commodity
+    where 1=1
+    <if test="gp.id != null" >
+     and id = #{gp.id,jdbcType=VARCHAR}
+      </if>
+      <if test="gp.style != null" >
+     and style =    #{gp.style,jdbcType=VARCHAR}
+      </if>
+      <if test="gp.english_brand_name != null" >
+     and english_brand_name =    #{gp.english_brand_name,jdbcType=VARCHAR}
+      </if>
+      <if test="gp.china_brand_name != null" >
+     and china_brand_name =    #{gp.china_brand_name,jdbcType=VARCHAR}
+      </if>
+      <if test="gp.name != null" >
+     and name =    #{gp.name,jdbcType=VARCHAR}
+      </if>
+      <if test="gp.code != null" >
+      and code =   #{gp.code,jdbcType=VARCHAR}
+      </if>
+       <if test="gp.modelname != null" >
+      and code =   #{gp.modelname,jdbcType=VARCHAR}
+      </if>
+      <if test="gp.small_image != null" >
+      and small_image =   #{gp.small_image,jdbcType=VARCHAR}
+      </if>
+      <if test="gp.big_image != null" >
+      and bigImage =   #{gp.bigImage,jdbcType=VARCHAR}
+      </if>
+      <if test="gp.normal_image != null" >
+      and normal_image =   #{gp.normal_image,jdbcType=VARCHAR}
+      </if>
+      <if test="gp.salecode != null" >
+      and salecode =   #{gp.salecode,jdbcType=VARCHAR}
+      </if>
+      <if test="gp.remark != null" >
+       and remark =  #{gp.remark,jdbcType=VARCHAR}
+      </if>
+  </select>
+  
+  <!-- 查询西服款式配置信息 -->
+  <select id="getSuitStyleBySelective" resultType="com.cn.zyrs.domain.SuitStyle" parameterType="map" >
+    select 
+    	*
+    from PL_Suit_Style
+    where 1=1
+    <if test="map.id != null" >
+       and ID = #{map.id,jdbcType=VARCHAR}
+      </if>
+      <if test="map.stylename != null" >
+        and stylename = #{map.stylename,jdbcType=VARCHAR}
+      </if>
+      <if test="map.assetbundle != null" >
+       and assetbundle = #{map.assetbundle,jdbcType=VARCHAR}
+      </if>
+      <if test="map.collar != null" >
+        and collar = #{map.collar,jdbcType=VARCHAR}
+      </if>
+      <if test="map.breastpocket != null" >
+       and breastpocket = #{map.breastpocket,jdbcType=VARCHAR}
+      </if>
+      <if test="map.porket != null" >
+        and porket = #{map.porket,jdbcType=VARCHAR}
+      </if>
+      <if test="map.sleeve != null" >
+       and sleeve = #{map.sleeve,jdbcType=VARCHAR}
+      </if>
+      <if test="map.buttonnum != null" >
+        and buttonnum = #{map.buttonnum,jdbcType=VARCHAR}
+      </if>
+      <if test="map.placket != null" >
+        and placket = #{map.placket,jdbcType=VARCHAR}
+      </if>
+      <if test="map.back != null" >
+        and back = #{map.back,jdbcType=VARCHAR}
+      </if>
+      <if test="map.botouyan != null" >
+        and botouyan = #{map.botouyan,jdbcType=VARCHAR}
+      </if>
+      <if test="map.buttoneye != null" >
+        and buttoneye = #{map.buttoneye,jdbcType=VARCHAR}
+      </if>
+      <if test="map.smallImage != null" >
+        and smallImage = #{map.smallImage,jdbcType=VARCHAR}
+      </if>
+      <if test="map.bigImage != null" >
+        and bigImage = #{map.bigImage,jdbcType=VARCHAR}
+      </if>
+      <if test="map.jsonname != null" >
+        and jsonname = #{map.jsonname,jdbcType=VARCHAR}
+      </if>
+  </select>
+   <!-- 查询裤子款式配置信息 -->
+  <select id="getTrousersStyleBySelective" resultType="com.cn.zyrs.domain.TrousersStyle" parameterType="map" >
+    select 
+    	*
+    from PL_Trousers_Style
+    where 1=1
+    <if test="map.id != null" >
+       and ID = #{map.id,jdbcType=VARCHAR}
+      </if>
+      <if test="map.stylename != null" >
+        and stylename = #{map.stylename,jdbcType=VARCHAR}
+      </if>
+      <if test="map.assetbundle != null" >
+       and assetbundle = #{map.assetbundle,jdbcType=VARCHAR}
+      </if>
+      <if test="map.yaotou != null" >
+        and yaotou = #{map.yaotou,jdbcType=VARCHAR}
+      </if>
+      <if test="map.kujiao != null" >
+       and kujiao = #{map.kujiao,jdbcType=VARCHAR}
+      </if>
+      <if test="map.cekoudai != null" >
+        and cekoudai = #{map.cekoudai,jdbcType=VARCHAR}
+      </if>
+      <if test="map.houkoudai != null" >
+       and houkoudai = #{map.houkoudai,jdbcType=VARCHAR}
+      </if>
+      <if test="map.kouyan != null" >
+        and kouyan = #{map.kouyan,jdbcType=VARCHAR}
+      </if>
+      <if test="map.smallImage != null" >
+        and smallImage = #{map.smallImage,jdbcType=VARCHAR}
+      </if>
+      <if test="map.bigImage != null" >
+        and bigImage = #{map.bigImage,jdbcType=VARCHAR}
+      </if>
+      <if test="map.jsonname != null" >
+        and jsonname = #{map.jsonname,jdbcType=VARCHAR}
+      </if>
+  </select>
+  <!-- 查询衬衫款式配置信息 -->
+  <select id="getShirtStyleBySelective" resultType="com.cn.zyrs.domain.ShirtStyle" parameterType="map" >
+    select 
+    	*
+    from PL_Shirt_Style
+    where 1=1
+    <if test="map.id != null" >
+       and ID = #{map.id,jdbcType=VARCHAR}
+      </if>
+      <if test="map.stylename != null" >
+        and stylename = #{map.stylename,jdbcType=VARCHAR}
+      </if>
+      <if test="map.assetbundle != null" >
+       and assetbundle = #{map.assetbundle,jdbcType=VARCHAR}
+      </if>
+      <if test="map.collar != null" >
+        and collar = #{map.collar,jdbcType=VARCHAR}
+      </if>
+      <if test="map.font != null" >
+       and font = #{map.font,jdbcType=VARCHAR}
+      </if>
+      <if test="map.back != null" >
+        and back = #{map.back,jdbcType=VARCHAR}
+      </if>
+      <if test="map.sleeve != null" >
+       and sleeve = #{map.sleeve,jdbcType=VARCHAR}
+      </if>
+      <if test="map.breastpocket != null" >
+        and breastpocket = #{map.breastpocket,jdbcType=VARCHAR}
+      </if>
+      <if test="map.buttoneye != null" >
+        and buttoneye = #{map.buttoneye,jdbcType=VARCHAR}
+      </if>
+      <if test="map.smallImage != null" >
+        and smallImage = #{map.smallImage,jdbcType=VARCHAR}
+      </if>
+      <if test="map.bigImage != null" >
+        and bigImage = #{map.bigImage,jdbcType=VARCHAR}
+      </if>
+      <if test="map.jsonname != null" >
+        and jsonname = #{map.jsonname,jdbcType=VARCHAR}
+      </if>
+  </select>
+  <!-- 查询马甲款式配置信息 -->
+  <select id="getVestStyleBySelective" resultType="com.cn.zyrs.domain.VestStyle" parameterType="map" >
+    select 
+    	*
+    from PL_Vest_Style
+    where 1=1
+     <if test="map.id != null" >
+       and ID = #{map.id,jdbcType=VARCHAR}
+      </if>
+      <if test="map.stylename != null" >
+        and stylename = #{map.stylename,jdbcType=VARCHAR}
+      </if>
+      <if test="map.assetbundle != null" >
+       and assetbundle = #{map.assetbundle,jdbcType=VARCHAR}
+      </if>
+      <if test="map.collar != null" >
+        and collar = #{map.collar,jdbcType=VARCHAR}
+      </if>
+      <if test="map.breastpocket != null" >
+       and breastpocket = #{map.breastpocket,jdbcType=VARCHAR}
+      </if>
+      <if test="map.pocket != null" >
+        and pocket = #{map.pocket,jdbcType=VARCHAR}
+      </if>
+      <if test="map.xiabai != null" >
+       and xiabai = #{map.xiabai,jdbcType=VARCHAR}
+      </if>
+      <if test="map.kouyan != null" >
+        and kouyan = #{map.kouyan,jdbcType=VARCHAR}
+      </if>
+      <if test="map.smallImage != null" >
+        and smallImage = #{map.smallImage,jdbcType=VARCHAR}
+      </if>
+      <if test="map.bigImage != null" >
+        and bigImage = #{map.bigImage,jdbcType=VARCHAR}
+      </if>
+      <if test="map.jsonname != null" >
+        and jsonname = #{map.jsonname,jdbcType=VARCHAR}
+      </if>
+  </select>
+  
+   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from PL_Parts_Suit
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <!-- 检查西服配件模型名称是否存在 -->
+  <select id="checkSuitModelName" resultType="java.lang.Integer" parameterType="java.lang.String" >
+    select count(1)
+    from PL_Parts_Suit
+    where MODELNAME = #{mn,jdbcType=VARCHAR}
+  </select>
+  <!-- 检查西服配件模型名称是否存在 -->
+  <select id="checkTrousersModelName" resultType="java.lang.Integer" parameterType="java.lang.String" >
+    select count(1)
+    from PL_Parts_Trousers
+    where MODELNAME = #{mn,jdbcType=VARCHAR}
+  </select>
+  <!-- 检查西服配件模型名称是否存在 -->
+  <select id="checkShirtModelName" resultType="java.lang.Integer" parameterType="java.lang.String" >
+    select count(1)
+    from PL_Parts_Shirt
+    where MODELNAME = #{mn,jdbcType=VARCHAR}
+  </select>
+  <!-- 检查西服配件模型名称是否存在 -->
+  <select id="checkVestModelName" resultType="java.lang.Integer" parameterType="java.lang.String" >
+    select count(1)
+    from PL_Parts_Vest
+    where MODELNAME = #{mn,jdbcType=VARCHAR}
+  </select>
+  <!-- 检查面料编码是否存在 -->
+  <select id="checkBomCode" resultType="java.lang.Integer" parameterType="java.lang.String" >
+    select count(1)
+    from PL_Parts_Bom
+    where CODE = #{bomcode,jdbcType=VARCHAR}
+  </select>
+  <!-- 检查商品模型名称是否存在 -->
+  <select id="checkGoodsModelName" resultType="java.lang.Integer" parameterType="java.lang.String" >
+    select count(1)
+    from PL_Parts_Commodity
+    where MODELNAME = #{mn,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from PL_Parts_Suit
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.cn.zyrs.domain.SuitParts" >
+    insert into PL_Parts_Suit (ID, STYLE, NAME, 
+      WORKSHOPNAME, REMARK, MODELNAME, 
+      IMAGE, IMAGE1, IMAGE2, 
+      IMAGE3)
+    values (#{id,jdbcType=VARCHAR}, #{style,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{workshopname,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{modelname,jdbcType=VARCHAR}, 
+      #{image,jdbcType=VARCHAR}, #{image1,jdbcType=VARCHAR}, #{image2,jdbcType=VARCHAR}, 
+      #{image3,jdbcType=VARCHAR})
+  </insert>
+  <!-- 新增西服配件信息 -->
+  <insert id="insertSelective" parameterType="com.cn.zyrs.domain.SuitParts" >
+    insert into PL_Parts_Suit
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sp.id != null" >
+        ID,
+      </if>
+      <if test="sp.style != null" >
+        STYLE,
+      </if>
+      <if test="sp.type != null" >
+        TYPE,
+      </if>
+      <if test="sp.name != null" >
+        NAME,
+      </if>
+      <if test="sp.workshopname != null" >
+        WORKSHOPNAME,
+      </if>
+      <if test="sp.remark != null" >
+        REMARK,
+      </if>
+      <if test="sp.modelname != null" >
+        MODELNAME,
+      </if>
+      <if test="sp.image != null" >
+        IMAGE,
+      </if>
+      <if test="sp.image1 != null" >
+        IMAGE1,
+      </if>
+      <if test="sp.image2 != null" >
+        IMAGE2,
+      </if>
+      <if test="sp.image3 != null" >
+        IMAGE3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sp.id != null" >
+        #{sp.id,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.style != null" >
+        #{sp.style,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.type != null" >
+        #{sp.type,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.name != null" >
+        #{sp.name,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.workshopname != null" >
+        #{sp.workshopname,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.remark != null" >
+        #{sp.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.modelname != null" >
+        #{sp.modelname,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.image != null" >
+        #{sp.image,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.image1 != null" >
+        #{sp.image1,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.image2 != null" >
+        #{sp.image2,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.image3 != null" >
+        #{sp.image3,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+   <!-- 新增裤子配件信息 -->
+  <insert id="insertTrousersSelective" parameterType="com.cn.zyrs.domain.SuitParts" >
+    insert into PL_Parts_Trousers
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sp.id != null" >
+        ID,
+      </if>
+      <if test="sp.style != null" >
+        STYLE,
+      </if>
+      <if test="sp.type != null" >
+        TYPE,
+      </if>
+      <if test="sp.name != null" >
+        NAME,
+      </if>
+      <if test="sp.workshopname != null" >
+        WORKSHOPNAME,
+      </if>
+      <if test="sp.remark != null" >
+        REMARK,
+      </if>
+      <if test="sp.modelname != null" >
+        MODELNAME,
+      </if>
+      <if test="sp.image != null" >
+        IMAGE,
+      </if>
+      <if test="sp.image1 != null" >
+        IMAGE1,
+      </if>
+      <if test="sp.image2 != null" >
+        IMAGE2,
+      </if>
+      <if test="sp.image3 != null" >
+        IMAGE3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sp.id != null" >
+        #{sp.id,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.style != null" >
+        #{sp.style,jdbcType=VARCHAR},
+      </if>
+       <if test="sp.type != null" >
+        #{sp.type,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.name != null" >
+        #{sp.name,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.workshopname != null" >
+        #{sp.workshopname,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.remark != null" >
+        #{sp.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.modelname != null" >
+        #{sp.modelname,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.image != null" >
+        #{sp.image,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.image1 != null" >
+        #{sp.image1,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.image2 != null" >
+        #{sp.image2,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.image3 != null" >
+        #{sp.image3,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+   <!-- 新增衬衫配件信息 -->
+  <insert id="insertShirtSelective" parameterType="com.cn.zyrs.domain.SuitParts" >
+    insert into PL_Parts_Shirt
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sp.id != null" >
+        ID,
+      </if>
+      <if test="sp.style != null" >
+        STYLE,
+      </if>
+      <if test="sp.type != null" >
+        TYPE,
+      </if>
+      <if test="sp.name != null" >
+        NAME,
+      </if>
+      <if test="sp.workshopname != null" >
+        WORKSHOPNAME,
+      </if>
+      <if test="sp.remark != null" >
+        REMARK,
+      </if>
+      <if test="sp.modelname != null" >
+        MODELNAME,
+      </if>
+      <if test="sp.image != null" >
+        IMAGE,
+      </if>
+      <if test="sp.image1 != null" >
+        IMAGE1,
+      </if>
+      <if test="sp.image2 != null" >
+        IMAGE2,
+      </if>
+      <if test="sp.image3 != null" >
+        IMAGE3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sp.id != null" >
+        #{sp.id,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.style != null" >
+        #{sp.style,jdbcType=VARCHAR},
+      </if>
+       <if test="sp.type != null" >
+        #{sp.type,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.name != null" >
+        #{sp.name,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.workshopname != null" >
+        #{sp.workshopname,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.remark != null" >
+        #{sp.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.modelname != null" >
+        #{sp.modelname,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.image != null" >
+        #{sp.image,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.image1 != null" >
+        #{sp.image1,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.image2 != null" >
+        #{sp.image2,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.image3 != null" >
+        #{sp.image3,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+   <!-- 新增马甲配件信息 -->
+  <insert id="insertVestSelective" parameterType="com.cn.zyrs.domain.SuitParts" >
+    insert into PL_Parts_Vest
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sp.id != null" >
+        ID,
+      </if>
+      <if test="sp.style != null" >
+        STYLE,
+      </if>
+      <if test="sp.type != null" >
+        TYPE,
+      </if>
+      <if test="sp.name != null" >
+        NAME,
+      </if>
+      <if test="sp.workshopname != null" >
+        WORKSHOPNAME,
+      </if>
+      <if test="sp.remark != null" >
+        REMARK,
+      </if>
+      <if test="sp.modelname != null" >
+        MODELNAME,
+      </if>
+      <if test="sp.image != null" >
+        IMAGE,
+      </if>
+      <if test="sp.image1 != null" >
+        IMAGE1,
+      </if>
+      <if test="sp.image2 != null" >
+        IMAGE2,
+      </if>
+      <if test="sp.image3 != null" >
+        IMAGE3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sp.id != null" >
+        #{sp.id,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.style != null" >
+        #{sp.style,jdbcType=VARCHAR},
+      </if>
+       <if test="sp.type != null" >
+        #{sp.type,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.name != null" >
+        #{sp.name,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.workshopname != null" >
+        #{sp.workshopname,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.remark != null" >
+        #{sp.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.modelname != null" >
+        #{sp.modelname,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.image != null" >
+        #{sp.image,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.image1 != null" >
+        #{sp.image1,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.image2 != null" >
+        #{sp.image2,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.image3 != null" >
+        #{sp.image3,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+   <!-- 新增西服面料配件信息 -->
+  <insert id="insertSuitBomSelective" parameterType="com.cn.zyrs.domain.BomParts" >
+    insert into PL_Parts_Bom
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+       <if test="bp.id != null" >
+        ID,
+      </if>
+      <if test="bp.style != null" >
+        STYLE,
+      </if>
+      <if test="bp.english_brand_name != null" >
+        ENGLISH_BRAND_NAME,
+      </if>
+      <if test="bp.china_brand_name != null" >
+        CHINA_BRAND_NAME,
+      </if>
+      <if test="bp.name != null" >
+        NAME,
+      </if>
+      <if test="bp.code != null" >
+        CODE,
+      </if>
+      <if test="bp.small_image != null" >
+        SMALL_IMAGE,
+      </if>
+      <if test="bp.big_image != null" >
+        BIG_IMAGE,
+      </if>
+      <if test="bp.normal_image != null" >
+        NORMAL_IMAGE,
+      </if>
+      <if test="bp.salecode != null" >
+        SALECODE,
+      </if>
+      <if test="bp.remark != null" >
+        REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+     <if test="bp.id != null" >
+        #{bp.id,jdbcType=VARCHAR},
+      </if>
+      <if test="bp.style != null" >
+        #{bp.style,jdbcType=VARCHAR},
+      </if>
+      <if test="bp.english_brand_name != null" >
+        #{bp.english_brand_name,jdbcType=VARCHAR},
+      </if>
+      <if test="bp.china_brand_name != null" >
+        #{bp.china_brand_name,jdbcType=VARCHAR},
+      </if>
+      <if test="bp.name != null" >
+        #{bp.name,jdbcType=VARCHAR},
+      </if>
+      <if test="bp.code != null" >
+        #{bp.code,jdbcType=VARCHAR},
+      </if>
+      <if test="bp.small_image != null" >
+        #{bp.small_image,jdbcType=VARCHAR},
+      </if>
+      <if test="bp.big_image != null" >
+        #{bp.big_image,jdbcType=VARCHAR},
+      </if>
+      <if test="bp.normal_image != null" >
+        #{bp.normal_image,jdbcType=VARCHAR},
+      </if>
+      <if test="bp.salecode != null" >
+        #{bp.salecode,jdbcType=VARCHAR},
+      </if>
+      <if test="bp.remark != null" >
+        #{bp.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <!-- 新增商品配件信息 -->
+  <insert id="insertGoodsSelective" parameterType="com.cn.zyrs.domain.GoodsParts" >
+    insert into PL_Parts_Commodity
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+       <if test="gp.id != null" >
+        ID,
+      </if>
+      <if test="gp.style != null" >
+        STYLE,
+      </if>
+      <if test="gp.english_brand_name != null" >
+        ENGLISH_BRAND_NAME,
+      </if>
+      <if test="gp.china_brand_name != null" >
+        CHINA_BRAND_NAME,
+      </if>
+      <if test="gp.name != null" >
+        NAME,
+      </if>
+      <if test="gp.code != null" >
+        CODE,
+      </if>
+       <if test="gp.modelname != null" >
+       MODELNAME,
+      </if>
+      <if test="gp.small_image != null" >
+        SMALL_IMAGE,
+      </if>
+      <if test="gp.big_image != null" >
+        BIG_IMAGE,
+      </if>
+      <if test="gp.normal_image != null" >
+        NORMAL_IMAGE,
+      </if>
+      <if test="gp.salecode != null" >
+        SALECODE,
+      </if>
+      <if test="gp.remark != null" >
+        REMARK,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+     <if test="gp.id != null" >
+        #{gp.id,jdbcType=VARCHAR},
+      </if>
+      <if test="gp.style != null" >
+        #{gp.style,jdbcType=VARCHAR},
+      </if>
+      <if test="gp.english_brand_name != null" >
+        #{gp.english_brand_name,jdbcType=VARCHAR},
+      </if>
+      <if test="gp.china_brand_name != null" >
+        #{gp.china_brand_name,jdbcType=VARCHAR},
+      </if>
+      <if test="gp.name != null" >
+        #{gp.name,jdbcType=VARCHAR},
+      </if>
+      <if test="gp.code != null" >
+        #{gp.code,jdbcType=VARCHAR},
+      </if>
+       <if test="gp.modelname != null" >
+        #{gp.modelname,jdbcType=VARCHAR},
+      </if>
+      <if test="gp.small_image != null" >
+        #{gp.small_image,jdbcType=VARCHAR},
+      </if>
+      <if test="gp.big_image != null" >
+        #{gp.big_image,jdbcType=VARCHAR},
+      </if>
+      <if test="gp.normal_image != null" >
+        #{gp.normal_image,jdbcType=VARCHAR},
+      </if>
+      <if test="gp.salecode != null" >
+        #{gp.salecode,jdbcType=VARCHAR},
+      </if>
+      <if test="gp.remark != null" >
+        #{gp.remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <!-- 新增西服款式信息 -->
+  <insert id="addSuitStyle" parameterType="com.cn.zyrs.domain.SuitStyle" >
+    insert into PL_Suit_Style
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ss.id != null" >
+        ID,
+      </if>
+      <if test="ss.stylename != null" >
+        stylename,
+      </if>
+      <if test="ss.assetbundle != null" >
+        assetbundle,
+      </if>
+      <if test="ss.collar != null" >
+        collar,
+      </if>
+      <if test="ss.breastpocket != null" >
+        breastpocket,
+      </if>
+      <if test="ss.pocket != null" >
+        pocket,
+      </if>
+      <if test="ss.sleeve != null" >
+        sleeve,
+      </if>
+      <if test="ss.buttonnum != null" >
+        buttonnum,
+      </if>
+      <if test="ss.placket != null" >
+        placket,
+      </if>
+      <if test="ss.back != null" >
+        back,
+      </if>
+      <if test="ss.botouyan != null" >
+        botouyan,
+      </if>
+      <if test="ss.buttoneye != null" >
+        buttoneye,
+      </if>
+      <if test="ss.small_image != null" >
+        small_image,
+      </if>
+      <if test="ss.big_image != null" >
+        big_image,
+      </if>
+      <if test="ss.jsonname != null" >
+        jsonname,
+      </if>
+       <if test="ss.suitbom != null" >
+        suitbom,
+      </if>
+      <if test="ss.insidebom != null" >
+        insidebom,
+      </if>
+      <if test="ss.shirtbom != null" >
+        shirtbom,
+      </if>
+      <if test="ss.tiebom != null" >
+        tiebom,
+      </if>
+       <if test="ss.kouyanbom != null" >
+        kouyanbom,
+      </if>
+       <if test="ss.botouyanbom != null" >
+        botouyanbom,
+      </if>
+      <if test="ss.suitbutton != null" >
+        suitbutton,
+      </if>
+      <if test="ss.shirtbutton != null" >
+        shirtbutton,
+      </if>
+      <if test="ss.vestbutton != null" >
+        vestbutton,
+      </if>
+      <if test="ss.trousersbutton != null" >
+        trousersbutton,
+      </if>
+      <if test="ss.tie != null" >
+        tie,
+      </if>
+      <if test="ss.cravat != null" >
+        cravat,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+       <if test="ss.id != null" >
+        #{ss.id,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.stylename != null" >
+        #{ss.stylename,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.assetbundle != null" >
+        #{ss.assetbundle,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.collar != null" >
+       #{ss.collar,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.breastpocket != null" >
+       #{ss.breastpocket,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.pocket != null" >
+        #{ss.pocket,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.sleeve != null" >
+        #{ss.sleeve,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.buttonnum != null" >
+        #{ss.buttonnum,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.placket != null" >
+      #{ss.placket,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.back != null" >
+       #{ss.back,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.botouyan != null" >
+       #{ss.botouyan,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.buttoneye != null" >
+       #{ss.buttoneye,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.small_image != null" >
+       #{ss.small_image,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.big_image != null" >
+       #{ss.big_image,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.jsonname != null" >
+        #{ss.jsonname,jdbcType=VARCHAR},
+      </if>
+       <if test="ss.suitbom != null" >
+        #{ss.suitbom,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.insidebom != null" >
+        #{ss.insidebom,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.shirtbom != null" >
+        #{ss.shirtbom,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.tiebom != null" >
+        #{ss.tiebom,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.kouyanbom != null" >
+        #{ss.kouyanbom,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.botouyanbom != null" >
+        #{ss.botouyanbom,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.suitbutton != null" >
+         #{ss.suitbutton,jdbcType=VARCHAR},
+      </if>
+       <if test="ss.shirtbutton != null" >
+         #{ss.shirtbutton,jdbcType=VARCHAR},
+      </if>
+       <if test="ss.vestbutton != null" >
+         #{ss.vestbutton,jdbcType=VARCHAR},
+      </if>
+       <if test="ss.trousersbutton != null" >
+         #{ss.trousersbutton,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.tie != null" >
+        #{ss.tie,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.cravat != null" >
+         #{ss.cravat,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <!-- 新增裤子款式信息 -->
+  <insert id="addTrousersStyle" parameterType="com.cn.zyrs.domain.TrousersStyle" >
+    insert into PL_Trousers_Style
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ts.id != null" >
+        ID,
+      </if>
+      <if test="ts.stylename != null" >
+        stylename,
+      </if>
+      <if test="ts.assetbundle != null" >
+        assetbundle,
+      </if>
+      <if test="ts.yaotou != null" >
+        yaotou,
+      </if>
+      <if test="ts.kujiao != null" >
+        kujiao,
+      </if>
+      <if test="ts.frontdart != null" >
+        frontdart,
+      </if>
+      <if test="ts.cekoudai != null" >
+        cekoudai,
+      </if>
+      <if test="ts.houkoudai != null" >
+        houkoudai,
+      </if>
+      <if test="ts.kouyan != null" >
+        kouyan,
+      </if>
+      <if test="ts.small_image != null" >
+        small_image,
+      </if>
+      <if test="ts.big_image != null" >
+        big_image,
+      </if>
+      <if test="ts.jsonname != null" >
+        jsonname,
+      </if>
+      <if test="ts.suitbom != null" >
+        suitbom,
+      </if>
+      <if test="ts.insidebom != null" >
+        insidebom,
+      </if>
+      <if test="ts.shirtbom != null" >
+        shirtbom,
+      </if>
+      <if test="ts.tiebom != null" >
+        tiebom,
+      </if>
+      <if test="ts.kouyanbom != null" >
+        kouyanbom,
+      </if>
+       <if test="ts.botouyanbom != null" >
+        botouyanbom,
+      </if>
+      <if test="ts.suitbutton != null" >
+        suitbutton,
+      </if>
+      <if test="ts.shirtbutton != null" >
+        shirtbutton,
+      </if>
+      <if test="ts.vestbutton != null" >
+        vestbutton,
+      </if>
+      <if test="ts.trousersbutton != null" >
+        trousersbutton,
+      </if>
+      <if test="ts.tie != null" >
+        tie,
+      </if>
+      <if test="ts.cravat != null" >
+        cravat,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+       <if test="ts.id != null" >
+        #{ts.id,jdbcType=VARCHAR},
+      </if>
+      <if test="ts.stylename != null" >
+        #{ts.stylename,jdbcType=VARCHAR},
+      </if>
+      <if test="ts.assetbundle != null" >
+         #{ts.assetbundle,jdbcType=VARCHAR},
+      </if>
+      <if test="ts.yaotou != null" >
+         #{ts.yaotou,jdbcType=VARCHAR},
+      </if>
+      <if test="ts.kujiao != null" >
+        #{ts.kujiao,jdbcType=VARCHAR},
+      </if>
+      <if test="ts.frontdart != null" >
+        #{ts.frontdart,jdbcType=VARCHAR},
+      </if>
+      <if test="ts.cekoudai != null" >
+        #{ts.cekoudai,jdbcType=VARCHAR},
+      </if>
+      <if test="ts.houkoudai != null" >
+         #{ts.houkoudai,jdbcType=VARCHAR},
+      </if>
+      <if test="ts.kouyan != null" >
+         #{ts.kouyan,jdbcType=VARCHAR},
+      </if>
+      <if test="ts.small_image != null" >
+         #{ts.small_image,jdbcType=VARCHAR},
+      </if>
+      <if test="ts.big_image != null" >
+        #{ts.big_image,jdbcType=VARCHAR},
+      </if>
+      <if test="ts.jsonname != null" >
+         #{ts.jsonname,jdbcType=VARCHAR},
+      </if>
+      <if test="ts.suitbom != null" >
+        #{ts.suitbom,jdbcType=VARCHAR},
+      </if>
+      <if test="ts.insidebom != null" >
+        #{ts.insidebom,jdbcType=VARCHAR},
+      </if>
+      <if test="ts.shirtbom != null" >
+         #{ts.shirtbom,jdbcType=VARCHAR},
+      </if>
+      <if test="ts.tiebom != null" >
+         #{ts.tiebom,jdbcType=VARCHAR},
+      </if>
+      <if test="ts.kouyanbom != null" >
+        #{ts.kouyanbom,jdbcType=VARCHAR},
+      </if>
+      <if test="ts.botouyanbom != null" >
+        #{ts.botouyanbom,jdbcType=VARCHAR},
+      </if>
+      <if test="ts.suitbutton != null" >
+         #{ts.suitbutton,jdbcType=VARCHAR},
+      </if>
+       <if test="ts.shirtbutton != null" >
+         #{ts.shirtbutton,jdbcType=VARCHAR},
+      </if>
+       <if test="ts.vestbutton != null" >
+         #{ts.vestbutton,jdbcType=VARCHAR},
+      </if>
+       <if test="ts.trousersbutton != null" >
+         #{ts.trousersbutton,jdbcType=VARCHAR},
+      </if>
+      <if test="ts.tie != null" >
+        #{ts.tie,jdbcType=VARCHAR},
+      </if>
+      <if test="ts.cravat != null" >
+         #{ts.cravat,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <!-- 新增衬衫款式信息 -->
+  <insert id="addShirtStyle" parameterType="com.cn.zyrs.domain.ShirtStyle" >
+    insert into PL_Shirt_Style
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ss.id != null" >
+        ID,
+      </if>
+      <if test="ss.stylename != null" >
+        stylename,
+      </if>
+      <if test="ss.assetbundle != null" >
+        assetbundle,
+      </if>
+      <if test="ss.collar != null" >
+        collar,
+      </if>
+      <if test="ss.font != null" >
+        font,
+      </if>
+      <if test="ss.back != null" >
+        back,
+      </if>
+      <if test="ss.sleeve != null" >
+        sleeve,
+      </if>
+      <if test="ss.breastpocket != null" >
+        breastpocket,
+      </if>
+      <if test="ss.buttoneye != null" >
+        buttoneye,
+      </if>
+      <if test="ss.small_image != null" >
+        small_image,
+      </if>
+      <if test="ss.big_image != null" >
+        big_image,
+      </if>
+      <if test="ss.jsonname != null" >
+        jsonname,
+      </if>
+      <if test="ss.suitbom != null" >
+        suitbom,
+      </if>
+      <if test="ss.shirtbom != null" >
+        shirtbom,
+      </if>
+      <if test="ss.insidebom != null" >
+        insidebom,
+      </if>
+      <if test="ss.tiebom != null" >
+        tiebom,
+      </if>
+      <if test="ss.kouyanbom != null" >
+        kouyanbom,
+      </if>
+       <if test="ss.botouyanbom != null" >
+        botouyanbom,
+      </if>
+      <if test="ss.suitbutton != null" >
+        suitbutton,
+      </if>
+      <if test="ss.shirtbutton != null" >
+        shirtbutton,
+      </if>
+      <if test="ss.vestbutton != null" >
+        vestbutton,
+      </if>
+      <if test="ss.trousersbutton != null" >
+        trousersbutton,
+      </if>
+      <if test="ss.tie != null" >
+        tie,
+      </if>
+      <if test="ss.cravat != null" >
+        cravat,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+       <if test="ss.id != null" >
+        #{ss.id,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.stylename != null" >
+        #{ss.stylename,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.assetbundle != null" >
+       #{ss.assetbundle,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.collar != null" >
+        #{ss.collar,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.font != null" >
+        #{ss.font,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.back != null" >
+       #{ss.back,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.sleeve != null" >
+        #{ss.sleeve,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.breastpocket != null" >
+        #{ss.breastpocket,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.buttoneye != null" >
+         #{ss.buttoneye,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.small_image != null" >
+         #{ss.small_image,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.big_image != null" >
+        #{ss.big_image,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.jsonname != null" >
+        #{ss.jsonname,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.suitbom != null" >
+       #{ss.suitbom,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.insidebom != null" >
+        #{ss.insidebom,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.shirtbom != null" >
+        #{ss.shirtbom,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.tiebom != null" >
+         #{ss.tiebom,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.kouyanbom != null" >
+        #{ss.kouyanbom,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.botouyanbom != null" >
+        #{ss.botouyanbom,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.suitbutton != null" >
+         #{ss.suitbutton,jdbcType=VARCHAR},
+      </if>
+       <if test="ss.shirtbutton != null" >
+         #{ss.shirtbutton,jdbcType=VARCHAR},
+      </if>
+       <if test="ss.vestbutton != null" >
+         #{ss.vestbutton,jdbcType=VARCHAR},
+      </if>
+       <if test="ss.trousersbutton != null" >
+         #{ss.trousersbutton,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.tie != null" >
+        #{ss.tie,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.cravat != null" >
+        #{ss.cravat,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <!-- 新增马甲款式信息 -->
+  <insert id="addVestStyle" parameterType="com.cn.zyrs.domain.VestStyle" >
+    insert into PL_Vest_Style
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="vs.id != null" >
+        ID,
+      </if>
+      <if test="vs.stylename != null" >
+        stylename,
+      </if>
+      <if test="vs.assetbundle != null" >
+        assetbundle,
+      </if>
+      <if test="vs.collar != null" >
+        collar,
+      </if>
+      <if test="vs.breastpocket != null" >
+        breastpocket,
+      </if>
+      <if test="vs.pocket != null" >
+        pocket,
+      </if>
+      <if test="vs.xiabai != null" >
+        xiabai,
+      </if>
+      <if test="vs.kouyan != null" >
+        kouyan,
+      </if>
+      <if test="vs.small_image != null" >
+        small_image,
+      </if>
+      <if test="vs.big_image != null" >
+        big_image,
+      </if>
+      <if test="vs.jsonname != null" >
+        jsonname,
+      </if>
+      <if test="vs.suitbom != null" >
+        suitbom,
+      </if>
+      <if test="vs.insidebom != null" >
+        insidebom,
+      </if>
+      <if test="vs.shirtbom != null" >
+        shirtbom,
+      </if>
+      <if test="vs.tiebom != null" >
+        tiebom,
+      </if>
+     <if test="vs.kouyanbom != null" >
+        kouyanbom,
+      </if>
+       <if test="vs.botouyanbom != null" >
+        botouyanbom,
+      </if>
+      <if test="vs.suitbutton != null" >
+        suitbutton,
+      </if>
+      <if test="vs.shirtbutton != null" >
+        shirtbutton,
+      </if>
+      <if test="vs.vestbutton != null" >
+        vestbutton,
+      </if>
+      <if test="vs.trousersbutton != null" >
+        trousersbutton,
+      </if>
+      <if test="vs.tie != null" >
+        tie,
+      </if>
+      <if test="vs.cravat != null" >
+        cravat,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+       <if test="vs.id != null" >
+        #{vs.id,jdbcType=VARCHAR},
+      </if>
+      <if test="vs.stylename != null" >
+       #{vs.stylename,jdbcType=VARCHAR},
+      </if>
+      <if test="vs.assetbundle != null" >
+       #{vs.assetbundle,jdbcType=VARCHAR},
+      </if>
+      <if test="vs.collar != null" >
+        #{vs.collar,jdbcType=VARCHAR},
+      </if>
+      <if test="vs.breastpocket != null" >
+       #{vs.breastpocket,jdbcType=VARCHAR},
+      </if>
+      <if test="vs.pocket != null" >
+       #{vs.pocket,jdbcType=VARCHAR},
+      </if>
+      <if test="vs.xiabai != null" >
+       #{vs.xiabai,jdbcType=VARCHAR},
+      </if>
+      <if test="vs.kouyan != null" >
+       #{vs.kouyan,jdbcType=VARCHAR},
+      </if>
+      <if test="vs.small_image != null" >
+       #{vs.small_image,jdbcType=VARCHAR},
+      </if>
+      <if test="vs.big_image != null" >
+       #{vs.big_image,jdbcType=VARCHAR},
+      </if>
+      <if test="vs.jsonname != null" >
+       #{vs.jsonname,jdbcType=VARCHAR},
+      </if>
+      <if test="vs.suitbom != null" >
+       #{vs.suitbom,jdbcType=VARCHAR},
+      </if>
+      <if test="vs.insidebom != null" >
+       #{vs.insidebom,jdbcType=VARCHAR},
+      </if>
+      <if test="vs.shirtbom != null" >
+       #{vs.shirtbom,jdbcType=VARCHAR},
+      </if>
+      <if test="vs.tiebom != null" >
+       #{vs.tiebom,jdbcType=VARCHAR},
+      </if>
+     <if test="vs.kouyanbom != null" >
+        #{vs.kouyanbom,jdbcType=VARCHAR},
+      </if>
+      <if test="vs.botouyanbom != null" >
+        #{vs.botouyanbom,jdbcType=VARCHAR},
+      </if>
+      <if test="vs.suitbutton != null" >
+         #{vs.suitbutton,jdbcType=VARCHAR},
+      </if>
+       <if test="vs.shirtbutton != null" >
+         #{vs.shirtbutton,jdbcType=VARCHAR},
+      </if>
+       <if test="vs.vestbutton != null" >
+         #{vs.vestbutton,jdbcType=VARCHAR},
+      </if>
+       <if test="vs.trousersbutton != null" >
+         #{vs.trousersbutton,jdbcType=VARCHAR},
+      </if>
+      <if test="vs.tie != null" >
+       #{vs.tie,jdbcType=VARCHAR},
+      </if>
+      <if test="vs.cravat != null" >
+       #{vs.cravat,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <!-- 更新修改西服配件信息 -->
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn.zyrs.domain.SuitParts" >
+    update PL_Parts_Suit
+    <set >
+      <if test="sp.style != null" >
+        STYLE = #{sp.style,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.type != null" >
+        TYPE = #{sp.type,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.name != null" >
+        NAME = #{sp.name,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.workshopname != null" >
+        WORKSHOPNAME = #{sp.workshopname,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.remark != null" >
+        REMARK = #{sp.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.modelname != null" >
+        MODELNAME = #{sp.modelname,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.image != null" >
+        IMAGE = #{sp.image,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.image1 != null" >
+        IMAGE1 = #{sp.image1,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.image2 != null" >
+        IMAGE2 = #{sp.image2,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.image3 != null" >
+        IMAGE3 = #{sp.image3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{sp.id,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 更新修改裤子配件信息 -->
+  <update id="updateTrousersByPrimaryKeySelective" parameterType="com.cn.zyrs.domain.SuitParts" >
+    update PL_Parts_Trousers
+    <set >
+      <if test="sp.style != null" >
+        STYLE = #{sp.style,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.type != null" >
+        TYPE = #{sp.type,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.name != null" >
+        NAME = #{sp.name,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.workshopname != null" >
+        WORKSHOPNAME = #{sp.workshopname,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.remark != null" >
+        REMARK = #{sp.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.modelname != null" >
+        MODELNAME = #{sp.modelname,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.image != null" >
+        IMAGE = #{sp.image,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.image1 != null" >
+        IMAGE1 = #{sp.image1,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.image2 != null" >
+        IMAGE2 = #{sp.image2,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.image3 != null" >
+        IMAGE3 = #{sp.image3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{sp.id,jdbcType=VARCHAR}
+  </update>
+  
+   <!-- 更新修改衬衫配件信息 -->
+  <update id="updateShirtByPrimaryKeySelective" parameterType="com.cn.zyrs.domain.SuitParts" >
+    update PL_Parts_Shirt
+    <set >
+      <if test="sp.style != null" >
+        STYLE = #{sp.style,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.type != null" >
+        TYPE = #{sp.type,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.name != null" >
+        NAME = #{sp.name,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.workshopname != null" >
+        WORKSHOPNAME = #{sp.workshopname,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.remark != null" >
+        REMARK = #{sp.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.modelname != null" >
+        MODELNAME = #{sp.modelname,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.image != null" >
+        IMAGE = #{sp.image,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.image1 != null" >
+        IMAGE1 = #{sp.image1,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.image2 != null" >
+        IMAGE2 = #{sp.image2,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.image3 != null" >
+        IMAGE3 = #{sp.image3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{sp.id,jdbcType=VARCHAR}
+  </update>
+  
+   <!-- 更新修改马甲配件信息 -->
+  <update id="updateVestByPrimaryKeySelective" parameterType="com.cn.zyrs.domain.SuitParts" >
+    update PL_Parts_Vest
+    <set >
+      <if test="sp.style != null" >
+        STYLE = #{sp.style,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.type != null" >
+        TYPE = #{sp.type,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.name != null" >
+        NAME = #{sp.name,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.workshopname != null" >
+        WORKSHOPNAME = #{sp.workshopname,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.remark != null" >
+        REMARK = #{sp.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.modelname != null" >
+        MODELNAME = #{sp.modelname,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.image != null" >
+        IMAGE = #{sp.image,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.image1 != null" >
+        IMAGE1 = #{sp.image1,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.image2 != null" >
+        IMAGE2 = #{sp.image2,jdbcType=VARCHAR},
+      </if>
+      <if test="sp.image3 != null" >
+        IMAGE3 = #{sp.image3,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{sp.id,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 更新修改面料配件信息 -->
+  <update id="updateBomByPrimaryKeySelective" parameterType="com.cn.zyrs.domain.BomParts" >
+    update PL_Parts_Bom
+    <set >
+      <if test="bp.style != null" >
+        STYLE = #{bp.style,jdbcType=VARCHAR},
+      </if>
+      <if test="bp.english_brand_name != null" >
+        ENGLISH_BRAND_NAME = #{bp.english_brand_name,jdbcType=VARCHAR},
+      </if>
+      <if test="bp.china_brand_name != null" >
+        CHINA_BRAND_NAME = #{bp.china_brand_name,jdbcType=VARCHAR},
+      </if>
+      <if test="bp.name != null" >
+        NAME = #{bp.name,jdbcType=VARCHAR},
+      </if>
+      <if test="bp.code != null" >
+        CODE = #{bp.code,jdbcType=VARCHAR},
+      </if>
+      <if test="bp.small_image != null" >
+        SMALL_IMAGE = #{bp.small_image,jdbcType=VARCHAR},
+      </if>
+      <if test="bp.big_image != null" >
+        BIG_IMAGE = #{bp.big_image,jdbcType=VARCHAR},
+      </if>
+      <if test="bp.normal_image != null" >
+        NORMAL_IMAGE = #{bp.normal_image,jdbcType=VARCHAR},
+      </if>
+      <if test="bp.salecode != null" >
+        SALECODE = #{bp.salecode,jdbcType=VARCHAR},
+      </if>
+      <if test="bp.remark != null" >
+        REMARK = #{bp.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{bp.id,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 更新修改商品配件信息 -->
+  <update id="updateGoodsByPrimaryKeySelective" parameterType="com.cn.zyrs.domain.GoodsParts" >
+    update PL_Parts_Commodity
+    <set >
+      <if test="gp.style != null" >
+        STYLE = #{gp.style,jdbcType=VARCHAR},
+      </if>
+      <if test="gp.english_brand_name != null" >
+        ENGLISH_BRAND_NAME = #{gp.english_brand_name,jdbcType=VARCHAR},
+      </if>
+      <if test="gp.china_brand_name != null" >
+        CHINA_BRAND_NAME = #{gp.china_brand_name,jdbcType=VARCHAR},
+      </if>
+      <if test="gp.name != null" >
+        NAME = #{gp.name,jdbcType=VARCHAR},
+      </if>
+      <if test="gp.code != null" >
+        CODE = #{gp.code,jdbcType=VARCHAR},
+      </if>
+       <if test="gp.modelname != null" >
+        MODELNAME = #{gp.modelname,jdbcType=VARCHAR},
+      </if>
+      <if test="gp.small_image != null" >
+        SMALL_IMAGE = #{gp.small_image,jdbcType=VARCHAR},
+      </if>
+      <if test="gp.big_image != null" >
+        BIG_IMAGE = #{gp.big_image,jdbcType=VARCHAR},
+      </if>
+      <if test="gp.normal_image != null" >
+        NORMAL_IMAGE = #{gp.normal_image,jdbcType=VARCHAR},
+      </if>
+      <if test="gp.salecode != null" >
+        SALECODE = #{gp.salecode,jdbcType=VARCHAR},
+      </if>
+      <if test="gp.remark != null" >
+        REMARK = #{gp.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{gp.id,jdbcType=VARCHAR}
+  </update>
+  
+    <!-- 更新修改西服款式信息 -->
+  <update id="updateSuitStyleBySelective" parameterType="com.cn.zyrs.domain.SuitStyle" >
+    update PL_Suit_Style
+    <set >
+      <if test="ss.stylename != null" >
+       stylename = #{ss.stylename,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.assetbundle != null" >
+       assetbundle = #{ss.assetbundle,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.collar != null" >
+       collar = #{ss.collar,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.breastpocket != null" >
+       breastpocket = #{ss.breastpocket,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.pocket != null" >
+       pocket = #{ss.pocket,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.sleeve != null" >
+       sleeve = #{ss.sleeve,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.buttonnum != null" >
+        buttonnum = #{ss.buttonnum,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.placket != null" >
+        placket = #{ss.placket,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.back != null" >
+        back = #{ss.back,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.botouyan != null" >
+        botouyan = #{ss.botouyan,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.buttoneye != null" >
+        buttoneye = #{ss.buttoneye,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.small_image != null" >
+        small_image = #{ss.small_image,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.big_image != null" >
+        big_image = #{ss.big_image,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.jsonname != null" >
+        jsonname = #{ss.jsonname,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.suitbom != null" >
+        suitbom = #{ss.suitbom,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.insidebom != null" >
+        insidebom = #{ss.insidebom,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.shirtbom != null" >
+        shirtbom = #{ss.shirtbom,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.tiebom != null" >
+        tiebom = #{ss.tiebom,jdbcType=VARCHAR},
+      </if>
+       <if test="ss.kouyanbom != null" >
+        kouyanbom = #{ss.kouyanbom,jdbcType=VARCHAR},
+      </if>
+       <if test="ss.botouyanbom != null" >
+        botouyanbom = #{ss.botouyanbom,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.suitbutton != null" >
+        suitbutton = #{ss.suitbutton,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.shirtbutton != null" >
+        shirtbutton = #{ss.shirtbutton,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.vestbutton != null" >
+        vestbutton = #{ss.vestbutton,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.trousersbutton != null" >
+        trousersbutton = #{ss.trousersbutton,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.tie != null" >
+        tie = #{ss.tie,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.cravat != null" >
+        cravat = #{ss.cravat,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{ss.id,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 更新修改裤子款式信息 -->
+  <update id="updateTrousersStyleBySelective" parameterType="com.cn.zyrs.domain.TrousersStyle" >
+    update PL_Trousers_Style
+    <set >
+      <if test="ts.stylename != null" >
+        stylename = #{ts.stylename,jdbcType=VARCHAR},
+      </if>
+      <if test="ts.assetbundle != null" >
+        assetbundle = #{ts.assetbundle,jdbcType=VARCHAR},
+      </if>
+      <if test="ts.yaotou != null" >
+       yaotou = #{ts.yaotou,jdbcType=VARCHAR},
+      </if>
+      <if test="ts.kujiao != null" >
+        kujiao = #{ts.kujiao,jdbcType=VARCHAR},
+      </if>
+      <if test="ts.frontdart != null" >
+        frontdart = #{ts.frontdart,jdbcType=VARCHAR},
+      </if>
+      <if test="ts.cekoudai != null" >
+        cekoudai = #{ts.cekoudai,jdbcType=VARCHAR},
+      </if>
+      <if test="ts.houkoudai != null" >
+        houkoudai = #{ts.houkoudai,jdbcType=VARCHAR},
+      </if>
+      <if test="ts.kouyan != null" >
+        kouyan = #{ts.kouyan,jdbcType=VARCHAR},
+      </if>
+      <if test="ts.small_image != null" >
+        small_image = #{ts.small_image,jdbcType=VARCHAR},
+      </if>
+      <if test="ts.big_image != null" >
+        big_image = #{ts.big_image,jdbcType=VARCHAR},
+      </if>
+      <if test="ts.jsonname != null" >
+        jsonname = #{ts.jsonname,jdbcType=VARCHAR},
+      </if>
+      <if test="ts.suitbom != null" >
+        suitbom = #{ts.suitbom,jdbcType=VARCHAR},
+      </if>
+      <if test="ts.insidebom != null" >
+        insidebom = #{ts.insidebom,jdbcType=VARCHAR},
+      </if>
+      <if test="ts.shirtbom != null" >
+        shirtbom = #{ts.shirtbom,jdbcType=VARCHAR},
+      </if>
+      <if test="ts.tiebom != null" >
+        tiebom = #{ts.tiebom,jdbcType=VARCHAR},
+      </if>
+      <if test="ts.kouyanbom != null" >
+        kouyanbom = #{ts.kouyanbom,jdbcType=VARCHAR},
+      </if>
+       <if test="ts.botouyanbom != null" >
+        botouyanbom = #{ts.botouyanbom,jdbcType=VARCHAR},
+      </if>
+      <if test="ts.suitbutton != null" >
+        suitbutton = #{ts.suitbutton,jdbcType=VARCHAR},
+      </if>
+      <if test="ts.shirtbutton != null" >
+        shirtbutton = #{ts.shirtbutton,jdbcType=VARCHAR},
+      </if>
+      <if test="ts.vestbutton != null" >
+        vestbutton = #{ts.vestbutton,jdbcType=VARCHAR},
+      </if>
+      <if test="ts.trousersbutton != null" >
+        trousersbutton = #{ts.trousersbutton,jdbcType=VARCHAR},
+      </if>
+      <if test="ts.tie != null" >
+        tie = #{ts.tie,jdbcType=VARCHAR},
+      </if>
+      <if test="ts.cravat != null" >
+        cravat = #{ts.cravat,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{ts.id,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 更新修改衬衫款式信息 -->
+  <update id="updateShirtStyleBySelective" parameterType="com.cn.zyrs.domain.ShirtStyle" >
+    update PL_Shirt_Style
+    <set >
+      <if test="ss.stylename != null" >
+         stylename = #{ss.stylename,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.assetbundle != null" >
+         assetbundle = #{ss.assetbundle,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.collar != null" >
+        collar = #{ss.collar,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.font != null" >
+         font = #{ss.font,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.back != null" >
+        back = #{ss.back,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.sleeve != null" >
+        sleeve = #{ss.sleeve,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.breastpocket != null" >
+        breastpocket = #{ss.breastpocket,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.buttoneye != null" >
+        buttoneye = #{ss.buttoneye,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.small_image != null" >
+        small_image = #{ss.small_image,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.big_image != null" >
+         big_image = #{ss.big_image,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.jsonname != null" >
+        jsonname = #{ss.jsonname,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.suitbom != null" >
+        suitbom = #{ss.suitbom,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.insidebom != null" >
+        insidebom = #{ss.insidebom,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.shirtbom != null" >
+        shirtbom = #{ss.shirtbom,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.tiebom != null" >
+        tiebom = #{ss.tiebom,jdbcType=VARCHAR},
+      </if>
+       <if test="ss.kouyanbom != null" >
+        kouyanbom = #{ss.kouyanbom,jdbcType=VARCHAR},
+      </if>
+       <if test="ss.botouyanbom != null" >
+        botouyanbom = #{ss.botouyanbom,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.suitbutton != null" >
+        suitbutton = #{ss.suitbutton,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.shirtbutton != null" >
+        shirtbutton = #{ss.shirtbutton,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.vestbutton != null" >
+        vestbutton = #{ss.vestbutton,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.trousersbutton != null" >
+        trousersbutton = #{ss.trousersbutton,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.tie != null" >
+         tie = #{ss.tie,jdbcType=VARCHAR},
+      </if>
+      <if test="ss.cravat != null" >
+        cravat = #{ss.cravat,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{ss.id,jdbcType=VARCHAR}
+  </update>
+  
+  <!-- 更新修改马甲款式信息 -->
+  <update id="updateVestStyleBySelective" parameterType="com.cn.zyrs.domain.VestStyle" >
+    update PL_Vest_Style
+    <set >
+      <if test="vs.stylename != null" >
+       stylename = #{vs.stylename,jdbcType=VARCHAR},
+      </if>
+      <if test="vs.assetbundle != null" >
+      assetbundle = #{vs.assetbundle,jdbcType=VARCHAR},
+      </if>
+      <if test="vs.collar != null" >
+       collar = #{vs.collar,jdbcType=VARCHAR},
+      </if>
+      <if test="vs.breastpocket != null" >
+       breastpocket = #{vs.breastpocket,jdbcType=VARCHAR},
+      </if>
+      <if test="vs.pocket != null" >
+       pocket = #{vs.pocket,jdbcType=VARCHAR},
+      </if>
+      <if test="vs.xiabai != null" >
+       xiabai = #{vs.xiabai,jdbcType=VARCHAR},
+      </if>
+      <if test="vs.kouyan != null" >
+       kouyan = #{vs.kouyan,jdbcType=VARCHAR},
+      </if>
+      <if test="vs.small_image != null" >
+        small_image = #{vs.small_image,jdbcType=VARCHAR},
+      </if>
+      <if test="vs.big_image != null" >
+        big_image = #{vs.big_image,jdbcType=VARCHAR},
+      </if>
+      <if test="vs.jsonname != null" >
+        jsonname = #{vs.jsonname,jdbcType=VARCHAR},
+      </if>
+      <if test="vs.suitbom != null" >
+       suitbom = #{vs.suitbom,jdbcType=VARCHAR},
+      </if>
+      <if test="vs.insidebom != null" >
+       insidebom = #{vs.insidebom,jdbcType=VARCHAR},
+      </if>
+      <if test="vs.shirtbom != null" >
+       shirtbom = #{vs.shirtbom,jdbcType=VARCHAR},
+      </if>
+      <if test="vs.tiebom != null" >
+       tiebom = #{vs.tiebom,jdbcType=VARCHAR},
+      </if>
+       <if test="vs.kouyanbom != null" >
+        kouyanbom = #{vs.kouyanbom,jdbcType=VARCHAR},
+      </if>
+       <if test="vs.botouyanbom != null" >
+        botouyanbom = #{vs.botouyanbom,jdbcType=VARCHAR},
+      </if>
+      <if test="vs.suitbutton != null" >
+        suitbutton = #{vs.suitbutton,jdbcType=VARCHAR},
+      </if>
+      <if test="vs.shirtbutton != null" >
+        shirtbutton = #{vs.shirtbutton,jdbcType=VARCHAR},
+      </if>
+      <if test="vs.vestbutton != null" >
+        vestbutton = #{vs.vestbutton,jdbcType=VARCHAR},
+      </if>
+      <if test="vs.trousersbutton != null" >
+        trousersbutton = #{vs.trousersbutton,jdbcType=VARCHAR},
+      </if>
+      <if test="vs.tie != null" >
+        tie = #{vs.tie,jdbcType=VARCHAR},
+      </if>
+      <if test="vs.cravat != null" >
+        cravat = #{vs.cravat,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{vs.id,jdbcType=VARCHAR}
+  </update>
+
+  
+  <!-- 删除西服配件信息 -->
+  <delete id="deleteSuitByPrimartKey" parameterType = "java.util.List">
+		delete from PL_Parts_Suit where id in
+		<foreach item="item" index="index" collection="ids" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+  </delete>
+   <!-- 删除裤子配件信息 -->
+  <delete id="deleteTrousersByPrimartKey" parameterType = "java.util.List">
+		delete from PL_Parts_Trousers where id in
+		<foreach item="item" index="index" collection="ids" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+  </delete>
+   <!-- 删除衬衫配件信息 -->
+  <delete id="deleteShirtByPrimartKey" parameterType = "java.util.List">
+		delete from PL_Parts_Shirt where id in
+		<foreach item="item" index="index" collection="ids" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+  </delete>
+  <!-- 删除马甲配件信息 -->
+  <delete id="deleteVestByPrimartKey" parameterType = "java.util.List">
+		delete from PL_Parts_Vest where id in
+		<foreach item="item" index="index" collection="ids" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+  </delete>
+  
+  <!-- 删除面料配件信息 -->
+  <delete id="deleteBomByPrimartKey" parameterType = "java.util.List">
+		delete from PL_Parts_Bom where id in
+		<foreach item="item" index="index" collection="ids" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+  </delete>
+  
+  <!-- 删除商品配件信息 -->
+  <delete id="deleteGoodsByPrimartKey" parameterType = "java.util.List">
+		delete from PL_Parts_Commodity where id in
+		<foreach item="item" index="index" collection="ids" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+  </delete>
+  
+  <!-- 删除西服款式配置信息 -->
+  <delete id="deleteSuitStyleByPrimartKey" parameterType = "java.util.List">
+		delete from PL_Suit_Style where id in
+		<foreach item="item" index="index" collection="ids" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+  </delete>
+  
+  <!-- 删除裤子款式配置信息 -->
+  <delete id="deleteTrousersStyleByPrimartKey" parameterType = "java.util.List">
+		delete from PL_Trousers_Style where id in
+		<foreach item="item" index="index" collection="ids" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+  </delete>
+  
+  <!-- 删除衬衫款式配置信息 -->
+  <delete id="deleteShirtStyleByPrimartKey" parameterType = "java.util.List">
+		delete from PL_Shirt_Style where id in
+		<foreach item="item" index="index" collection="ids" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+  </delete>
+  
+  <!-- 删除马甲款式配置信息 -->
+  <delete id="deleteVestStyleByPrimartKey" parameterType = "java.util.List">
+		delete from PL_Vest_Style where id in
+		<foreach item="item" index="index" collection="ids" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+  </delete>
+  
+  <update id="updateByPrimaryKey" parameterType="com.cn.zyrs.domain.SuitParts" >
+    update PL_Parts_Suit
+    set STYLE = #{style,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      WORKSHOPNAME = #{workshopname,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      MODELNAME = #{modelname,jdbcType=VARCHAR},
+      IMAGE = #{image,jdbcType=VARCHAR},
+      IMAGE1 = #{image1,jdbcType=VARCHAR},
+      IMAGE2 = #{image2,jdbcType=VARCHAR},
+      IMAGE3 = #{image3,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

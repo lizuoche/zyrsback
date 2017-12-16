@@ -1,0 +1,1107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.zyrs.mapper.DesignMapper" >
+	<resultMap id="BaseResultMap" type="com.cn.zyrs.domain.Design" >
+		<result column="ID" property="id" jdbcType="VARCHAR" />
+		<result column="DEPTID" property="deptid" jdbcType="VARCHAR" />
+		<result column="DESIGNENAME" property="designename" jdbcType="VARCHAR" />
+		<result column="CREATEDATE" property="createdate" jdbcType="VARCHAR" />
+		<result column="UPDATEDATE" property="updatedate" jdbcType="VARCHAR" />
+		<result column="PICTURE" property="picture" jdbcType="VARCHAR" />
+		<result column="STYLE" property="style" jdbcType="VARCHAR" />
+		<result column="STYLENAME" property="stylename" jdbcType="VARCHAR" />
+		<result column="ASSETBUNDLE" property="assetbundle" jdbcType="VARCHAR" />
+		<result column="COLLAR" property="collar" jdbcType="VARCHAR" />
+		<result column="FONT" property="font" jdbcType="VARCHAR" />
+		<result column="BACK" property="back" jdbcType="VARCHAR" />
+		<result column="BUFF" property="buff" jdbcType="VARCHAR" />
+		<result column="BREASTPOCKET" property="breastpocket" jdbcType="VARCHAR" />
+		<result column="BUTTONEYE" property="buttoneye" jdbcType="VARCHAR" />
+		<result column="FRONTDART" property="frontdart" jdbcType="VARCHAR" />
+		<result column="POCKET" property="pocket" jdbcType="VARCHAR" />
+		<result column="BUTTONNUM" property="buttonnum" jdbcType="VARCHAR" />
+		<result column="PLACKET" property="placket" jdbcType="VARCHAR" />
+		<result column="BOTOUYAN" property="botouyan" jdbcType="VARCHAR" />
+		<result column="XIABAI" property="xiabai" jdbcType="VARCHAR" />
+		<result column="YAOTOU" property="yaotou" jdbcType="VARCHAR" />
+		<result column="KUJIAO" property="kujiao" jdbcType="VARCHAR" />
+		<result column="CEKOUDAI" property="cekoudai" jdbcType="VARCHAR" />
+		<result column="HOUKOUDAI" property="houkoudai" jdbcType="VARCHAR" />
+		<result column="SUITBOM" property="suitbom" jdbcType="VARCHAR" />
+		<result column="INSIDEBOM" property="insidebom" jdbcType="VARCHAR" />
+		<result column="SHIRTBOM" property="shirtbom" jdbcType="VARCHAR" />
+		<result column="TIEBOM" property="tiebom" jdbcType="VARCHAR" />
+		<result column="SUITBUTTON" property="suitbutton" jdbcType="VARCHAR" />
+		<result column="TIE" property="tie" jdbcType="VARCHAR" />
+		<result column="CRAVAT" property="cravat" jdbcType="VARCHAR" />
+		<result column="SMALL_IMAGE" property="smallImage" jdbcType="VARCHAR" />
+		<result column="BIG_IMAGE" property="bigImage" jdbcType="VARCHAR" />
+		<result column="JSONURL" property="jsonurl" jdbcType="VARCHAR" />
+		<result column="DELFLAG" property="delflag" jdbcType="VARCHAR" />
+		<result column="ISVALID" property="isvalid" jdbcType="VARCHAR" />
+	</resultMap>
+  
+	<!-- 查询所有设计方案基本信息 -->
+	<select id="getDesignBase" parameterType="map" resultType="com.cn.zyrs.domain.DesignBase">
+  SELECT 
+  	ID,DEPTID,ASSETBUNDLENAME,TYPE,DESIGNNAME,TYPENAME,JSONURL,PICTURE,CONVERT(varchar(20), CREATEDATE, 120 ) AS CREATEDATE,CONVERT(varchar(20), UPDATEDATE, 120 ) AS UPDATEDATE
+  FROM V_DESIGN
+  WHERE 
+  	DEPTID =  #{di,jdbcType=VARCHAR}
+		<if test="type != null" >
+    AND TYPE = #{type,jdbcType=VARCHAR}
+		</if>
+	order by UPDATEDATE DESC
+	</select>
+	
+	<!-- 查询指定设计方案基本信息 -->
+	<select id="getDesign" parameterType="map" resultType="com.cn.zyrs.domain.Design">
+  SELECT 
+  	ID,
+	DEPTID,
+	DESIGNNAME,
+	CONVERT (VARCHAR(20), CREATEDATE, 120) AS CREATEDATE,
+	CONVERT (VARCHAR(20), UPDATEDATE, 120) AS UPDATEDATE,
+	PICTURE,
+	TYPE,
+	TYPENAME,
+	ASSETBUNDLENAME,
+	COLLAR,
+	FONT,
+	BACK,
+	SLEEVE AS BUFF,
+	BREASTPOCKET,
+	BUTTONEYE,
+	FRONTDART,
+	POCKET,
+	BUTTONNUM,
+	PLACKET,
+	BOTOUYAN,
+	XIABAI,
+	YAOTOU,
+	KUJIAO,
+	CEKOUDAI,
+	HOUKOUDAI,
+	SUITBOM,
+	INSIDEBOM,
+	SHIRTBOM,
+	TIEBOM,
+	KOUYANBOM,
+	SUITBUTTON,
+	TIE,
+	CRAVAT,
+	SMALL_IMAGE,
+	BIG_IMAGE,
+	JSONURL,
+	DELFLAG,
+	ISVALID		
+	<!-- ID,DEPTID,ASSETBUNDLE,STYLE,DESIGNENAME,STYLENAME,jsonurl,PICTURE,CREATEDATE,UPDATEDATE, -->
+  FROM V_DESIGN
+  WHERE 
+  	DEPTID =  #{di,jdbcType=VARCHAR}
+  	AND ID = #{id,jdbcType=VARCHAR}
+		<if test="type != null" >
+    AND TYPE = #{type,jdbcType=VARCHAR}
+		</if>
+	order by UPDATEDATE DESC
+	</select>
+  
+	<!-- 查询指定设计方案信息详情 -->
+	<select id="getDesignDetail" parameterType="map" resultType="com.cn.zyrs.domain.DesignDetail">
+  SELECT 
+	ID,
+	DEPTID,
+	DESIGNNAME,
+	CONVERT (VARCHAR(20), CREATEDATE, 120) AS CREATEDATE,
+	CONVERT (VARCHAR(20), UPDATEDATE, 120) AS UPDATEDATE,
+	PICTURE,
+	TYPE,
+	TYPENAME,
+	ASSETBUNDLENAME,
+	COLLAR,
+	FONT,
+	BACK,
+	SLEEVE AS BUFF,
+	BREASTPOCKET,
+	BUTTONEYE,
+	FRONTDART,
+	POCKET,
+	BUTTONNUM,
+	PLACKET,
+	BOTOUYAN,
+	XIABAI,
+	YAOTOU,
+	KUJIAO,
+	CEKOUDAI,
+	HOUKOUDAI,
+	SUITBOM,
+	INSIDEBOM,
+	SHIRTBOM,
+	TIEBOM,
+	KOUYANBOM,
+	SUITBUTTON,
+	TIE,
+	CRAVAT,
+	SMALL_IMAGE,
+	BIG_IMAGE,
+	JSONURL,
+	DELFLAG,
+	ISVALID		
+  	<!-- ID,DEPTID,ASSETBUNDLENAME,TYPE,DESIGNNAME,TYPENAME,JSONURL,PICTURE,CREATEDATE,UPDATEDATE -->
+  FROM V_DESIGN
+  WHERE 
+  	DEPTID =  #{di,jdbcType=VARCHAR}
+  	AND ID =  #{id,jdbcType=VARCHAR}
+		<if test="type != null" >
+    AND TYPE = #{type,jdbcType=VARCHAR}
+		</if>
+	order by UPDATEDATE DESC
+	</select>
+  
+	<!-- 新增西服设计方案 -->
+	<insert id="addDesignSuit" parameterType="com.cn.zyrs.domain.Design" >
+    insert into DS_Suit_Style
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="design.id != null" >
+        ID,
+			</if>
+			<if test="design.deptid != null" >
+        DEPTID,
+			</if>
+			<if test="design.designname != null" >
+        DESIGNNAME,
+			</if>
+        CREATEDATE,
+        UPDATEDATE,
+			<if test="design.picture != null" >
+        PICTURE,
+			</if>
+      
+			<if test="design.typename != null" >
+        TYPENAME,
+			</if>
+			<if test="design.assetbundlename != null" >
+        ASSETBUNDLENAME,
+			</if>
+			<if test="design.collar != null" >
+        COLLAR,
+			</if>
+			<if test="design.breastpocket != null" >
+        BREASTPOCKET,
+			</if>
+			<if test="design.pocket != null" >
+        POCKET,
+			</if>
+			<if test="design.buff != null" >
+        SLEEVE,
+			</if>
+			<if test="design.buttonnum != null" >
+        BUTTONNUM,
+			</if>
+			<if test="design.placket != null" >
+        PLACKET,
+			</if>
+			<if test="design.back != null" >
+        BACK,
+			</if>
+			<if test="design.botouyan != null" >
+        BOTOUYAN,
+			</if>
+			<if test="design.buttoneye != null" >
+        BUTTONEYE,
+			</if>
+			<if test="design.suitbom != null" >
+        SUITBOM,
+			</if>
+			<if test="design.insidebom != null" >
+        INSIDEBOM,
+			</if>
+			<if test="design.shirtbom != null" >
+        SHIRTBOM,
+			</if>
+			<if test="design.tiebom != null" >
+        TIEBOM,
+			</if>
+			<if test="design.kouyanbom != null" >
+        KOUYANBOM,
+			</if>
+			<if test="design.suitbutton != null" >
+        SUITBUTTON,
+			</if>
+			<if test="design.tie != null" >
+        TIE,
+			</if>
+			<if test="design.cravat != null" >
+        CRAVAT,
+			</if>
+			<if test="design.smallImage != null" >
+        SMALL_IMAGE,
+			</if>
+			<if test="design.bigImage != null" >
+        BIG_IMAGE,
+			</if>
+			<if test="design.jsonurl != null" >
+        jsonurl,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="design.id != null" >
+        #{design.id,jdbcType=VARCHAR},
+			</if>
+			<if test="design.deptid != null" >
+        #{design.deptid,jdbcType=VARCHAR},
+			</if>
+			<if test="design.designname != null" >
+        #{design.designname,jdbcType=VARCHAR},
+			</if>
+      getDate(),
+      getDate(),
+			<if test="design.picture != null" >
+        #{design.picture,jdbcType=VARCHAR},
+			</if>
+			<if test="design.typename != null" >
+        #{design.typename,jdbcType=VARCHAR},
+			</if>
+			<if test="design.assetbundlename != null" >
+        #{design.assetbundlename,jdbcType=VARCHAR},
+			</if>
+			<if test="design.collar != null" >
+        #{design.collar,jdbcType=VARCHAR},
+			</if>
+			<if test="design.breastpocket != null" >
+        #{design.breastpocket,jdbcType=VARCHAR},
+			</if>
+			<if test="design.pocket != null" >
+        #{design.pocket,jdbcType=VARCHAR},
+			</if>
+			<if test="design.buff != null" >
+        #{design.buff,jdbcType=VARCHAR},
+			</if>
+			<if test="design.buttonnum != null" >
+        #{design.buttonnum,jdbcType=VARCHAR},
+			</if>
+			<if test="design.placket != null" >
+        #{design.placket,jdbcType=VARCHAR},
+			</if>
+			<if test="design.back != null" >
+        #{design.back,jdbcType=VARCHAR},
+			</if>
+			<if test="design.botouyan != null" >
+        #{design.botouyan,jdbcType=VARCHAR},
+			</if>
+			<if test="design.buttoneye != null" >
+        #{design.buttoneye,jdbcType=VARCHAR},
+			</if>
+			<if test="design.suitbom != null" >
+        #{design.suitbom,jdbcType=VARCHAR},
+			</if>
+			<if test="design.insidebom != null" >
+        #{design.insidebom,jdbcType=VARCHAR},
+			</if>
+			<if test="design.shirtbom != null" >
+        #{design.shirtbom,jdbcType=VARCHAR},
+			</if>
+			<if test="design.tiebom != null" >
+        #{design.tiebom,jdbcType=VARCHAR},
+			</if>
+			<if test="design.kouyanbom != null" >
+        #{design.kouyanbom,jdbcType=VARCHAR},
+			</if>
+			<if test="design.suitbutton != null" >
+        #{design.suitbutton,jdbcType=VARCHAR},
+			</if>
+			<if test="design.tie != null" >
+        #{design.tie,jdbcType=VARCHAR},
+			</if>
+			<if test="design.cravat != null" >
+        #{design.cravat,jdbcType=VARCHAR},
+			</if>
+			<if test="design.smallImage != null" >
+        #{design.smallImage,jdbcType=VARCHAR},
+			</if>
+			<if test="design.bigImage != null" >
+        #{design.bigImage,jdbcType=VARCHAR},
+			</if>
+			<if test="design.jsonurl != null" >
+        #{design.jsonurl,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+  
+	<!-- 新增衬衫设计方案 -->
+	<insert id="addDesignShirt" parameterType="com.cn.zyrs.domain.Design" >
+    insert into DS_Shirt_Style
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="design.id != null" >
+        ID,
+			</if>
+			<if test="design.deptid != null" >
+        DEPTID,
+			</if>
+			<if test="design.designname != null" >
+        DESIGNNAME,
+			</if>
+        CREATEDATE,
+        UPDATEDATE,
+			<if test="design.picture != null" >
+        PICTURE,
+			</if>
+			<if test="design.typename != null" >
+        TYPENAME,
+			</if>
+			<if test="design.assetbundlename != null" >
+        ASSETBUNDLENAME,
+			</if>
+			<if test="design.collar != null" >
+        COLLAR,
+			</if>
+			<if test="design.font != null" >
+        FONT,
+			</if>
+			<if test="design.back != null" >
+        BACK,
+			</if>
+			<if test="design.buff != null" >
+        SLEEVE,
+			</if>
+			<if test="design.breastpocket != null" >
+        BREASTPOCKET,
+			</if>
+			<if test="design.buttoneye != null" >
+        BUTTONEYE,
+			</if>
+			<if test="design.suitbom != null" >
+        SUITBOM,
+			</if>
+			<if test="design.insidebom != null" >
+        INSIDEBOM,
+			</if>
+			<if test="design.shirtbom != null" >
+        SHIRTBOM,
+			</if>
+			<if test="design.tiebom != null" >
+        TIEBOM,
+			</if>
+			<if test="design.kouyanbom != null" >
+        KOUYANBOM,
+			</if>
+			<if test="design.suitbutton != null" >
+        SUITBUTTON,
+			</if>
+			<if test="design.tie != null" >
+        TIE,
+			</if>
+			<if test="design.cravat != null" >
+        CRAVAT,
+			</if>
+			<if test="design.smallImage != null" >
+        SMALL_IMAGE,
+			</if>
+			<if test="design.bigImage != null" >
+        BIG_IMAGE,
+			</if>
+			<if test="design.jsonurl != null" >
+        jsonurl,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="design.id != null" >
+        #{design.id,jdbcType=VARCHAR},
+			</if>
+			<if test="design.deptid != null" >
+        #{design.deptid,jdbcType=VARCHAR},
+			</if>
+			<if test="design.designname != null" >
+        #{design.designname,jdbcType=VARCHAR},
+			</if>
+		getDate(),	
+		getDate(),
+			<if test="design.picture != null" >
+        #{design.picture,jdbcType=VARCHAR},
+			</if>
+			<if test="design.typename != null" >
+        #{design.typename,jdbcType=VARCHAR},
+			</if>
+			<if test="design.assetbundlename != null" >
+        #{design.assetbundlename,jdbcType=VARCHAR},
+			</if>
+			<if test="design.collar != null" >
+        #{design.collar,jdbcType=VARCHAR},
+			</if>
+			<if test="design.font != null" >
+        #{design.font,jdbcType=VARCHAR},
+			</if>
+			<if test="design.back != null" >
+        #{design.back,jdbcType=VARCHAR},
+			</if>
+			<if test="design.buff != null" >
+        #{design.buff,jdbcType=VARCHAR},
+			</if>
+			<if test="design.breastpocket != null" >
+        #{design.breastpocket,jdbcType=VARCHAR},
+			</if>
+			<if test="design.buttoneye != null" >
+        #{design.buttoneye,jdbcType=VARCHAR},
+			</if>
+			<if test="design.suitbom != null" >
+        #{design.suitbom,jdbcType=VARCHAR},
+			</if>
+			<if test="design.insidebom != null" >
+        #{design.insidebom,jdbcType=VARCHAR},
+			</if>
+			<if test="design.shirtbom != null" >
+        #{design.shirtbom,jdbcType=VARCHAR},
+			</if>
+			<if test="design.tiebom != null" >
+        #{design.tiebom,jdbcType=VARCHAR},
+			</if>
+			<if test="design.kouyanbom != null" >
+        #{design.kouyanbom,jdbcType=VARCHAR},
+			</if>
+			<if test="design.suitbutton != null" >
+        #{design.suitbutton,jdbcType=VARCHAR},
+			</if>
+			<if test="design.tie != null" >
+        #{design.tie,jdbcType=VARCHAR},
+			</if>
+			<if test="design.cravat != null" >
+        #{design.cravat,jdbcType=VARCHAR},
+			</if>
+			<if test="design.smallImage != null" >
+        #{design.smallImage,jdbcType=VARCHAR},
+			</if>
+			<if test="design.bigImage != null" >
+        #{design.bigImage,jdbcType=VARCHAR},
+			</if>
+			<if test="design.jsonurl != null" >
+        #{design.jsonurl,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+  
+	<!-- 新增裤子设计方案 -->
+	<insert id="addDesignTrousers" parameterType="com.cn.zyrs.domain.Design" >
+    insert into DS_Trousers_Style
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="design.id != null" >
+        ID,
+			</if>
+			<if test="design.deptid != null" >
+        DEPTID,
+			</if>
+			<if test="design.designname != null" >
+        DESIGNNAME,
+			</if>
+        CREATEDATE,
+        UPDATEDATE,
+			<if test="design.picture != null" >
+        PICTURE,
+			</if>
+			<if test="design.typename != null" >
+        TYPENAME,
+			</if>
+			<if test="design.assetbundlename != null" >
+        ASSETBUNDLENAME,
+			</if>
+			<if test="design.yaotou != null" >
+        YAOTOU,
+			</if>
+			<if test="design.frontdart != null" >
+        FRONTDART,
+			</if>
+			<if test="design.kujiao != null" >
+        KUJIAO,
+			</if>
+			<if test="design.cekoudai != null" >
+        CEKOUDAI,
+			</if>
+			<if test="design.houkoudai != null" >
+        HOUKOUDAI,
+			</if>
+			<if test="design.buttoneye != null" >
+        BUTTONEYE,
+			</if>
+			<if test="design.suitbom != null" >
+        SUITBOM,
+			</if>
+			<if test="design.insidebom != null" >
+        INSIDEBOM,
+			</if>
+			<if test="design.shirtbom != null" >
+        SHIRTBOM,
+			</if>
+			<if test="design.tiebom != null" >
+        TIEBOM,
+			</if>
+			<if test="design.kouyanbom != null" >
+        KOUYANBOM,
+			</if>
+			<if test="design.suitbutton != null" >
+        SUITBUTTON,
+			</if>
+			<if test="design.tie != null" >
+        TIE,
+			</if>
+			<if test="design.cravat != null" >
+        CRAVAT,
+			</if>
+			<if test="design.smallImage != null" >
+        SMALL_IMAGE,
+			</if>
+			<if test="design.bigImage != null" >
+        BIG_IMAGE,
+			</if>
+			<if test="design.jsonurl != null" >
+        jsonurl,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="design.id != null" >
+        #{design.id,jdbcType=VARCHAR},
+			</if>
+			<if test="design.deptid != null" >
+        #{design.deptid,jdbcType=VARCHAR},
+			</if>
+			<if test="design.designname != null" >
+        #{design.designname,jdbcType=VARCHAR},
+			</if>
+      	getDate(),
+      	getDate(),
+			<if test="design.picture != null" >
+        #{design.picture,jdbcType=VARCHAR},
+			</if>
+			<if test="design.typename != null" >
+        #{design.typename,jdbcType=VARCHAR},
+			</if>
+			<if test="design.assetbundlename != null" >
+        #{design.assetbundlename,jdbcType=VARCHAR},
+			</if>
+			<if test="design.yaotou != null" >
+        #{design.yaotou,jdbcType=VARCHAR},
+			</if>
+			<if test="design.frontdart != null" >
+        #{design.frontdart,jdbcType=VARCHAR},
+			</if>
+			<if test="design.kujiao != null" >
+        #{design.kujiao,jdbcType=VARCHAR},
+			</if>
+			<if test="design.cekoudai != null" >
+        #{design.cekoudai,jdbcType=VARCHAR},
+			</if>
+			<if test="design.houkoudai != null" >
+        #{design.houkoudai,jdbcType=VARCHAR},
+			</if>
+			<if test="design.buttoneye != null" >
+        #{design.buttoneye,jdbcType=VARCHAR},
+			</if>
+			<if test="design.suitbom != null" >
+        #{design.suitbom,jdbcType=VARCHAR},
+			</if>
+			<if test="design.insidebom != null" >
+        #{design.insidebom,jdbcType=VARCHAR},
+			</if>
+			<if test="design.shirtbom != null" >
+        #{design.shirtbom,jdbcType=VARCHAR},
+			</if>
+			<if test="design.tiebom != null" >
+        #{design.tiebom,jdbcType=VARCHAR},
+			</if>
+			<if test="design.kouyanbom != null" >
+        #{design.kouyanbom,jdbcType=VARCHAR},
+			</if>
+			<if test="design.suitbutton != null" >
+        #{design.suitbutton,jdbcType=VARCHAR},
+			</if>
+			<if test="design.tie != null" >
+        #{design.tie,jdbcType=VARCHAR},
+			</if>
+			<if test="design.cravat != null" >
+        #{design.cravat,jdbcType=VARCHAR},
+			</if>
+			<if test="design.smallImage != null" >
+        #{design.smallImage,jdbcType=VARCHAR},
+			</if>
+			<if test="design.bigImage != null" >
+        #{design.bigImage,jdbcType=VARCHAR},
+			</if>
+			<if test="design.jsonurl != null" >
+        #{design.jsonurl,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+  
+	<!-- 新增马甲设计方案 -->
+	<insert id="addDesignVest" parameterType="com.cn.zyrs.domain.Design" >
+    insert into DS_Vest_Style
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="design.id != null" >
+        ID,
+			</if>
+			<if test="design.deptid != null" >
+        DEPTID,
+			</if>
+			<if test="design.designname != null" >
+        DESIGNNAME,
+			</if>
+        CREATEDATE,
+        UPDATEDATE,
+			<if test="design.picture != null" >
+        PICTURE,
+			</if>
+			<if test="design.typename != null" >
+        TYPENAME,
+			</if>
+			<if test="design.assetbundlename != null" >
+        ASSETBUNDLENAME,
+			</if>
+			<if test="design.collar != null" >
+        COLLAR,
+			</if>
+			<if test="design.breastpocket != null" >
+        BREASTPOCKET,
+			</if>
+			<if test="design.pocket != null" >
+        POCKET,
+			</if>
+			<if test="design.xiabai != null" >
+        XIABAI,
+			</if>
+			<if test="design.buttoneye != null" >
+        BUTTONEYE,
+			</if>
+			<if test="design.suitbom != null" >
+        SUITBOM,
+			</if>
+			<if test="design.insidebom != null" >
+        INSIDEBOM,
+			</if>
+			<if test="design.shirtbom != null" >
+        SHIRTBOM,
+			</if>
+			<if test="design.tiebom != null" >
+        TIEBOM,
+			</if>
+			<if test="design.kouyanbom != null" >
+        KOUYANBOM,
+			</if>
+			<if test="design.suitbutton != null" >
+        SUITBUTTON,
+			</if>
+			<if test="design.tie != null" >
+        TIE,
+			</if>
+			<if test="design.cravat != null" >
+        CRAVAT,
+			</if>
+			<if test="design.smallImage != null" >
+        SMALL_IMAGE,
+			</if>
+			<if test="design.bigImage != null" >
+        BIG_IMAGE,
+			</if>
+			<if test="design.jsonurl != null" >
+        jsonurl,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="design.id != null" >
+        #{design.id,jdbcType=VARCHAR},
+			</if>
+			<if test="design.deptid != null" >
+        #{design.deptid,jdbcType=VARCHAR},
+			</if>
+			<if test="design.designname != null" >
+        #{design.designname,jdbcType=VARCHAR},
+			</if>
+	      getDate(),
+	      getDate(),
+			<if test="design.picture != null" >
+        #{design.picture,jdbcType=VARCHAR},
+			</if>
+			<if test="design.typename != null" >
+        #{design.typename,jdbcType=VARCHAR},
+			</if>
+			<if test="design.assetbundlename != null" >
+        #{design.assetbundlename,jdbcType=VARCHAR},
+			</if>
+			<if test="design.collar != null" >
+        #{design.collar,jdbcType=VARCHAR},
+			</if>
+			<if test="design.breastpocket != null" >
+        #{design.breastpocket,jdbcType=VARCHAR},
+			</if>
+			<if test="design.pocket != null" >
+        #{design.pocket,jdbcType=VARCHAR},
+			</if>
+			<if test="design.xiabai != null" >
+        #{design.xiabai,jdbcType=VARCHAR},
+			</if>
+			<if test="design.buttoneye != null" >
+        #{design.buttoneye,jdbcType=VARCHAR},
+			</if>
+			<if test="design.suitbom != null" >
+        #{design.suitbom,jdbcType=VARCHAR},
+			</if>
+			<if test="design.insidebom != null" >
+        #{design.insidebom,jdbcType=VARCHAR},
+			</if>
+			<if test="design.shirtbom != null" >
+        #{design.shirtbom,jdbcType=VARCHAR},
+			</if>
+			<if test="design.tiebom != null" >
+        #{design.tiebom,jdbcType=VARCHAR},
+			</if>
+			<if test="design.kouyanbom != null" >
+        #{design.kouyanbom,jdbcType=VARCHAR},
+			</if>
+			<if test="design.suitbutton != null" >
+        #{design.suitbutton,jdbcType=VARCHAR},
+			</if>
+			<if test="design.tie != null" >
+        #{design.tie,jdbcType=VARCHAR},
+			</if>
+			<if test="design.cravat != null" >
+        #{design.cravat,jdbcType=VARCHAR},
+			</if>
+			<if test="design.mallImage != null" >
+        #{design.smallImage,jdbcType=VARCHAR},
+			</if>
+			<if test="design.bigImage != null" >
+        #{design.bigImage,jdbcType=VARCHAR},
+			</if>
+			<if test="design.jsonurl != null" >
+        #{design.jsonurl,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	
+	<!-- 更新西服设计方案信息 -->
+	<update id="updateDesignSuit" parameterType="com.cn.zyrs.domain.Design" >
+    update DS_Suit_Style
+		<set >
+			<if test="design.deptid != null" >
+        deptid = #{design.deptid,jdbcType=VARCHAR},
+			</if>
+			<if test="design.designname != null" >
+       designname = #{design.designname,jdbcType=VARCHAR},
+			</if>
+	   updatedate = getDate(),
+			<if test="design.picture != null" >
+       picture = #{design.picture,jdbcType=VARCHAR},
+			</if>
+			<if test="design.typename != null" >
+        typename = #{design.typename,jdbcType=VARCHAR},
+			</if>
+			<if test="design.assetbundlename != null" >
+       assetbundlename = #{design.assetbundlename,jdbcType=VARCHAR},
+			</if>
+			<if test="design.collar != null" >
+        collar = #{design.collar,jdbcType=VARCHAR},
+			</if>
+			<if test="design.breastpocket != null" >
+        breastpocket =#{design.breastpocket,jdbcType=VARCHAR},
+			</if>
+			<if test="design.pocket != null" >
+        pocket = #{design.pocket,jdbcType=VARCHAR},
+			</if>
+			<if test="design.buff != null" >
+        sleeve = #{design.buff,jdbcType=VARCHAR},
+			</if>
+			<if test="design.buttonnum != null" >
+        buttonnum = #{design.buttonnum,jdbcType=VARCHAR},
+			</if>
+			<if test="design.placket != null" >
+        placket = #{design.placket,jdbcType=VARCHAR},
+			</if>
+			<if test="design.back != null" >
+        back = #{design.back,jdbcType=VARCHAR},
+			</if>
+			<if test="design.botouyan != null" >
+        botouyan = #{design.botouyan,jdbcType=VARCHAR},
+			</if>
+			<if test="design.buttoneye != null" >
+        buttoneye = #{design.buttoneye,jdbcType=VARCHAR},
+			</if>
+			<if test="design.suitbom != null" >
+       suitbom = #{design.suitbom,jdbcType=VARCHAR},
+			</if>
+			<if test="design.insidebom != null" >
+       insidebom = #{design.insidebom,jdbcType=VARCHAR},
+			</if>
+			<if test="design.shirtbom != null" >
+       shirtbom = #{design.shirtbom,jdbcType=VARCHAR},
+			</if>
+			<if test="design.tiebom != null" >
+        tiebom = #{design.tiebom,jdbcType=VARCHAR},
+			</if>
+			<if test="design.kouyanbom != null" >
+        kouyanbom = #{design.kouyanbom,jdbcType=VARCHAR},
+			</if>
+			<if test="design.suitbutton != null" >
+       suitbutton = #{design.suitbutton,jdbcType=VARCHAR},
+			</if>
+			<if test="design.tie != null" >
+       tie = #{design.tie,jdbcType=VARCHAR},
+			</if>
+			<if test="design.cravat != null" >
+        cravat = #{design.cravat,jdbcType=VARCHAR},
+			</if>
+			<if test="design.smallImage != null" >
+       smallImage = #{design.smallImage,jdbcType=VARCHAR},
+			</if>
+			<if test="design.bigImage != null" >
+       bigImage = #{design.bigImage,jdbcType=VARCHAR},
+			</if>
+			<if test="design.jsonurl != null" >
+       jsonurl =  #{design.jsonurl,jdbcType=VARCHAR},
+			</if>
+		</set>
+    where id = #{design.id,jdbcType=VARCHAR}
+	</update>
+	
+	<!-- 更新裤子设计方案信息 -->
+	<update id="updateDesignTrousers" parameterType="com.cn.zyrs.domain.Design" >
+    update DS_Trousers_Style
+		<set >
+			<if test="design.deptid != null" >
+        deptid = #{design.deptid,jdbcType=VARCHAR},
+			</if>
+			<if test="design.designname != null" >
+       designname = #{design.designname,jdbcType=VARCHAR},
+			</if>
+	   updatedate = getDate(),
+			<if test="design.picture != null" >
+       picture = #{design.picture,jdbcType=VARCHAR},
+			</if>
+			<if test="design.typename != null" >
+        typename = #{design.typename,jdbcType=VARCHAR},
+			</if>
+			<if test="design.assetbundlename != null" >
+       assetbundlename = #{design.assetbundlename,jdbcType=VARCHAR},
+			</if>
+			<if test="design.yaotou != null" >
+        yaotou = #{design.yaotou,jdbcType=VARCHAR},
+			</if>
+			<if test="design.kujiao != null" >
+        kujiao =#{design.kujiao,jdbcType=VARCHAR},
+			</if>
+			<if test="design.frontdart != null" >
+        frontdart = #{design.frontdart,jdbcType=VARCHAR},
+			</if>
+			<if test="design.cekoudai != null" >
+        cekoudai = #{design.cekoudai,jdbcType=VARCHAR},
+			</if>
+			<if test="design.houkoudai != null" >
+        houkoudai = #{design.houkoudai,jdbcType=VARCHAR},
+			</if>
+			<if test="design.buttoneye != null" >
+        buttoneye = #{design.buttoneye,jdbcType=VARCHAR},
+			</if>
+			<if test="design.suitbom != null" >
+       suitbom = #{design.suitbom,jdbcType=VARCHAR},
+			</if>
+			<if test="design.insidebom != null" >
+       insidebom = #{design.insidebom,jdbcType=VARCHAR},
+			</if>
+			<if test="design.shirtbom != null" >
+       shirtbom = #{design.shirtbom,jdbcType=VARCHAR},
+			</if>
+			<if test="design.tiebom != null" >
+        tiebom = #{design.tiebom,jdbcType=VARCHAR},
+			</if>
+			<if test="design.kouyanbom != null" >
+        kouyanbom = #{design.kouyanbom,jdbcType=VARCHAR},
+			</if>
+			<if test="design.suitbutton != null" >
+       suitbutton = #{design.suitbutton,jdbcType=VARCHAR},
+			</if>
+			<if test="design.tie != null" >
+       tie = #{design.tie,jdbcType=VARCHAR},
+			</if>
+			<if test="design.cravat != null" >
+        cravat = #{design.cravat,jdbcType=VARCHAR},
+			</if>
+			<if test="design.smallImage != null" >
+       smallImage = #{design.smallImage,jdbcType=VARCHAR},
+			</if>
+			<if test="design.bigImage != null" >
+       bigImage = #{design.bigImage,jdbcType=VARCHAR},
+			</if>
+			<if test="design.jsonurl != null" >
+       jsonurl =  #{design.jsonurl,jdbcType=VARCHAR},
+			</if>
+		</set>
+    where id = #{design.id,jdbcType=VARCHAR}
+	</update>
+	
+	<!-- 更新衬衫设计方案信息 -->
+	<update id="updateDesignShirt" parameterType="com.cn.zyrs.domain.Design" >
+    update DS_Shirt_Style
+		<set >
+			<if test="design.deptid != null" >
+        deptid = #{design.deptid,jdbcType=VARCHAR},
+			</if>
+			<if test="design.designname != null" >
+       designname = #{design.designname,jdbcType=VARCHAR},
+			</if>
+	   updatedate = getDate(),
+			<if test="design.picture != null" >
+       picture = #{design.picture,jdbcType=VARCHAR},
+			</if>
+			<if test="design.typename != null" >
+        typename = #{design.typename,jdbcType=VARCHAR},
+			</if>
+			<if test="design.assetbundlename != null" >
+       assetbundlename = #{design.assetbundlename,jdbcType=VARCHAR},
+			</if>
+			<if test="design.collar != null" >
+        collar = #{design.collar,jdbcType=VARCHAR},
+			</if>
+			<if test="design.font != null" >
+        font = #{design.font,jdbcType=VARCHAR},
+			</if>
+			<if test="design.back != null" >
+        back = #{design.back,jdbcType=VARCHAR},
+			</if>
+			<if test="design.buff != null" >
+        sleeve = #{design.buff,jdbcType=VARCHAR},
+			</if>
+			<if test="design.breastpocket != null" >
+        breastpocket =#{design.breastpocket,jdbcType=VARCHAR},
+			</if>
+			<if test="design.buttoneye != null" >
+        buttoneye = #{design.buttoneye,jdbcType=VARCHAR},
+			</if>
+			<if test="design.suitbom != null" >
+       suitbom = #{design.suitbom,jdbcType=VARCHAR},
+			</if>
+			<if test="design.insidebom != null" >
+       insidebom = #{design.insidebom,jdbcType=VARCHAR},
+			</if>
+			<if test="design.shirtbom != null" >
+       shirtbom = #{design.shirtbom,jdbcType=VARCHAR},
+			</if>
+			<if test="design.tiebom != null" >
+        tiebom = #{design.tiebom,jdbcType=VARCHAR},
+			</if>
+			<if test="design.kouyanbom != null" >
+        kouyanbom = #{design.kouyanbom,jdbcType=VARCHAR},
+			</if>
+			<if test="design.suitbutton != null" >
+       suitbutton = #{design.suitbutton,jdbcType=VARCHAR},
+			</if>
+			<if test="design.tie != null" >
+       tie = #{design.tie,jdbcType=VARCHAR},
+			</if>
+			<if test="design.cravat != null" >
+        cravat = #{design.cravat,jdbcType=VARCHAR},
+			</if>
+			<if test="design.smallImage != null" >
+       smallImage = #{design.smallImage,jdbcType=VARCHAR},
+			</if>
+			<if test="design.bigImage != null" >
+       bigImage = #{design.bigImage,jdbcType=VARCHAR},
+			</if>
+			<if test="design.jsonurl != null" >
+       jsonurl =  #{design.jsonurl,jdbcType=VARCHAR},
+			</if>
+		</set>
+    where id = #{design.id,jdbcType=VARCHAR}
+	</update>
+	
+	<!-- 更新马甲设计方案信息 -->
+	<update id="updateDesignVest" parameterType="com.cn.zyrs.domain.Design" >
+    update DS_Vest_Style
+		<set >
+			<if test="design.deptid != null" >
+        deptid = #{design.deptid,jdbcType=VARCHAR},
+			</if>
+			<if test="design.designname != null" >
+       designname = #{design.designname,jdbcType=VARCHAR},
+			</if>
+	   updatedate = getDate(),
+			<if test="design.picture != null" >
+       picture = #{design.picture,jdbcType=VARCHAR},
+			</if>
+			<if test="design.typename != null" >
+        typename = #{design.typename,jdbcType=VARCHAR},
+			</if>
+			<if test="design.assetbundlename != null" >
+       assetbundlename = #{design.assetbundlename,jdbcType=VARCHAR},
+			</if>
+			<if test="design.collar != null" >
+        collar = #{design.collar,jdbcType=VARCHAR},
+			</if>
+			<if test="design.breastpocket != null" >
+        breastpocket =#{design.breastpocket,jdbcType=VARCHAR},
+			</if>
+			<if test="design.pocket != null" >
+        pocket = #{design.pocket,jdbcType=VARCHAR},
+			</if>
+			<if test="design.xiabai != null" >
+        xiabai =#{design.xiabai,jdbcType=VARCHAR},
+			</if>
+			<if test="design.buttoneye != null" >
+        buttoneye = #{design.buttoneye,jdbcType=VARCHAR},
+			</if>
+			<if test="design.suitbom != null" >
+       suitbom = #{design.suitbom,jdbcType=VARCHAR},
+			</if>
+			<if test="design.insidebom != null" >
+       insidebom = #{design.insidebom,jdbcType=VARCHAR},
+			</if>
+			<if test="design.shirtbom != null" >
+       shirtbom = #{design.shirtbom,jdbcType=VARCHAR},
+			</if>
+			<if test="design.tiebom != null" >
+        tiebom = #{design.tiebom,jdbcType=VARCHAR},
+			</if>
+			<if test="design.kouyanbom != null" >
+        kouyanbom = #{design.kouyanbom,jdbcType=VARCHAR},
+			</if>
+			<if test="design.suitbutton != null" >
+       suitbutton = #{design.suitbutton,jdbcType=VARCHAR},
+			</if>
+			<if test="design.tie != null" >
+       tie = #{design.tie,jdbcType=VARCHAR},
+			</if>
+			<if test="design.cravat != null" >
+        cravat = #{design.cravat,jdbcType=VARCHAR},
+			</if>
+			<if test="design.smallImage != null" >
+       smallImage = #{design.smallImage,jdbcType=VARCHAR},
+			</if>
+			<if test="design.bigImage != null" >
+       bigImage = #{design.bigImage,jdbcType=VARCHAR},
+			</if>
+			<if test="design.jsonurl != null" >
+       jsonurl =  #{design.jsonurl,jdbcType=VARCHAR},
+			</if>
+		</set>
+    where id = #{design.id,jdbcType=VARCHAR}
+	</update>
+	
+	<!-- 删除西服设计方案 -->
+	<delete id="deleteDesignSuit" parameterType="map" >
+    delete from DS_Suit_Style
+    where id = #{id,jdbcType=VARCHAR} and deptid = #{di,jdbcType=VARCHAR}
+	</delete>
+	
+	<!-- 删除裤子设计方案 -->
+	<delete id="deleteDesignTrousers" parameterType="map" >
+    delete from DS_Trousers_Style
+    where id = #{id,jdbcType=VARCHAR} and deptid = #{di,jdbcType=VARCHAR}
+	</delete>
+	
+	<!-- 删除衬衫设计方案 -->
+	<delete id="deleteDesignShirt" parameterType="map" >
+    delete from DS_Shirt_Style
+    where id = #{id,jdbcType=VARCHAR} and deptid = #{di,jdbcType=VARCHAR}
+	</delete>
+	
+	<!-- 删除马甲设计方案 -->
+	<delete id="deleteDesignVest" parameterType="map" >
+    delete from DS_Vest_Style
+    where id = #{id,jdbcType=VARCHAR} and deptid = #{di,jdbcType=VARCHAR}
+	</delete>
+</mapper>

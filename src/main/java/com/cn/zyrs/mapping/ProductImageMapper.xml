@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.zyrs.mapper.ProductImageMapper" >
+	<resultMap id="BaseResultMap" type="com.cn.zyrs.domain.ProductImage" >
+		<id column="ID" property="id" jdbcType="VARCHAR" />
+		<result column="CODE" property="code" jdbcType="VARCHAR" />
+		<result column="NAME" property="name" jdbcType="VARCHAR" />
+		<result column="PATH1" property="path1" jdbcType="VARCHAR" />
+		<result column="PATH2" property="path2" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List" >
+    ID, CODE, NAME, PATH1, PATH2
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+		<include refid="Base_Column_List" />
+    from OD_PRODUCTIMAGE
+    where ID = #{id,jdbcType=VARCHAR}
+	</select>
+	<select id="getImagesPath" resultMap="BaseResultMap" >
+    select 
+		<include refid="Base_Column_List" />
+ 	from OD_PRODUCTIMAGE
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from OD_PRODUCTIMAGE
+    where ID = #{id,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.cn.zyrs.domain.ProductImage" >
+    insert into OD_PRODUCTIMAGE (ID, CODE, NAME, 
+      PATH1, PATH2)
+    values (#{id,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{path1,jdbcType=VARCHAR}, #{path2,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.cn.zyrs.domain.ProductImage" >
+    insert into OD_PRODUCTIMAGE
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="id != null" >
+        ID,
+			</if>
+			<if test="code != null" >
+        CODE,
+			</if>
+			<if test="name != null" >
+        NAME,
+			</if>
+			<if test="path1 != null" >
+        PATH1,
+			</if>
+			<if test="path2 != null" >
+        PATH2,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+			</if>
+			<if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="path1 != null" >
+        #{path1,jdbcType=VARCHAR},
+			</if>
+			<if test="path2 != null" >
+        #{path2,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.cn.zyrs.domain.ProductImage" >
+    update OD_PRODUCTIMAGE
+		<set >
+			<if test="code != null" >
+        CODE = #{code,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null" >
+        NAME = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="path1 != null" >
+        PATH1 = #{path1,jdbcType=VARCHAR},
+			</if>
+			<if test="path2 != null" >
+        PATH2 = #{path2,jdbcType=VARCHAR},
+			</if>
+		</set>
+    where ID = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.cn.zyrs.domain.ProductImage" >
+    update OD_PRODUCTIMAGE
+    set CODE = #{code,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      PATH1 = #{path1,jdbcType=VARCHAR},
+      PATH2 = #{path2,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+	</update>
+</mapper>

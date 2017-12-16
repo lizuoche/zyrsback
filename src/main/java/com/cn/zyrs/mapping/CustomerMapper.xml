@@ -1,0 +1,485 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.zyrs.mapper.CustomerMapper" >
+	<!-- 客户基本信息返回结果集 -->
+	<resultMap id="CustomerInfoBaseResultMap" type="com.cn.zyrs.domain.CustomerBaseInfo" >
+		<id column="CUSTOMERID" property="customerid" jdbcType="VARCHAR" />
+		<result column="CUSTOMERNAME" property="customername" jdbcType="VARCHAR" />
+		<result column="TEL" property="tel" jdbcType="VARCHAR" />
+		<result column="PICTURE" property="picture" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<!-- 客户详细信息返回结果集 -->
+	<resultMap id="BaseResultMap" type="com.cn.zyrs.domain.Customer" >
+		<id column="CUSTOMERID" property="customerid" jdbcType="VARCHAR" />
+		<result column="CUSTONERCODE" property="custonercode" jdbcType="VARCHAR" />
+		<result column="CUSTOMERNAME" property="customername" jdbcType="VARCHAR" />
+		<result column="GENDER" property="gender" jdbcType="VARCHAR" />
+		<result column="TEL" property="tel" jdbcType="VARCHAR" />
+		<result column="CARBRAND" property="carbrand" jdbcType="VARCHAR" />
+		<result column="CARCOLOR" property="carcolor" jdbcType="VARCHAR" />
+		<result column="CARCODE" property="carcode" jdbcType="VARCHAR" />
+		<result column="BIRTHDAY" property="birthday" jdbcType="VARCHAR" />
+		<result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+		<result column="ORGADDR" property="orgaddr" jdbcType="VARCHAR" />
+		<result column="JOB" property="job" jdbcType="VARCHAR" />
+		<result column="ISVIP" property="isvip" jdbcType="VARCHAR" />
+		<result column="JOINVIPDAY" property="joinvipday" jdbcType="VARCHAR" />
+		<result column="NATION" property="nation" jdbcType="VARCHAR" />
+		<result column="CHINESEZODIAC" property="chinesezodiac" jdbcType="VARCHAR" />
+		<result column="ZODIAC" property="zodiac" jdbcType="VARCHAR" />
+		<result column="CUSTOMERTYPE" property="customertype" jdbcType="VARCHAR" />
+		<result column="FEATURE" property="feature" jdbcType="VARCHAR" />
+		<result column="ISVALID" property="isvalid" jdbcType="VARCHAR" />
+		<result column="DELFLAG" property="delflag" jdbcType="VARCHAR" />
+		<result column="HEIGHT" property="height" jdbcType="VARCHAR" />
+		<result column="WEIGHT" property="weight" jdbcType="VARCHAR" />
+		<result column="BODYSIZE" property="bodysize" jdbcType="VARCHAR" />
+		<result column="PICTURE" property="picture" jdbcType="VARCHAR" />
+		<result column="TN" property="tn" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<sql id="CustomerInfoBase_Column_List" >
+    CUSTOMERID, CUSTONERCODE, CUSTOMERNAME, GENDER, TEL, CARBRAND, CARCOLOR, CARCODE, 
+    CONVERT (VARCHAR(10), BIRTHDAY, 120) AS BIRTHDAY, 
+    ADDRESS, ORGADDR, JOB, ISVIP, JOINVIPDAY, 
+    NATION, CHINESEZODIAC, ZODIAC, CUSTOMERTYPE, FEATURE, ISVALID, DELFLAG,  
+    HEIGHT, WEIGHT, BODYSIZE, PICTURE
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+		<include refid="CustomerInfoBase_Column_List" />
+    from CUM_Customer
+    where CUSTOMERID = #{customerid,jdbcType=VARCHAR} and DELFLAG = 0 and ISVALID = 1
+	</select>
+	
+	<!-- 查询客户信息 -->
+	<select id="getCustomerInfoDetail" resultMap="BaseResultMap" parameterType="com.cn.zyrs.domain.Customer" >
+	SELECT	
+		 <include refid="CustomerInfoBase_Column_List" />
+	FROM
+		CUM_Customer a
+	WHERE
+		a.CUSTOMERID = #{ci,jdbcType=VARCHAR} AND a.DELFLAG = 0 AND a.ISVALID = 1
+	</select>
+	
+	<!-- 查询所有客户基本信息 -->
+	<select id="getCustomerInfoBase" resultMap="CustomerInfoBaseResultMap" parameterType="com.cn.zyrs.domain.Customer" >
+	SELECT	
+		TOP 100 CUSTOMERID, CUSTOMERNAME, TEL, PICTURE
+	FROM
+		V_CUSTOMERINFO a
+	WHERE 
+		a.SERVICESHOP = #{di,jdbcType=VARCHAR}
+		AND a.DELFLAG = 0 AND a.ISVALID = 1
+ 	<if test="customer.tn != null and customer.tn != '' " >
+    AND TEL = #{customer.tn,jdbcType=VARCHAR} or CUSTOMERNAME = #{customer.tn,jdbcType=VARCHAR} 
+    </if>
+    <if test="customer.gender != null and customer.gender != '' " >
+    AND GENDER = #{customer.gender,jdbcType=VARCHAR} 
+    </if>
+	AND a.CUSTOMERID NOT IN (
+	SELECT
+		TOP (#{num}) CUSTOMERID
+	FROM
+		V_CUSTOMERINFO t
+	WHERE
+		t.SERVICESHOP = #{di,jdbcType=VARCHAR}
+		AND	t.DELFLAG = 0 AND t.ISVALID = 1
+	<if test="customer.tn != null and customer.tn != '' " >
+    AND TEL = #{customer.tn,jdbcType=VARCHAR} or CUSTOMERNAME = #{customer.tn,jdbcType=VARCHAR} 
+    </if>
+    <if test="customer.gender != null and customer.gender != '' " >
+    AND GENDER = #{customer.gender,jdbcType=VARCHAR} 
+    </if>
+	ORDER BY
+		t.joinvipday DESC
+	)ORDER BY
+	a.joinvipday DESC	
+	</select>
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from CUM_Customer
+    where CUSTOMERID = #{customerid,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.cn.zyrs.domain.Customer" >
+    insert into CUM_Customer (CUSTOMERID, CUSTONERCODE, CUSTOMERNAME, 
+      GENDER, TEL, CARBRAND, 
+      CARCOLOR, CARCODE, CONSUMELV, 
+      BIRTHDAY, ADDRESS, 
+      ORGADDR, HOBBY, JOB, 
+      ISVIP, JOINVIPDAY, NATION, 
+      CHINESEZODIAC, ZODIAC, CUSTOMERTYPE, 
+      FEATURE, ISVALID, DELFLAG, 
+      HEIGHT, 
+      WEIGHT, BODYSIZE, PICTURE
+      )
+    values (#{customerid,jdbcType=VARCHAR}, #{custonercode,jdbcType=VARCHAR}, #{customername,jdbcType=VARCHAR}, 
+      #{gender,jdbcType=INTEGER}, #{tel,jdbcType=VARCHAR}, #{carbrand,jdbcType=VARCHAR}, 
+      #{carcolor,jdbcType=VARCHAR}, #{carcode,jdbcType=VARCHAR}, #{consumelv,jdbcType=VARCHAR}, 
+      #{birthday,jdbcType=TIMESTAMP}, #{address,jdbcType=VARCHAR}, 
+      #{orgaddr,jdbcType=VARCHAR}, #{hobby,jdbcType=VARCHAR}, #{job,jdbcType=VARCHAR}, 
+      #{isvip,jdbcType=INTEGER}, #{joinvipday,jdbcType=TIMESTAMP}, #{nation,jdbcType=VARCHAR}, 
+      #{chinesezodiac,jdbcType=VARCHAR}, #{zodiac,jdbcType=VARCHAR}, #{customertype,jdbcType=VARCHAR}, 
+      #{feature,jdbcType=VARCHAR}, #{isvalid,jdbcType=INTEGER}, #{delflag,jdbcType=INTEGER}, 
+      #{height,jdbcType=DECIMAL}, 
+      #{weight,jdbcType=DECIMAL}, #{bodysize,jdbcType=VARCHAR}, #{picture,jdbcType=VARCHAR}
+      )
+	</insert>
+	<insert id="insertSelective" parameterType="com.cn.zyrs.domain.Customer" >
+    insert into CUM_Customer
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+        CUSTOMERID,CUSTONERCODE,
+			<if test="customer.customername != null" >
+        CUSTOMERNAME,
+			</if>
+			<if test="customer.gender != null" >
+        GENDER,
+			</if>
+			<if test="customer.tel != null" >
+        TEL,
+			</if>
+			<if test="customer.carbrand != null" >
+        CARBRAND,
+			</if>
+			<if test="customer.carcolor != null" >
+        CARCOLOR,
+			</if>
+			<if test="customer.carcode != null" >
+        CARCODE,
+			</if>
+			<if test="customer.consumelv != null" >
+        CONSUMELV,
+			</if>
+			
+			<if test="customer.birthday != null" >
+        BIRTHDAY,
+			</if>
+			<if test="customer.address != null" >
+        ADDRESS,
+			</if>
+			<if test="customer.orgaddr != null" >
+        ORGADDR,
+			</if>
+			<if test="customer.hobby != null" >
+        HOBBY,
+			</if>
+			<if test="customer.job != null" >
+        JOB,
+			</if>
+			<if test="customer.isvip != null" >
+        ISVIP,
+			</if>
+			<if test="customer.joinvipday != null" >
+        JOINVIPDAY,
+			</if>
+			<if test="customer.nation != null" >
+        NATION,
+			</if>
+			<if test="customer.chinesezodiac != null" >
+        CHINESEZODIAC,
+			</if>
+			<if test="customer.zodiac != null" >
+        ZODIAC,
+			</if>
+			<if test="customer.customertype != null" >
+        CUSTOMERTYPE,
+			</if>
+			<if test="customer.feature != null" >
+        FEATURE,
+			</if>
+			<if test="customer.isvalid != null" >
+        ISVALID,
+			</if>
+			<if test="customer.delflag != null" >
+        DELFLAG,
+			</if>
+			
+			<if test="customer.height != null" >
+        HEIGHT,
+			</if>
+			<if test="customer.weight != null" >
+        WEIGHT,
+			</if>
+			<if test="customer.bodysize != null" >
+        BODYSIZE,
+			</if>
+			<if test="customer.picture != null" >
+        PICTURE,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			 #{customer.customerid,jdbcType=VARCHAR},
+			 NEWID(),
+			<if test="customer.customername != null" >
+        #{customer.customername,jdbcType=VARCHAR},
+			</if>
+			<if test="customer.gender != null" >
+        #{customer.gender,jdbcType=INTEGER},
+			</if>
+			<if test="customer.tel != null" >
+        #{customer.tel,jdbcType=VARCHAR},
+			</if>
+			<if test="customer.carbrand != null" >
+        #{customer.carbrand,jdbcType=VARCHAR},
+			</if>
+			<if test="customer.carcolor != null" >
+        #{customer.carcolor,jdbcType=VARCHAR},
+			</if>
+			<if test="customer.carcode != null" >
+        #{customer.carcode,jdbcType=VARCHAR},
+			</if>
+			<if test="customer.consumelv != null" >
+        #{customer.consumelv,jdbcType=VARCHAR},
+			</if>
+			
+			<if test="customer.birthday != null" >
+        #{customer.birthday,jdbcType=TIMESTAMP},
+			</if>
+			<if test="customer.address != null" >
+        #{customer.address,jdbcType=VARCHAR},
+			</if>
+			<if test="customer.orgaddr != null" >
+        #{customer.orgaddr,jdbcType=VARCHAR},
+			</if>
+			<if test="customer.hobby != null" >
+        #{customer.hobby,jdbcType=VARCHAR},
+			</if>
+			<if test="customer.job != null" >
+        #{customer.job,jdbcType=VARCHAR},
+			</if>
+			<if test="customer.isvip != null" >
+        #{customer.isvip,jdbcType=INTEGER},
+			</if>
+			<if test="customer.joinvipday != null" >
+        #{customer.joinvipday,jdbcType=TIMESTAMP},
+			</if>
+			<if test="customer.nation != null" >
+        #{customer.nation,jdbcType=VARCHAR},
+			</if>
+			<if test="customer.chinesezodiac != null" >
+        #{customer.chinesezodiac,jdbcType=VARCHAR},
+			</if>
+			<if test="customer.zodiac != null" >
+        #{customer.zodiac,jdbcType=VARCHAR},
+			</if>
+			<if test="customer.customertype != null" >
+        #{customer.customertype,jdbcType=VARCHAR},
+			</if>
+			<if test="customer.feature != null" >
+        #{customer.feature,jdbcType=VARCHAR},
+			</if>
+			<if test="customer.isvalid != null" >
+        #{customer.isvalid,jdbcType=INTEGER},
+			</if>
+			<if test="customer.delflag != null" >
+        #{customer.delflag,jdbcType=INTEGER},
+			</if>
+			
+			<if test="customer.height != null" >
+        #{customer.height,jdbcType=DECIMAL},
+			</if>
+			<if test="customer.weight != null" >
+        #{customer.weight,jdbcType=DECIMAL},
+			</if>
+			<if test="customer.bodysize != null" >
+        #{customer.bodysize,jdbcType=VARCHAR},
+			</if>
+			<if test="customer.picture != null" >
+        #{customer.picture,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	
+	<insert id="insertVIPSelective" parameterType="com.cn.zyrs.domain.CustomerVIP" >
+    insert into CUM_Customer_VIP
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="vip.id != null" >
+        ID,
+      </if>
+      <if test="vip.vipcode != null" >
+        VIPCODE,
+      </if>
+      <if test="vip.cashback != null" >
+        CASHBACK,
+      </if>
+      <if test="vip.balance != null" >
+        BALANCE,
+      </if>
+      <if test="vip.type != null" >
+        TYPE,
+      </if>
+      <if test="vip.serviceshop != null" >
+        SERVICESHOP,
+      </if>
+      <if test="vip.score != null" >
+        SCORE,
+      </if>
+      <if test="vip.isvalid != null" >
+        ISVALID,
+      </if>
+      <if test="vip.delflag != null" >
+        DELFLAG,
+      </if>
+      <if test="vip.ownerdeptid != null" >
+        OWNERDEPTID,
+      </if>
+      <if test="vip.customerid != null" >
+        CUSTOMERID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="vip.id != null" >
+        #{vip.id,jdbcType=VARCHAR},
+      </if>
+      <if test="vip.vipcode != null" >
+        #{vip.vipcode,jdbcType=VARCHAR},
+      </if>
+      <if test="vip.cashback != null" >
+        #{vip.cashback,jdbcType=DECIMAL},
+      </if>
+      <if test="vip.balance != null" >
+        #{vip.balance,jdbcType=DECIMAL},
+      </if>
+      <if test="vip.type != null" >
+        #{vip.type,jdbcType=VARCHAR},
+      </if>
+      <if test="vip.serviceshop != null" >
+        #{vip.serviceshop,jdbcType=VARCHAR},
+      </if>
+      <if test="vip.score != null" >
+        #{vip.score,jdbcType=DECIMAL},
+      </if>
+      <if test="vip.isvalid != null" >
+        #{vip.isvalid,jdbcType=INTEGER},
+      </if>
+      <if test="vip.delflag != null" >
+        #{vip.delflag,jdbcType=INTEGER},
+      </if>
+      <if test="vip.ownerdeptid != null" >
+        #{vip.ownerdeptid,jdbcType=VARCHAR},
+      </if>
+      <if test="vip.customerid != null" >
+        #{vip.customerid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.cn.zyrs.domain.Customer" >
+    update CUM_Customer
+		<set >
+			<if test="custonercode != null" >
+        CUSTONERCODE = #{custonercode,jdbcType=VARCHAR},
+			</if>
+			<if test="customername != null" >
+        CUSTOMERNAME = #{customername,jdbcType=VARCHAR},
+			</if>
+			<if test="gender != null" >
+        GENDER = #{gender,jdbcType=INTEGER},
+			</if>
+			<if test="tel != null" >
+        TEL = #{tel,jdbcType=VARCHAR},
+			</if>
+			<if test="carbrand != null" >
+        CARBRAND = #{carbrand,jdbcType=VARCHAR},
+			</if>
+			<if test="carcolor != null" >
+        CARCOLOR = #{carcolor,jdbcType=VARCHAR},
+			</if>
+			<if test="carcode != null" >
+        CARCODE = #{carcode,jdbcType=VARCHAR},
+			</if>
+			<if test="consumelv != null" >
+        CONSUMELV = #{consumelv,jdbcType=VARCHAR},
+			</if>
+			
+			<if test="birthday != null" >
+        BIRTHDAY = #{birthday,jdbcType=TIMESTAMP},
+			</if>
+			<if test="address != null" >
+        ADDRESS = #{address,jdbcType=VARCHAR},
+			</if>
+			<if test="orgaddr != null" >
+        ORGADDR = #{orgaddr,jdbcType=VARCHAR},
+			</if>
+			<if test="hobby != null" >
+        HOBBY = #{hobby,jdbcType=VARCHAR},
+			</if>
+			<if test="job != null" >
+        JOB = #{job,jdbcType=VARCHAR},
+			</if>
+			<if test="isvip != null" >
+        ISVIP = #{isvip,jdbcType=INTEGER},
+			</if>
+			<if test="joinvipday != null" >
+        JOINVIPDAY = #{joinvipday,jdbcType=TIMESTAMP},
+			</if>
+			<if test="nation != null" >
+        NATION = #{nation,jdbcType=VARCHAR},
+			</if>
+			<if test="chinesezodiac != null" >
+        CHINESEZODIAC = #{chinesezodiac,jdbcType=VARCHAR},
+			</if>
+			<if test="zodiac != null" >
+        ZODIAC = #{zodiac,jdbcType=VARCHAR},
+			</if>
+			<if test="customertype != null" >
+        CUSTOMERTYPE = #{customertype,jdbcType=VARCHAR},
+			</if>
+			<if test="feature != null" >
+        FEATURE = #{feature,jdbcType=VARCHAR},
+			</if>
+			<if test="isvalid != null" >
+        ISVALID = #{isvalid,jdbcType=INTEGER},
+			</if>
+			<if test="delflag != null" >
+        DELFLAG = #{delflag,jdbcType=INTEGER},
+			</if>
+			
+			<if test="height != null" >
+        HEIGHT = #{height,jdbcType=DECIMAL},
+			</if>
+			<if test="weight != null" >
+        WEIGHT = #{weight,jdbcType=DECIMAL},
+			</if>
+			<if test="bodysize != null" >
+        BODYSIZE = #{bodysize,jdbcType=VARCHAR},
+			</if>
+			<if test="picture != null" >
+        PICTURE = #{picture,jdbcType=VARCHAR},
+			</if>
+		</set>
+    where CUSTOMERID = #{customerid,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.cn.zyrs.domain.Customer" >
+    update CUM_Customer
+    set CUSTONERCODE = #{custonercode,jdbcType=VARCHAR},
+      CUSTOMERNAME = #{customername,jdbcType=VARCHAR},
+      GENDER = #{gender,jdbcType=INTEGER},
+      TEL = #{tel,jdbcType=VARCHAR},
+      CARBRAND = #{carbrand,jdbcType=VARCHAR},
+      CARCOLOR = #{carcolor,jdbcType=VARCHAR},
+      CARCODE = #{carcode,jdbcType=VARCHAR},
+      CONSUMELV = #{consumelv,jdbcType=VARCHAR},
+     
+      BIRTHDAY = #{birthday,jdbcType=TIMESTAMP},
+      ADDRESS = #{address,jdbcType=VARCHAR},
+      ORGADDR = #{orgaddr,jdbcType=VARCHAR},
+      HOBBY = #{hobby,jdbcType=VARCHAR},
+      JOB = #{job,jdbcType=VARCHAR},
+      ISVIP = #{isvip,jdbcType=INTEGER},
+      JOINVIPDAY = #{joinvipday,jdbcType=TIMESTAMP},
+      NATION = #{nation,jdbcType=VARCHAR},
+      CHINESEZODIAC = #{chinesezodiac,jdbcType=VARCHAR},
+      ZODIAC = #{zodiac,jdbcType=VARCHAR},
+      CUSTOMERTYPE = #{customertype,jdbcType=VARCHAR},
+      FEATURE = #{feature,jdbcType=VARCHAR},
+      ISVALID = #{isvalid,jdbcType=INTEGER},
+      DELFLAG = #{delflag,jdbcType=INTEGER},
+      
+      HEIGHT = #{height,jdbcType=DECIMAL},
+      WEIGHT = #{weight,jdbcType=DECIMAL},
+      BODYSIZE = #{bodysize,jdbcType=VARCHAR},
+      PICTURE = #{picture,jdbcType=VARCHAR}
+    where CUSTOMERID = #{customerid,jdbcType=VARCHAR}
+	</update>
+</mapper>

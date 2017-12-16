@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.zyrs.mapper.ProductDetailMapper" >
+ <resultMap id="BaseResultMap" type="com.cn.zyrs.domain.ProductDetail" >
+    <id column="DETAILCODE" property="detailcode" jdbcType="VARCHAR" />
+    <result column="ORDERCODE" property="ordercode" jdbcType="VARCHAR" />
+    <result column="PRODUCTSTYLE" property="productstyle" jdbcType="VARCHAR" />
+    <result column="DESIGNNAME" property="designname" jdbcType="VARCHAR" />
+    <result column="PICTURE" property="picture" jdbcType="VARCHAR" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+    <result column="TYPENAME" property="typename" jdbcType="VARCHAR" />
+    <result column="ASSETBUNDLENAME" property="assetbundlename" jdbcType="VARCHAR" />
+    <result column="COLLAR" property="collar" jdbcType="VARCHAR" />
+    <result column="FONT" property="font" jdbcType="VARCHAR" />
+    <result column="BACK" property="back" jdbcType="VARCHAR" />
+    <result column="BUFF" property="buff" jdbcType="VARCHAR" />
+    <result column="BREASTPOCKET" property="breastpocket" jdbcType="VARCHAR" />
+    <result column="BUTTONEYE" property="buttoneye" jdbcType="VARCHAR" />
+    <result column="FRONTDART" property="frontdart" jdbcType="VARCHAR" />
+    <result column="POCKET" property="pocket" jdbcType="VARCHAR" />
+    <result column="BUTTONNUM" property="buttonnum" jdbcType="VARCHAR" />
+    <result column="PLACKET" property="placket" jdbcType="VARCHAR" />
+    <result column="BOTOUYAN" property="botouyan" jdbcType="VARCHAR" />
+    <result column="XIABAI" property="xiabai" jdbcType="VARCHAR" />
+    <result column="YAOTOU" property="yaotou" jdbcType="VARCHAR" />
+    <result column="KUJIAO" property="kujiao" jdbcType="VARCHAR" />
+    <result column="CEKOUDAI" property="cekoudai" jdbcType="VARCHAR" />
+    <result column="HOUKOUDAI" property="houkoudai" jdbcType="VARCHAR" />
+    <result column="SUITBOM" property="suitbom" jdbcType="VARCHAR" />
+    <result column="INSIDEBOM" property="insidebom" jdbcType="VARCHAR" />
+    <result column="SHIRTBOM" property="shirtbom" jdbcType="VARCHAR" />
+    <result column="TIEBOM" property="tiebom" jdbcType="VARCHAR" />
+    <result column="KOUYANBOM" property="kouyanbom" jdbcType="VARCHAR" />
+    <result column="SUITBUTTON" property="suitbutton" jdbcType="VARCHAR" />
+    <result column="TIE" property="tie" jdbcType="VARCHAR" />
+    <result column="CRAVAT" property="cravat" jdbcType="VARCHAR" />
+    <result column="SMALL_IMAGE" property="smallImage" jdbcType="VARCHAR" />
+    <result column="BIG_IMAGE" property="bigImage" jdbcType="VARCHAR" />
+    <result column="JSONURL" property="jsonurl" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    DETAILCODE, ORDERCODE, PRODUCTSTYLE, DESIGNNAME, PICTURE, TYPE, TYPENAME, ASSETBUNDLENAME, 
+    COLLAR, FONT, BACK, BUFF, BREASTPOCKET, BUTTONEYE, FRONTDART, POCKET, BUTTONNUM, 
+    PLACKET, BOTOUYAN, XIABAI, YAOTOU, KUJIAO, CEKOUDAI, HOUKOUDAI, SUITBOM, INSIDEBOM, 
+    SHIRTBOM, TIEBOM, KOUYANBOM, SUITBUTTON, TIE, CRAVAT, SMALL_IMAGE, BIG_IMAGE, JSONURL
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from OD_ProductDetail
+    where DETAILCODE = #{detailcode,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from OD_ProductDetail
+    where DETAILCODE = #{detailcode,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.cn.zyrs.domain.ProductDetail" >
+    insert into OD_ProductDetail (DETAILCODE, ORDERCODE, PRODUCTSTYLE, 
+      DETAIL1, DETAIL2, DETAIL3, 
+      DETAIL4, DETAIL5, DETAIL6, 
+      DETAIL7, DETAIL8, DETAIL9, 
+      DETAIL10)
+    values (#{detailcode,jdbcType=VARCHAR}, #{ordercode,jdbcType=VARCHAR}, #{productstyle,jdbcType=VARCHAR}, 
+      #{detail1,jdbcType=VARCHAR}, #{detail2,jdbcType=VARCHAR}, #{detail3,jdbcType=VARCHAR}, 
+      #{detail4,jdbcType=VARCHAR}, #{detail5,jdbcType=VARCHAR}, #{detail6,jdbcType=VARCHAR}, 
+      #{detail7,jdbcType=VARCHAR}, #{detail8,jdbcType=VARCHAR}, #{detail9,jdbcType=VARCHAR}, 
+      #{detail10,jdbcType=VARCHAR})
+  </insert>
+  <!-- 新增产品详情信息 -->
+ <insert id="addProductDetail" parameterType="com.cn.zyrs.domain.ProductDetail" >
+    insert into OD_ProductDetail_Test
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pd.detailcode != null" >
+        DETAILCODE,
+      </if>
+      <if test="pd.ordercode != null" >
+        ORDERCODE,
+      </if>
+      <if test="pd.productstyle != null" >
+        PRODUCTSTYLE,
+      </if>
+      <if test="pd.designname != null" >
+        DESIGNNAME,
+      </if>
+      <if test="pd.picture != null" >
+        PICTURE,
+      </if>
+      <if test="pd.type != null" >
+        TYPE,
+      </if>
+      <if test="pd.typename != null" >
+        TYPENAME,
+      </if>
+      <if test="pd.assetbundlename != null" >
+        ASSETBUNDLENAME,
+      </if>
+      <if test="pd.collar != null" >
+        COLLAR,
+      </if>
+      <if test="pd.font != null" >
+        FONT,
+      </if>
+      <if test="pd.back != null" >
+        BACK,
+      </if>
+      <if test="pd.buff != null" >
+        BUFF,
+      </if>
+      <if test="pd.breastpocket != null" >
+        BREASTPOCKET,
+      </if>
+      <if test="pd.buttoneye != null" >
+        BUTTONEYE,
+      </if>
+      <if test="pd.frontdart != null" >
+        FRONTDART,
+      </if>
+      <if test="pd.pocket != null" >
+        POCKET,
+      </if>
+      <if test="pd.buttonnum != null" >
+        BUTTONNUM,
+      </if>
+      <if test="pd.placket != null" >
+        PLACKET,
+      </if>
+      <if test="pd.botouyan != null" >
+        BOTOUYAN,
+      </if>
+      <if test="pd.xiabai != null" >
+        XIABAI,
+      </if>
+      <if test="pd.yaotou != null" >
+        YAOTOU,
+      </if>
+      <if test="pd.kujiao != null" >
+        KUJIAO,
+      </if>
+      <if test="pd.cekoudai != null" >
+        CEKOUDAI,
+      </if>
+      <if test="pd.houkoudai != null" >
+        HOUKOUDAI,
+      </if>
+      <if test="pd.suitbom != null" >
+        SUITBOM,
+      </if>
+      <if test="pd.insidebom != null" >
+        INSIDEBOM,
+      </if>
+      <if test="pd.shirtbom != null" >
+        SHIRTBOM,
+      </if>
+      <if test="pd.tiebom != null" >
+        TIEBOM,
+      </if>
+      <if test="pd.kouyanbom != null" >
+        KOUYANBOM,
+      </if>
+      <if test="pd.suitbutton != null" >
+        SUITBUTTON,
+      </if>
+      <if test="pd.tie != null" >
+        TIE,
+      </if>
+      <if test="pd.cravat != null" >
+        CRAVAT,
+      </if>
+      <if test="pd.smallImage != null" >
+        SMALL_IMAGE,
+      </if>
+      <if test="pd.bigImage != null" >
+        BIG_IMAGE,
+      </if>
+      <if test="pd.jsonurl != null" >
+        JSONURL,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pd.detailcode != null" >
+        #{pd.detailcode,jdbcType=VARCHAR},
+      </if>
+      <if test="pd.ordercode != null" >
+        #{pd.ordercode,jdbcType=VARCHAR},
+      </if>
+      <if test="pd.productstyle != null" >
+        #{pd.productstyle,jdbcType=VARCHAR},
+      </if>
+      <if test="pd.designname != null" >
+        #{pd.designname,jdbcType=VARCHAR},
+      </if>
+      <if test="pd.picture != null" >
+        #{pd.picture,jdbcType=VARCHAR},
+      </if>
+      <if test="pd.type != null" >
+        #{pd.type,jdbcType=VARCHAR},
+      </if>
+      <if test="pd.typename != null" >
+        #{pd.typename,jdbcType=VARCHAR},
+      </if>
+      <if test="pd.assetbundlename != null" >
+        #{pd.assetbundlename,jdbcType=VARCHAR},
+      </if>
+      <if test="pd.collar != null" >
+        #{pd.collar,jdbcType=VARCHAR},
+      </if>
+      <if test="pd.font != null" >
+        #{pd.font,jdbcType=VARCHAR},
+      </if>
+      <if test="pd.back != null" >
+        #{pd.back,jdbcType=VARCHAR},
+      </if>
+      <if test="pd.buff != null" >
+        #{pd.buff,jdbcType=VARCHAR},
+      </if>
+      <if test="pd.breastpocket != null" >
+        #{pd.breastpocket,jdbcType=VARCHAR},
+      </if>
+      <if test="pd.buttoneye != null" >
+        #{pd.buttoneye,jdbcType=VARCHAR},
+      </if>
+      <if test="pd.frontdart != null" >
+        #{pd.frontdart,jdbcType=VARCHAR},
+      </if>
+      <if test="pd.pocket != null" >
+        #{pd.pocket,jdbcType=VARCHAR},
+      </if>
+      <if test="pd.buttonnum != null" >
+        #{pd.buttonnum,jdbcType=VARCHAR},
+      </if>
+      <if test="pd.placket != null" >
+        #{pd.placket,jdbcType=VARCHAR},
+      </if>
+      <if test="pd.botouyan != null" >
+        #{pd.botouyan,jdbcType=VARCHAR},
+      </if>
+      <if test="pd.xiabai != null" >
+        #{pd.xiabai,jdbcType=VARCHAR},
+      </if>
+      <if test="pd.yaotou != null" >
+        #{pd.yaotou,jdbcType=VARCHAR},
+      </if>
+      <if test="pd.kujiao != null" >
+        #{pd.kujiao,jdbcType=VARCHAR},
+      </if>
+      <if test="pd.cekoudai != null" >
+        #{pd.cekoudai,jdbcType=VARCHAR},
+      </if>
+      <if test="pd.houkoudai != null" >
+        #{pd.houkoudai,jdbcType=VARCHAR},
+      </if>
+      <if test="pd.suitbom != null" >
+        #{pd.suitbom,jdbcType=VARCHAR},
+      </if>
+      <if test="pd.insidebom != null" >
+        #{pd.insidebom,jdbcType=VARCHAR},
+      </if>
+      <if test="pd.shirtbom != null" >
+        #{pd.shirtbom,jdbcType=VARCHAR},
+      </if>
+      <if test="pd.tiebom != null" >
+        #{pd.tiebom,jdbcType=VARCHAR},
+      </if>
+      <if test="pd.kouyanbom != null" >
+        #{pd.kouyanbom,jdbcType=VARCHAR},
+      </if>
+      <if test="pd.suitbutton != null" >
+        #{pd.suitbutton,jdbcType=VARCHAR},
+      </if>
+      <if test="pd.tie != null" >
+        #{pd.tie,jdbcType=VARCHAR},
+      </if>
+      <if test="pd.cravat != null" >
+        #{pd.cravat,jdbcType=VARCHAR},
+      </if>
+      <if test="pd.smallImage != null" >
+        #{pd.smallImage,jdbcType=VARCHAR},
+      </if>
+      <if test="pd.bigImage != null" >
+        #{pd.bigImage,jdbcType=VARCHAR},
+      </if>
+      <if test="pd.jsonurl != null" >
+        #{pd.jsonurl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn.zyrs.domain.ProductDetail" >
+    update OD_ProductDetail
+    <set >
+      <if test="ordercode != null" >
+        ORDERCODE = #{ordercode,jdbcType=VARCHAR},
+      </if>
+      <if test="productstyle != null" >
+        PRODUCTSTYLE = #{productstyle,jdbcType=VARCHAR},
+      </if>
+      <if test="detail1 != null" >
+        DETAIL1 = #{detail1,jdbcType=VARCHAR},
+      </if>
+      <if test="detail2 != null" >
+        DETAIL2 = #{detail2,jdbcType=VARCHAR},
+      </if>
+      <if test="detail3 != null" >
+        DETAIL3 = #{detail3,jdbcType=VARCHAR},
+      </if>
+      <if test="detail4 != null" >
+        DETAIL4 = #{detail4,jdbcType=VARCHAR},
+      </if>
+      <if test="detail5 != null" >
+        DETAIL5 = #{detail5,jdbcType=VARCHAR},
+      </if>
+      <if test="detail6 != null" >
+        DETAIL6 = #{detail6,jdbcType=VARCHAR},
+      </if>
+      <if test="detail7 != null" >
+        DETAIL7 = #{detail7,jdbcType=VARCHAR},
+      </if>
+      <if test="detail8 != null" >
+        DETAIL8 = #{detail8,jdbcType=VARCHAR},
+      </if>
+      <if test="detail9 != null" >
+        DETAIL9 = #{detail9,jdbcType=VARCHAR},
+      </if>
+      <if test="detail10 != null" >
+        DETAIL10 = #{detail10,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where DETAILCODE = #{detailcode,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cn.zyrs.domain.ProductDetail" >
+    update OD_ProductDetail
+    set ORDERCODE = #{ordercode,jdbcType=VARCHAR},
+      PRODUCTSTYLE = #{productstyle,jdbcType=VARCHAR},
+      DETAIL1 = #{detail1,jdbcType=VARCHAR},
+      DETAIL2 = #{detail2,jdbcType=VARCHAR},
+      DETAIL3 = #{detail3,jdbcType=VARCHAR},
+      DETAIL4 = #{detail4,jdbcType=VARCHAR},
+      DETAIL5 = #{detail5,jdbcType=VARCHAR},
+      DETAIL6 = #{detail6,jdbcType=VARCHAR},
+      DETAIL7 = #{detail7,jdbcType=VARCHAR},
+      DETAIL8 = #{detail8,jdbcType=VARCHAR},
+      DETAIL9 = #{detail9,jdbcType=VARCHAR},
+      DETAIL10 = #{detail10,jdbcType=VARCHAR}
+    where DETAILCODE = #{detailcode,jdbcType=VARCHAR}
+  </update>
+</mapper>

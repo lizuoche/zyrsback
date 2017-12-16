@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cn.zyrs.mapper.UserLoginInfoMapper">
+	<resultMap id="BaseResultMap" type="com.cn.zyrs.domain.UserLoginInfo">
+		<result column="USERID" jdbcType="VARCHAR" property="userid" />
+		<result column="USERCODE" jdbcType="VARCHAR" property="usercode" />
+		<result column="USERNAME" jdbcType="VARCHAR" property="username" />
+		<result column="PASSWORD" jdbcType="VARCHAR" property="password" />
+		<result column="ISSPECIAL" jdbcType="INTEGER" property="isspecial" />
+		<result column="ISADMIN" jdbcType="INTEGER" property="isadmin" />
+		<result column="ISVALID" jdbcType="INTEGER" property="isvalid" />
+		<result column="DELFLAG" jdbcType="INTEGER" property="delflag" />
+		<result column="DEPARTID" jdbcType="VARCHAR" property="departid" />
+		<result column="DEPTNAME" jdbcType="VARCHAR" property="deptname" />
+		<result column="DEPTCODE" jdbcType="VARCHAR" property="deptcode" />
+		<result column="DEPTTEL" jdbcType="VARCHAR" property="depttel" />
+		<result column="OWNERDEPARTID" jdbcType="VARCHAR" property="ownerdepartid" />
+		<result column="OWNERDEPARTNAME" jdbcType="VARCHAR" property="ownerdepartname" />
+		<result column="POSITIONID" jdbcType="VARCHAR" property="positionid" />
+		<result column="POSITIONCODE" jdbcType="VARCHAR" property="positioncode" />
+		<result column="POSITIONNAME" jdbcType="VARCHAR" property="positionname" />
+		<result column="GENDER" jdbcType="INTEGER" property="gender" />
+		<result column="BIRTHDAY" jdbcType="TIMESTAMP" property="birthday" />
+		<result column="CARDTYPE" jdbcType="VARCHAR" property="cardtype" />
+		<result column="CARDID" jdbcType="VARCHAR" property="cardid" />
+		<result column="TEL" jdbcType="VARCHAR" property="tel" />
+		<result column="ADDRESS" jdbcType="VARCHAR" property="address" />
+		<result column="EMPLOTMENTDATE" jdbcType="TIMESTAMP" property="emplotmentdate" />
+		<result column="PAYTYPE" jdbcType="VARCHAR" property="paytype" />
+		<result column="BASEPAY" jdbcType="DECIMAL" property="basepay" />
+		<result column="ISSERVICE" jdbcType="VARCHAR" property="isservice" />
+		<result column="DEPARTUREDATE" jdbcType="TIMESTAMP" property="departuredate" />
+		<result column="CREATER" jdbcType="VARCHAR" property="creater" />
+		<result column="CREATEDATE" jdbcType="TIMESTAMP" property="createdate" />
+		<result column="MODIFIER" jdbcType="VARCHAR" property="modifier" />
+		<result column="MODIFYDATE" jdbcType="TIMESTAMP" property="modifydate" />
+		<result column="REMARK" jdbcType="VARCHAR" property="remark" />
+		<result column="PHOTO" jdbcType="VARCHAR" property="photo" />
+	</resultMap>
+	<sql id="Base_Column_List" >
+      USERID, USERCODE, USERNAME, 
+      PASSWORD, ISSPECIAL, ISADMIN, 
+      ISVALID, DELFLAG, DEPARTID, 
+      DEPTNAME, DEPTCODE, DEPTTEL, 
+      OWNERDEPARTID, OWNERDEPARTNAME, POSITIONID, 
+      POSITIONCODE, POSITIONNAME, GENDER, 
+      BIRTHDAY, CARDTYPE, CARDID, 
+      TEL, ADDRESS, EMPLOTMENTDATE, 
+      PAYTYPE, BASEPAY, ISSERVICE, 
+      DEPARTUREDATE, CREATER, CREATEDATE, 
+      MODIFIER, MODIFYDATE, REMARK, 
+      PHOTO
+	</sql>
+	<select id="getLoginInfo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+		<include refid="Base_Column_List" />
+    from V_UserInfo
+    where USERID = #{userid,jdbcType=VARCHAR}
+	</select>
+	<select id="getUserLoginInfoByUsername" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+		<include refid="Base_Column_List" />
+    from V_UserInfo
+    where USERCODE = #{username,jdbcType=VARCHAR} 
+	</select>
+	
+	<select id="getUserLoginInfo" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+		<include refid="Base_Column_List" />
+    from V_UserInfo
+    where USERCODE = #{username,jdbcType=VARCHAR} and PASSWORD = #{password,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="getUserLoginInfoByPassword" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+		<include refid="Base_Column_List" />
+    from V_UserInfo
+    where PASSWORD = #{password,jdbcType=VARCHAR}
+	</select>
+	<!-- 旧版本员工登陆接口 -->
+	<!-- <select id="login" resultMap="BaseResultMap" parameterType="map" >
+		select 
+			<include refid="Base_Column_List" />
+		from V_UserInfo
+		where USERCODE = #{username,jdbcType=VARCHAR} and PASSWORD = #{password,jdbcType=VARCHAR}
+		</select> -->
+	
+	<!-- 新版本门店登陆接口 -->
+	<select id="login" resultType="java.lang.String" parameterType="map" >
+	SELECT DEPTID FROM US_DeptLogin WHERE DEPTCODE = #{dc,jdbcType=VARCHAR} AND PASSWORD = #{pw,jdbcType=VARCHAR}
+	</select>
+	
+	<!-- 新版本查询门店登录账号 -->
+	<select id="searchDeptCode" resultType="Integer" parameterType="java.lang.String" >
+    SELECT COUNT(1) FROM US_DeptLogin WHERE DEPTCODE = #{dc,jdbcType=VARCHAR}
+	</select>
+	
+	<!-- 新版本记录门店密钥 -->
+	<update id="writeKey" parameterType="java.lang.String" >
+    UPDATE US_DeptKey SET DEPTKEY = #{key,jdbcType=VARCHAR}
+	</update>
+	
+	<select id="getUserName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select USERNAME
+    from V_UserInfo
+    where OWNERDEPARTID = #{odpid,jdbcType=VARCHAR} and ISSPECIAL='0'
+	</select>
+	<insert id="insert" parameterType="com.cn.zyrs.domain.UserLoginInfo">
+    insert into V_USERINFO (USERID, USERCODE, USERNAME, 
+      PASSWORD, ISSPECIAL, ISADMIN, 
+      ISVALID, DELFLAG, DEPARTID, 
+      DEPTNAME, DEPTCODE, DEPTTEL, 
+      OWNERDEPARTID, OWNERDEPARTNAME, POSITIONID, 
+      POSITIONCODE, POSITIONNAME, GENDER, 
+      BIRTHDAY, CARDTYPE, CARDID, 
+      TEL, ADDRESS, EMPLOTMENTDATE, 
+      PAYTYPE, BASEPAY, ISSERVICE, 
+      DEPARTUREDATE, CREATER, CREATEDATE, 
+      MODIFIER, MODIFYDATE, REMARK, 
+      PHOTO)
+    values (#{userid,jdbcType=VARCHAR}, #{usercode,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{isspecial,jdbcType=INTEGER}, #{isadmin,jdbcType=INTEGER}, 
+      #{isvalid,jdbcType=INTEGER}, #{delflag,jdbcType=INTEGER}, #{departid,jdbcType=VARCHAR}, 
+      #{deptname,jdbcType=VARCHAR}, #{deptcode,jdbcType=VARCHAR}, #{depttel,jdbcType=VARCHAR}, 
+      #{ownerdepartid,jdbcType=VARCHAR}, #{ownerdepartname,jdbcType=VARCHAR}, #{positionid,jdbcType=VARCHAR}, 
+      #{positioncode,jdbcType=VARCHAR}, #{positionname,jdbcType=VARCHAR}, #{gender,jdbcType=INTEGER}, 
+      #{birthday,jdbcType=TIMESTAMP}, #{cardtype,jdbcType=VARCHAR}, #{cardid,jdbcType=VARCHAR}, 
+      #{tel,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, #{emplotmentdate,jdbcType=TIMESTAMP}, 
+      #{paytype,jdbcType=VARCHAR}, #{basepay,jdbcType=DECIMAL}, #{isservice,jdbcType=VARCHAR}, 
+      #{departuredate,jdbcType=TIMESTAMP}, #{creater,jdbcType=VARCHAR}, #{createdate,jdbcType=TIMESTAMP}, 
+      #{modifier,jdbcType=VARCHAR}, #{modifydate,jdbcType=TIMESTAMP}, #{remark,jdbcType=VARCHAR}, 
+      #{photo,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.cn.zyrs.domain.UserLoginInfo">
+    insert into V_USERINFO
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userid != null">
+        USERID,
+			</if>
+			<if test="usercode != null">
+        USERCODE,
+			</if>
+			<if test="username != null">
+        USERNAME,
+			</if>
+			<if test="password != null">
+        PASSWORD,
+			</if>
+			<if test="isspecial != null">
+        ISSPECIAL,
+			</if>
+			<if test="isadmin != null">
+        ISADMIN,
+			</if>
+			<if test="isvalid != null">
+        ISVALID,
+			</if>
+			<if test="delflag != null">
+        DELFLAG,
+			</if>
+			<if test="departid != null">
+        DEPARTID,
+			</if>
+			<if test="deptname != null">
+        DEPTNAME,
+			</if>
+			<if test="deptcode != null">
+        DEPTCODE,
+			</if>
+			<if test="depttel != null">
+        DEPTTEL,
+			</if>
+			<if test="ownerdepartid != null">
+        OWNERDEPARTID,
+			</if>
+			<if test="ownerdepartname != null">
+        OWNERDEPARTNAME,
+			</if>
+			<if test="positionid != null">
+        POSITIONID,
+			</if>
+			<if test="positioncode != null">
+        POSITIONCODE,
+			</if>
+			<if test="positionname != null">
+        POSITIONNAME,
+			</if>
+			<if test="gender != null">
+        GENDER,
+			</if>
+			<if test="birthday != null">
+        BIRTHDAY,
+			</if>
+			<if test="cardtype != null">
+        CARDTYPE,
+			</if>
+			<if test="cardid != null">
+        CARDID,
+			</if>
+			<if test="tel != null">
+        TEL,
+			</if>
+			<if test="address != null">
+        ADDRESS,
+			</if>
+			<if test="emplotmentdate != null">
+        EMPLOTMENTDATE,
+			</if>
+			<if test="paytype != null">
+        PAYTYPE,
+			</if>
+			<if test="basepay != null">
+        BASEPAY,
+			</if>
+			<if test="isservice != null">
+        ISSERVICE,
+			</if>
+			<if test="departuredate != null">
+        DEPARTUREDATE,
+			</if>
+			<if test="creater != null">
+        CREATER,
+			</if>
+			<if test="createdate != null">
+        CREATEDATE,
+			</if>
+			<if test="modifier != null">
+        MODIFIER,
+			</if>
+			<if test="modifydate != null">
+        MODIFYDATE,
+			</if>
+			<if test="remark != null">
+        REMARK,
+			</if>
+			<if test="photo != null">
+        PHOTO,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="userid != null">
+        #{userid,jdbcType=VARCHAR},
+			</if>
+			<if test="usercode != null">
+        #{usercode,jdbcType=VARCHAR},
+			</if>
+			<if test="username != null">
+        #{username,jdbcType=VARCHAR},
+			</if>
+			<if test="password != null">
+        #{password,jdbcType=VARCHAR},
+			</if>
+			<if test="isspecial != null">
+        #{isspecial,jdbcType=INTEGER},
+			</if>
+			<if test="isadmin != null">
+        #{isadmin,jdbcType=INTEGER},
+			</if>
+			<if test="isvalid != null">
+        #{isvalid,jdbcType=INTEGER},
+			</if>
+			<if test="delflag != null">
+        #{delflag,jdbcType=INTEGER},
+			</if>
+			<if test="departid != null">
+        #{departid,jdbcType=VARCHAR},
+			</if>
+			<if test="deptname != null">
+        #{deptname,jdbcType=VARCHAR},
+			</if>
+			<if test="deptcode != null">
+        #{deptcode,jdbcType=VARCHAR},
+			</if>
+			<if test="depttel != null">
+        #{depttel,jdbcType=VARCHAR},
+			</if>
+			<if test="ownerdepartid != null">
+        #{ownerdepartid,jdbcType=VARCHAR},
+			</if>
+			<if test="ownerdepartname != null">
+        #{ownerdepartname,jdbcType=VARCHAR},
+			</if>
+			<if test="positionid != null">
+        #{positionid,jdbcType=VARCHAR},
+			</if>
+			<if test="positioncode != null">
+        #{positioncode,jdbcType=VARCHAR},
+			</if>
+			<if test="positionname != null">
+        #{positionname,jdbcType=VARCHAR},
+			</if>
+			<if test="gender != null">
+        #{gender,jdbcType=INTEGER},
+			</if>
+			<if test="birthday != null">
+        #{birthday,jdbcType=TIMESTAMP},
+			</if>
+			<if test="cardtype != null">
+        #{cardtype,jdbcType=VARCHAR},
+			</if>
+			<if test="cardid != null">
+        #{cardid,jdbcType=VARCHAR},
+			</if>
+			<if test="tel != null">
+        #{tel,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+        #{address,jdbcType=VARCHAR},
+			</if>
+			<if test="emplotmentdate != null">
+        #{emplotmentdate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="paytype != null">
+        #{paytype,jdbcType=VARCHAR},
+			</if>
+			<if test="basepay != null">
+        #{basepay,jdbcType=DECIMAL},
+			</if>
+			<if test="isservice != null">
+        #{isservice,jdbcType=VARCHAR},
+			</if>
+			<if test="departuredate != null">
+        #{departuredate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="creater != null">
+        #{creater,jdbcType=VARCHAR},
+			</if>
+			<if test="createdate != null">
+        #{createdate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifier != null">
+        #{modifier,jdbcType=VARCHAR},
+			</if>
+			<if test="modifydate != null">
+        #{modifydate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="photo != null">
+        #{photo,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+</mapper>

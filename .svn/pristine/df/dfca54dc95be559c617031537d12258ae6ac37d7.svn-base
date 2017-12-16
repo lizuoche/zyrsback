@@ -1,0 +1,480 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.zyrs.mapper.ShoppingCartMapper" >
+  <resultMap id="BaseResultMap" type="com.cn.zyrs.domain.ShoppingCart" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="DESIGNID" property="designid" jdbcType="VARCHAR" />
+    <result column="DEPTID" property="deptid" jdbcType="VARCHAR" />
+    <result column="DESIGNNAME" property="designname" jdbcType="VARCHAR" />
+    <result column="JOINDATE" property="joindate" jdbcType="VARCHAR" />
+    <result column="CREATEDATE" property="createdate" jdbcType="VARCHAR" />
+    <result column="UPDATEDATE" property="updatedate" jdbcType="VARCHAR" />
+    <result column="PICTURE" property="picture" jdbcType="VARCHAR" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+    <result column="TYPENAME" property="typename" jdbcType="VARCHAR" />
+    <result column="ASSETBUNDLENAME" property="assetbundlename" jdbcType="VARCHAR" />
+    <result column="COLLAR" property="collar" jdbcType="VARCHAR" />
+    <result column="FONT" property="font" jdbcType="VARCHAR" />
+    <result column="BACK" property="back" jdbcType="VARCHAR" />
+    <result column="BUFF" property="buff" jdbcType="VARCHAR" />
+    <result column="BREASTPOCKET" property="breastpocket" jdbcType="VARCHAR" />
+    <result column="BUTTONEYE" property="buttoneye" jdbcType="VARCHAR" />
+    <result column="FRONTDART" property="frontdart" jdbcType="VARCHAR" />
+    <result column="POCKET" property="pocket" jdbcType="VARCHAR" />
+    <result column="BUTTONNUM" property="buttonnum" jdbcType="VARCHAR" />
+    <result column="PLACKET" property="placket" jdbcType="VARCHAR" />
+    <result column="BOTOUYAN" property="botouyan" jdbcType="VARCHAR" />
+    <result column="XIABAI" property="xiabai" jdbcType="VARCHAR" />
+    <result column="YAOTOU" property="yaotou" jdbcType="VARCHAR" />
+    <result column="KUJIAO" property="kujiao" jdbcType="VARCHAR" />
+    <result column="CEKOUDAI" property="cekoudai" jdbcType="VARCHAR" />
+    <result column="HOUKOUDAI" property="houkoudai" jdbcType="VARCHAR" />
+    <result column="SUITBOM" property="suitbom" jdbcType="VARCHAR" />
+    <result column="INSIDEBOM" property="insidebom" jdbcType="VARCHAR" />
+    <result column="SHIRTBOM" property="shirtbom" jdbcType="VARCHAR" />
+    <result column="TIEBOM" property="tiebom" jdbcType="VARCHAR" />
+    <result column="KOUYANBOM" property="kouyanbom" jdbcType="VARCHAR" />
+    <result column="SUITBUTTON" property="suitbutton" jdbcType="VARCHAR" />
+    <result column="TIE" property="tie" jdbcType="VARCHAR" />
+    <result column="CRAVAT" property="cravat" jdbcType="VARCHAR" />
+    <result column="BIG_IMAGE" property="bigImage" jdbcType="VARCHAR" />
+    <result column="JSONURL" property="jsonurl" jdbcType="VARCHAR" />
+    <result column="DELFLAG" property="delflag" jdbcType="VARCHAR" />
+    <result column="ISVALID" property="isvalid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, DESIGNID, DEPTID, DESIGNNAME, 
+    CONVERT (VARCHAR(20), JOINDATE, 120) AS JOINDATE,
+	CONVERT (VARCHAR(20), CREATEDATE, 120) AS CREATEDATE,
+	CONVERT (VARCHAR(20), UPDATEDATE, 120) AS UPDATEDATE,
+    PICTURE, TYPE, TYPENAME, 
+    ASSETBUNDLENAME, COLLAR, FONT, BACK, BUFF, BREASTPOCKET, BUTTONEYE, FRONTDART, 
+    POCKET, BUTTONNUM, PLACKET, BOTOUYAN, XIABAI, YAOTOU, KUJIAO, CEKOUDAI, HOUKOUDAI, 
+    SUITBOM, INSIDEBOM, SHIRTBOM, TIEBOM, KOUYANBOM, SUITBUTTON, TIE, CRAVAT, 
+    BIG_IMAGE, JSONURL, DELFLAG, ISVALID
+  </sql>
+  
+  <!-- 查询购物车基本信息 -->
+  <select id="showShoppingCartBase" resultType="com.cn.zyrs.domain.ShoppingCartBase" parameterType="java.lang.String" >
+    select 
+    ID,DESIGNID, DEPTID, DESIGNNAME, TYPE, TYPENAME, ASSETBUNDLENAME, JSONURL,
+    CONVERT (VARCHAR(20), JOINDATE, 120) AS JOINDATE,
+	CONVERT (VARCHAR(20), CREATEDATE, 120) AS CREATEDATE,
+	CONVERT (VARCHAR(20), UPDATEDATE, 120) AS UPDATEDATE,
+	SUITBUTTON, SUITBOM, INSIDEBOM, SHIRTBOM, TIEBOM, KOUYANBOM,
+	PICTURE
+    from OD_Shopping_Cart
+    where DEPTID = #{di,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 查询指定购物车的详细信息 -->
+  <select id="showShoppingCartDetail" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from OD_Shopping_Cart
+    where ID = #{scid,jdbcType=VARCHAR}
+  </select>
+  
+  <!-- 删除指定的购物车信息 -->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from OD_Shopping_Cart
+    where ID = #{scid,jdbcType=VARCHAR}
+  </delete>
+  
+  <!-- 加入购物车  -->
+  <insert id="addShoppingCart" parameterType="com.cn.zyrs.domain.ShoppingCart" >
+    insert into OD_Shopping_Cart
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="sc.id != null" >
+        ID,
+      </if>
+      <if test="sc.designid != null" >
+        DESIGNID,
+      </if>
+      <if test="sc.deptid != null" >
+        DEPTID,
+      </if>
+      <if test="sc.designname != null" >
+        DESIGNNAME,
+      </if>
+        JOINDATE,
+      <if test="sc.createdate != null" >
+        CREATEDATE,
+      </if>
+      <if test="sc.updatedate != null" >
+        UPDATEDATE,
+      </if>
+      <if test="sc.picture != null" >
+        PICTURE,
+      </if>
+      <if test="sc.type != null" >
+        TYPE,
+      </if>
+      <if test="sc.typename != null" >
+        TYPENAME,
+      </if>
+      <if test="sc.assetbundlename != null" >
+        ASSETBUNDLENAME,
+      </if>
+      <if test="sc.collar != null" >
+        COLLAR,
+      </if>
+      <if test="sc.font != null" >
+        FONT,
+      </if>
+      <if test="sc.back != null" >
+        BACK,
+      </if>
+      <if test="sc.buff != null" >
+        BUFF,
+      </if>
+      <if test="sc.breastpocket != null" >
+        BREASTPOCKET,
+      </if>
+      <if test="sc.buttoneye != null" >
+        BUTTONEYE,
+      </if>
+      <if test="sc.frontdart != null" >
+        FRONTDART,
+      </if>
+      <if test="sc.pocket != null" >
+        POCKET,
+      </if>
+      <if test="sc.buttonnum != null" >
+        BUTTONNUM,
+      </if>
+      <if test="sc.placket != null" >
+        PLACKET,
+      </if>
+      <if test="sc.botouyan != null" >
+        BOTOUYAN,
+      </if>
+      <if test="sc.xiabai != null" >
+        XIABAI,
+      </if>
+      <if test="sc.yaotou != null" >
+        YAOTOU,
+      </if>
+      <if test="sc.kujiao != null" >
+        KUJIAO,
+      </if>
+      <if test="sc.cekoudai != null" >
+        CEKOUDAI,
+      </if>
+      <if test="sc.houkoudai != null" >
+        HOUKOUDAI,
+      </if>
+      <if test="sc.suitbom != null" >
+        SUITBOM,
+      </if>
+      <if test="sc.insidebom != null" >
+        INSIDEBOM,
+      </if>
+      <if test="sc.shirtbom != null" >
+        SHIRTBOM,
+      </if>
+      <if test="sc.tiebom != null" >
+        TIEBOM,
+      </if>
+      <if test="sc.kouyanbom != null" >
+        KOUYANBOM,
+      </if>
+      <if test="sc.suitbutton != null" >
+        SUITBUTTON,
+      </if>
+      <if test="sc.tie != null" >
+        TIE,
+      </if>
+      <if test="sc.cravat != null" >
+        CRAVAT,
+      </if>
+      <if test="sc.bigImage != null" >
+        BIG_IMAGE,
+      </if>
+      <if test="sc.jsonurl != null" >
+        JSONURL,
+      </if>
+      <if test="sc.delflag != null" >
+        DELFLAG,
+      </if>
+      <if test="sc.isvalid != null" >
+        ISVALID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="sc.id != null" >
+        #{sc.id,jdbcType=VARCHAR},
+      </if>
+      <if test="sc.designid != null" >
+        #{sc.designid,jdbcType=VARCHAR},
+      </if>
+      <if test="sc.deptid != null" >
+        #{sc.deptid,jdbcType=VARCHAR},
+      </if>
+      <if test="sc.designname != null" >
+        #{sc.designname,jdbcType=VARCHAR},
+      </if>
+      getDate(),
+      <if test="sc.createdate != null" >
+        #{sc.createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sc.updatedate != null" >
+        #{sc.updatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sc.picture != null" >
+        #{sc.picture,jdbcType=VARCHAR},
+      </if>
+      <if test="sc.type != null" >
+        #{sc.type,jdbcType=VARCHAR},
+      </if>
+      <if test="sc.typename != null" >
+        #{sc.typename,jdbcType=VARCHAR},
+      </if>
+      <if test="sc.assetbundlename != null" >
+        #{sc.assetbundlename,jdbcType=VARCHAR},
+      </if>
+      <if test="sc.collar != null" >
+        #{sc.collar,jdbcType=VARCHAR},
+      </if>
+      <if test="sc.font != null" >
+        #{sc.font,jdbcType=VARCHAR},
+      </if>
+      <if test="sc.back != null" >
+        #{sc.back,jdbcType=VARCHAR},
+      </if>
+      <if test="sc.buff != null" >
+        #{sc.buff,jdbcType=VARCHAR},
+      </if>
+      <if test="sc.breastpocket != null" >
+        #{sc.breastpocket,jdbcType=VARCHAR},
+      </if>
+      <if test="sc.buttoneye != null" >
+        #{sc.buttoneye,jdbcType=VARCHAR},
+      </if>
+      <if test="sc.frontdart != null" >
+        #{sc.frontdart,jdbcType=VARCHAR},
+      </if>
+      <if test="sc.pocket != null" >
+        #{sc.pocket,jdbcType=VARCHAR},
+      </if>
+      <if test="sc.buttonnum != null" >
+        #{sc.buttonnum,jdbcType=VARCHAR},
+      </if>
+      <if test="sc.placket != null" >
+        #{sc.placket,jdbcType=VARCHAR},
+      </if>
+      <if test="sc.botouyan != null" >
+        #{sc.botouyan,jdbcType=VARCHAR},
+      </if>
+      <if test="sc.xiabai != null" >
+        #{sc.xiabai,jdbcType=VARCHAR},
+      </if>
+      <if test="sc.yaotou != null" >
+        #{sc.yaotou,jdbcType=VARCHAR},
+      </if>
+      <if test="sc.kujiao != null" >
+        #{sc.kujiao,jdbcType=VARCHAR},
+      </if>
+      <if test="sc.cekoudai != null" >
+        #{sc.cekoudai,jdbcType=VARCHAR},
+      </if>
+      <if test="sc.houkoudai != null" >
+        #{sc.houkoudai,jdbcType=VARCHAR},
+      </if>
+      <if test="sc.suitbom != null" >
+        #{sc.suitbom,jdbcType=VARCHAR},
+      </if>
+      <if test="sc.insidebom != null" >
+        #{sc.insidebom,jdbcType=VARCHAR},
+      </if>
+      <if test="sc.shirtbom != null" >
+        #{sc.shirtbom,jdbcType=VARCHAR},
+      </if>
+      <if test="sc.tiebom != null" >
+        #{sc.tiebom,jdbcType=VARCHAR},
+      </if>
+      <if test="sc.kouyanbom != null" >
+        #{sc.kouyanbom,jdbcType=VARCHAR},
+      </if>
+      <if test="sc.suitbutton != null" >
+        #{sc.suitbutton,jdbcType=VARCHAR},
+      </if>
+      <if test="sc.tie != null" >
+        #{sc.tie,jdbcType=VARCHAR},
+      </if>
+      <if test="sc.cravat != null" >
+        #{sc.cravat,jdbcType=VARCHAR},
+      </if>
+      <if test="sc.bigImage != null" >
+        #{sc.bigImage,jdbcType=VARCHAR},
+      </if>
+      <if test="sc.jsonurl != null" >
+        #{sc.jsonurl,jdbcType=VARCHAR},
+      </if>
+      <if test="sc.delflag != null" >
+        #{sc.delflag,jdbcType=VARCHAR},
+      </if>
+      <if test="sc.isvalid != null" >
+        #{sc.isvalid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn.zyrs.domain.ShoppingCart" >
+    update OD_Shopping_Cart
+    <set >
+      <if test="deptid != null" >
+        DEPTID = #{deptid,jdbcType=VARCHAR},
+      </if>
+      <if test="designname != null" >
+        DESIGNNAME = #{designname,jdbcType=VARCHAR},
+      </if>
+      <if test="joindate != null" >
+        JOINDATE = #{joindate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdate != null" >
+        CREATEDATE = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedate != null" >
+        UPDATEDATE = #{updatedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="picture != null" >
+        PICTURE = #{picture,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        TYPE = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="typename != null" >
+        TYPENAME = #{typename,jdbcType=VARCHAR},
+      </if>
+      <if test="assetbundlename != null" >
+        ASSETBUNDLENAME = #{assetbundlename,jdbcType=VARCHAR},
+      </if>
+      <if test="collar != null" >
+        COLLAR = #{collar,jdbcType=VARCHAR},
+      </if>
+      <if test="font != null" >
+        FONT = #{font,jdbcType=VARCHAR},
+      </if>
+      <if test="back != null" >
+        BACK = #{back,jdbcType=VARCHAR},
+      </if>
+      <if test="buff != null" >
+        BUFF = #{buff,jdbcType=VARCHAR},
+      </if>
+      <if test="breastpocket != null" >
+        BREASTPOCKET = #{breastpocket,jdbcType=VARCHAR},
+      </if>
+      <if test="buttoneye != null" >
+        BUTTONEYE = #{buttoneye,jdbcType=VARCHAR},
+      </if>
+      <if test="frontdart != null" >
+        FRONTDART = #{frontdart,jdbcType=VARCHAR},
+      </if>
+      <if test="pocket != null" >
+        POCKET = #{pocket,jdbcType=VARCHAR},
+      </if>
+      <if test="buttonnum != null" >
+        BUTTONNUM = #{buttonnum,jdbcType=VARCHAR},
+      </if>
+      <if test="placket != null" >
+        PLACKET = #{placket,jdbcType=VARCHAR},
+      </if>
+      <if test="botouyan != null" >
+        BOTOUYAN = #{botouyan,jdbcType=VARCHAR},
+      </if>
+      <if test="xiabai != null" >
+        XIABAI = #{xiabai,jdbcType=VARCHAR},
+      </if>
+      <if test="yaotou != null" >
+        YAOTOU = #{yaotou,jdbcType=VARCHAR},
+      </if>
+      <if test="kujiao != null" >
+        KUJIAO = #{kujiao,jdbcType=VARCHAR},
+      </if>
+      <if test="cekoudai != null" >
+        CEKOUDAI = #{cekoudai,jdbcType=VARCHAR},
+      </if>
+      <if test="houkoudai != null" >
+        HOUKOUDAI = #{houkoudai,jdbcType=VARCHAR},
+      </if>
+      <if test="suitbom != null" >
+        SUITBOM = #{suitbom,jdbcType=VARCHAR},
+      </if>
+      <if test="insidebom != null" >
+        INSIDEBOM = #{insidebom,jdbcType=VARCHAR},
+      </if>
+      <if test="shirtbom != null" >
+        SHIRTBOM = #{shirtbom,jdbcType=VARCHAR},
+      </if>
+      <if test="tiebom != null" >
+        TIEBOM = #{tiebom,jdbcType=VARCHAR},
+      </if>
+      <if test="kouyanbom != null" >
+        KOUYANBOM = #{kouyanbom,jdbcType=VARCHAR},
+      </if>
+      <if test="suitbutton != null" >
+        SUITBUTTON = #{suitbutton,jdbcType=VARCHAR},
+      </if>
+      <if test="tie != null" >
+        TIE = #{tie,jdbcType=VARCHAR},
+      </if>
+      <if test="cravat != null" >
+        CRAVAT = #{cravat,jdbcType=VARCHAR},
+      </if>
+      <if test="bigImage != null" >
+        BIG_IMAGE = #{bigImage,jdbcType=VARCHAR},
+      </if>
+      <if test="jsonurl != null" >
+        JSONURL = #{jsonurl,jdbcType=VARCHAR},
+      </if>
+      <if test="delflag != null" >
+        DELFLAG = #{delflag,jdbcType=VARCHAR},
+      </if>
+      <if test="isvalid != null" >
+        ISVALID = #{isvalid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cn.zyrs.domain.ShoppingCart" >
+    update OD_Shopping_Cart
+    set DEPTID = #{deptid,jdbcType=VARCHAR},
+      DESIGNNAME = #{designname,jdbcType=VARCHAR},
+      JOINDATE = #{joindate,jdbcType=TIMESTAMP},
+      CREATEDATE = #{createdate,jdbcType=TIMESTAMP},
+      UPDATEDATE = #{updatedate,jdbcType=TIMESTAMP},
+      PICTURE = #{picture,jdbcType=VARCHAR},
+      TYPE = #{type,jdbcType=VARCHAR},
+      TYPENAME = #{typename,jdbcType=VARCHAR},
+      ASSETBUNDLENAME = #{assetbundlename,jdbcType=VARCHAR},
+      COLLAR = #{collar,jdbcType=VARCHAR},
+      FONT = #{font,jdbcType=VARCHAR},
+      BACK = #{back,jdbcType=VARCHAR},
+      BUFF = #{buff,jdbcType=VARCHAR},
+      BREASTPOCKET = #{breastpocket,jdbcType=VARCHAR},
+      BUTTONEYE = #{buttoneye,jdbcType=VARCHAR},
+      FRONTDART = #{frontdart,jdbcType=VARCHAR},
+      POCKET = #{pocket,jdbcType=VARCHAR},
+      BUTTONNUM = #{buttonnum,jdbcType=VARCHAR},
+      PLACKET = #{placket,jdbcType=VARCHAR},
+      BOTOUYAN = #{botouyan,jdbcType=VARCHAR},
+      XIABAI = #{xiabai,jdbcType=VARCHAR},
+      YAOTOU = #{yaotou,jdbcType=VARCHAR},
+      KUJIAO = #{kujiao,jdbcType=VARCHAR},
+      CEKOUDAI = #{cekoudai,jdbcType=VARCHAR},
+      HOUKOUDAI = #{houkoudai,jdbcType=VARCHAR},
+      SUITBOM = #{suitbom,jdbcType=VARCHAR},
+      INSIDEBOM = #{insidebom,jdbcType=VARCHAR},
+      SHIRTBOM = #{shirtbom,jdbcType=VARCHAR},
+      TIEBOM = #{tiebom,jdbcType=VARCHAR},
+      KOUYANBOM = #{kouyanbom,jdbcType=VARCHAR},
+      SUITBUTTON = #{suitbutton,jdbcType=VARCHAR},
+      TIE = #{tie,jdbcType=VARCHAR},
+      CRAVAT = #{cravat,jdbcType=VARCHAR},
+      BIG_IMAGE = #{bigImage,jdbcType=VARCHAR},
+      JSONURL = #{jsonurl,jdbcType=VARCHAR},
+      DELFLAG = #{delflag,jdbcType=VARCHAR},
+      ISVALID = #{isvalid,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

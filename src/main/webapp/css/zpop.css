@@ -1,0 +1,82 @@
+* {
+	font-family: '微软雅黑'
+}
+
+body {
+	padding: 0px;
+	margin: 0px;
+	width: 100%;
+	height: 95%;
+	padding-top: 20px;
+}
+.bodyPop{
+	background-color: white;
+}
+.bodyPop div {
+	margin: 15px 0px
+}
+
+.bodyPop label {
+	display: inline-block;
+	width: 100px;
+	text-align: right;
+	margin-left: 30px;
+	vertical-align: top;
+}
+
+.bodyPop .dtext {
+	border: solid 1px #ccc;
+	margin:0 auto;
+	padding-left: 10px;
+	padding-right: 10px
+}
+
+.bodyPop .dtext:FOCUS {
+	border: solid 1px red;
+	outline: none
+}
+
+.bodyPop input[type~="text"], input[type~="password"], select {
+	line-height: 30px;
+	height: 30px;
+	border: 1px solid #ccc;
+	width: 400px;
+	padding-left: 5px;
+}
+
+.bodyPop input[type~="text"]:FOCUS, input[type~="password"]:FOCUS,
+	select:FOCUS {
+	border-color: red;
+}
+
+.bodyPop input[type~="submit"], input[type~="button"] {
+	background-image: url("../images/button_small.png");
+	width: 82px;
+	height: 32px;
+	border: 1px;
+	color: white;
+	margin-right: 20px;
+	margin-top: 20px;
+	cursor: pointer;
+}
+
+.treePanel {
+	float: left;
+}
+
+.bodyPop textarea {
+	border: 1px solid #ccc;
+	width: 600px;
+	padding: 5px;
+	height: 200px;
+	margin-left: 10px;overflow:auto;
+}
+
+.bodyPop textarea:FOCUS {
+	border-color: red;
+}
+
+.bodyPop .tip {
+	color: red;
+	width: 200px;
+}

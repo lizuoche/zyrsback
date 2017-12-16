@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.zyrs.mapper.CustomerDataZoonMapper" >
+  <resultMap id="BaseResultMap" type="com.cn.zyrs.domain.CustomerDataZoon" >
+    <id column="DETAILCODE" property="detailcode" jdbcType="VARCHAR" />
+    <result column="ORDERCODE" property="ordercode" jdbcType="VARCHAR" />
+    <result column="CUSTOMERID" property="customerid" jdbcType="VARCHAR" />
+    <result column="CUSTONERCODE" property="custonercode" jdbcType="VARCHAR" />
+    <result column="ENTRYDAY" property="entryday" jdbcType="TIMESTAMP" />
+    <result column="SURVEYOR" property="surveyor" jdbcType="VARCHAR" />
+    <result column="STYLE" property="style" jdbcType="VARCHAR" />
+    <result column="DATA1" property="data1" jdbcType="VARCHAR" />
+    <result column="DATA2" property="data2" jdbcType="VARCHAR" />
+    <result column="DATA3" property="data3" jdbcType="VARCHAR" />
+    <result column="DATA4" property="data4" jdbcType="VARCHAR" />
+    <result column="DATA5" property="data5" jdbcType="VARCHAR" />
+    <result column="DATA6" property="data6" jdbcType="VARCHAR" />
+    <result column="DATA7" property="data7" jdbcType="VARCHAR" />
+    <result column="DATA8" property="data8" jdbcType="VARCHAR" />
+    <result column="DATA9" property="data9" jdbcType="VARCHAR" />
+    <result column="DATA10" property="data10" jdbcType="VARCHAR" />
+    <result column="DATA11" property="data11" jdbcType="VARCHAR" />
+    <result column="DATA12" property="data12" jdbcType="VARCHAR" />
+    <result column="DATA13" property="data13" jdbcType="VARCHAR" />
+    <result column="DATA14" property="data14" jdbcType="VARCHAR" />
+    <result column="DATA15" property="data15" jdbcType="VARCHAR" />
+    <result column="DATA16" property="data16" jdbcType="VARCHAR" />
+    <result column="DATA17" property="data17" jdbcType="VARCHAR" />
+    <result column="DATA18" property="data18" jdbcType="VARCHAR" />
+    <result column="DATA19" property="data19" jdbcType="VARCHAR" />
+    <result column="DATA20" property="data20" jdbcType="VARCHAR" />
+    <result column="DATA21" property="data21" jdbcType="VARCHAR" />
+    <result column="DATA22" property="data22" jdbcType="VARCHAR" />
+    <result column="DATA23" property="data23" jdbcType="VARCHAR" />
+    <result column="DATA24" property="data24" jdbcType="VARCHAR" />
+    <result column="DATA25" property="data25" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    DETAILCODE, ORDERCODE, CUSTOMERID, CUSTONERCODE, ENTRYDAY, SURVEYOR, STYLE, DATA1, 
+    DATA2, DATA3, DATA4, DATA5, DATA6, DATA7, DATA8, DATA9, DATA10, DATA11, DATA12, DATA13, 
+    DATA14, DATA15, DATA16, DATA17, DATA18, DATA19, DATA20, DATA21, DATA22, DATA23, DATA24, 
+    DATA25
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from OD_OrderCustomerDataZoon
+    where DETAILCODE = #{detailcode,jdbcType=VARCHAR}
+  </select>
+  <select id="selectBySelective" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from OD_OrderCustomerDataZoon
+    where CUSTOMERID = #{customerid,jdbcType=VARCHAR} 
+	<if test="style != null and style != ''" >
+     and style = #{style,jdbcType=VARCHAR} 
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from OD_OrderCustomerDataZoon
+    where DETAILCODE = #{detailcode,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.cn.zyrs.domain.CustomerDataZoon" >
+    insert into OD_OrderCustomerDataZoon (DETAILCODE, ORDERCODE, CUSTOMERID, 
+      CUSTONERCODE, ENTRYDAY, SURVEYOR, 
+      STYLE, DATA1, DATA2, 
+      DATA3, DATA4, DATA5, 
+      DATA6, DATA7, DATA8, 
+      DATA9, DATA10, DATA11, 
+      DATA12, DATA13, DATA14, 
+      DATA15, DATA16, DATA17, 
+      DATA18, DATA19, DATA20, 
+      DATA21, DATA22, DATA23, 
+      DATA24, DATA25)
+    values (#{detailcode,jdbcType=VARCHAR}, #{ordercode,jdbcType=VARCHAR}, #{customerid,jdbcType=VARCHAR}, 
+      #{custonercode,jdbcType=VARCHAR}, #{entryday,jdbcType=TIMESTAMP}, #{surveyor,jdbcType=VARCHAR}, 
+      #{style,jdbcType=VARCHAR}, #{data1,jdbcType=VARCHAR}, #{data2,jdbcType=VARCHAR}, 
+      #{data3,jdbcType=VARCHAR}, #{data4,jdbcType=VARCHAR}, #{data5,jdbcType=VARCHAR}, 
+      #{data6,jdbcType=VARCHAR}, #{data7,jdbcType=VARCHAR}, #{data8,jdbcType=VARCHAR}, 
+      #{data9,jdbcType=VARCHAR}, #{data10,jdbcType=VARCHAR}, #{data11,jdbcType=VARCHAR}, 
+      #{data12,jdbcType=VARCHAR}, #{data13,jdbcType=VARCHAR}, #{data14,jdbcType=VARCHAR}, 
+      #{data15,jdbcType=VARCHAR}, #{data16,jdbcType=VARCHAR}, #{data17,jdbcType=VARCHAR}, 
+      #{data18,jdbcType=VARCHAR}, #{data19,jdbcType=VARCHAR}, #{data20,jdbcType=VARCHAR}, 
+      #{data21,jdbcType=VARCHAR}, #{data22,jdbcType=VARCHAR}, #{data23,jdbcType=VARCHAR}, 
+      #{data24,jdbcType=VARCHAR}, #{data25,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cn.zyrs.domain.CustomerDataZoon" >
+    insert into OD_OrderCustomerDataZoon
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="customerdatazoon.detailcode != null" >
+        DETAILCODE,
+      </if>
+      <if test="customerdatazoon.ordercode != null" >
+        ORDERCODE,
+      </if>
+      <if test="customerdatazoon.customerid != null" >
+        CUSTOMERID,
+      </if>
+        CUSTONERCODE,
+        ENTRYDAY,
+      <if test="customerdatazoon.surveyor != null" >
+        SURVEYOR,
+      </if>
+      <if test="customerdatazoon.style != null" >
+        STYLE,
+      </if>
+      <if test="customerdatazoon.data1 != null" >
+        DATA1,
+      </if>
+      <if test="customerdatazoon.data2 != null" >
+        DATA2,
+      </if>
+      <if test="customerdatazoon.data3 != null" >
+        DATA3,
+      </if>
+      <if test="customerdatazoon.data4 != null" >
+        DATA4,
+      </if>
+      <if test="customerdatazoon.data5 != null" >
+        DATA5,
+      </if>
+      <if test="customerdatazoon.data6 != null" >
+        DATA6,
+      </if>
+      <if test="customerdatazoon.data7 != null" >
+        DATA7,
+      </if>
+      <if test="customerdatazoon.data8 != null" >
+        DATA8,
+      </if>
+      <if test="customerdatazoon.data9 != null" >
+        DATA9,
+      </if>
+      <if test="customerdatazoon.data10 != null" >
+        DATA10,
+      </if>
+      <if test="customerdatazoon.data11 != null" >
+        DATA11,
+      </if>
+      <if test="customerdatazoon.data12 != null" >
+        DATA12,
+      </if>
+      <if test="customerdatazoon.data13 != null" >
+        DATA13,
+      </if>
+      <if test="customerdatazoon.data14 != null" >
+        DATA14,
+      </if>
+      <if test="customerdatazoon.data15 != null" >
+        DATA15,
+      </if>
+      <if test="customerdatazoon.data16 != null" >
+        DATA16,
+      </if>
+      <if test="customerdatazoon.data17 != null" >
+        DATA17,
+      </if>
+      <if test="customerdatazoon.data18 != null" >
+        DATA18,
+      </if>
+      <if test="customerdatazoon.data19 != null" >
+        DATA19,
+      </if>
+      <if test="customerdatazoon.data20 != null" >
+        DATA20,
+      </if>
+      <if test="customerdatazoon.data21 != null" >
+        DATA21,
+      </if>
+      <if test="customerdatazoon.data22 != null" >
+        DATA22,
+      </if>
+      <if test="customerdatazoon.data23 != null" >
+        DATA23,
+      </if>
+      <if test="customerdatazoon.data24 != null" >
+        DATA24,
+      </if>
+      <if test="customerdatazoon.data25 != null" >
+        DATA25,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="customerdatazoon.detailcode != null" >
+        #{customerdatazoon.detailcode,jdbcType=VARCHAR},
+      </if>
+      <if test="customerdatazoon.ordercode != null" >
+        #{customerdatazoon.ordercode,jdbcType=VARCHAR},
+      </if>
+      <if test="customerdatazoon.customerid != null" >
+        #{customerdatazoon.customerid,jdbcType=VARCHAR},
+      </if>
+       NEWID(),
+      getdate(),
+      <if test="customerdatazoon.surveyor != null" >
+        #{customerdatazoon.surveyor,jdbcType=VARCHAR},
+      </if>
+      <if test="customerdatazoon.style != null" >
+        #{customerdatazoon.style,jdbcType=VARCHAR},
+      </if>
+      <if test="customerdatazoon.data1 != null" >
+        #{customerdatazoon.data1,jdbcType=VARCHAR},
+      </if>
+      <if test="customerdatazoon.data2 != null" >
+        #{customerdatazoon.data2,jdbcType=VARCHAR},
+      </if>
+      <if test="customerdatazoon.data3 != null" >
+        #{customerdatazoon.data3,jdbcType=VARCHAR},
+      </if>
+      <if test="customerdatazoon.data4 != null" >
+        #{customerdatazoon.data4,jdbcType=VARCHAR},
+      </if>
+      <if test="customerdatazoon.data5 != null" >
+        #{customerdatazoon.data5,jdbcType=VARCHAR},
+      </if>
+      <if test="customerdatazoon.data6 != null" >
+        #{customerdatazoon.data6,jdbcType=VARCHAR},
+      </if>
+      <if test="customerdatazoon.data7 != null" >
+        #{customerdatazoon.data7,jdbcType=VARCHAR},
+      </if>
+      <if test="customerdatazoon.data8 != null" >
+        #{customerdatazoon.data8,jdbcType=VARCHAR},
+      </if>
+      <if test="customerdatazoon.data9 != null" >
+        #{customerdatazoon.data9,jdbcType=VARCHAR},
+      </if>
+      <if test="customerdatazoon.data10 != null" >
+        #{customerdatazoon.data10,jdbcType=VARCHAR},
+      </if>
+      <if test="customerdatazoon.data11 != null" >
+        #{customerdatazoon.data11,jdbcType=VARCHAR},
+      </if>
+      <if test="customerdatazoon.data12 != null" >
+        #{customerdatazoon.data12,jdbcType=VARCHAR},
+      </if>
+      <if test="customerdatazoon.data13 != null" >
+        #{customerdatazoon.data13,jdbcType=VARCHAR},
+      </if>
+      <if test="customerdatazoon.data14 != null" >
+        #{customerdatazoon.data14,jdbcType=VARCHAR},
+      </if>
+      <if test="customerdatazoon.data15 != null" >
+        #{customerdatazoon.data15,jdbcType=VARCHAR},
+      </if>
+      <if test="customerdatazoon.data16 != null" >
+        #{customerdatazoon.data16,jdbcType=VARCHAR},
+      </if>
+      <if test="customerdatazoon.data17 != null" >
+        #{customerdatazoon.data17,jdbcType=VARCHAR},
+      </if>
+      <if test="customerdatazoon.data18 != null" >
+        #{customerdatazoon.data18,jdbcType=VARCHAR},
+      </if>
+      <if test="customerdatazoon.data19 != null" >
+        #{customerdatazoon.data19,jdbcType=VARCHAR},
+      </if>
+      <if test="customerdatazoon.data20 != null" >
+        #{customerdatazoon.data20,jdbcType=VARCHAR},
+      </if>
+      <if test="customerdatazoon.data21 != null" >
+        #{customerdatazoon.data21,jdbcType=VARCHAR},
+      </if>
+      <if test="customerdatazoon.data22 != null" >
+        #{customerdatazoon.data22,jdbcType=VARCHAR},
+      </if>
+      <if test="customerdatazoon.data23 != null" >
+        #{customerdatazoon.data23,jdbcType=VARCHAR},
+      </if>
+      <if test="customerdatazoon.data24 != null" >
+        #{customerdatazoon.data24,jdbcType=VARCHAR},
+      </if>
+      <if test="customerdatazoon.data25 != null" >
+        #{customerdatazoon.data25,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn.zyrs.domain.CustomerDataZoon" >
+    update OD_OrderCustomerDataZoon
+    <set >
+      <if test="ordercode != null" >
+        ORDERCODE = #{ordercode,jdbcType=VARCHAR},
+      </if>
+      <if test="customerid != null" >
+        CUSTOMERID = #{customerid,jdbcType=VARCHAR},
+      </if>
+      <if test="custonercode != null" >
+        CUSTONERCODE = #{custonercode,jdbcType=VARCHAR},
+      </if>
+      <if test="entryday != null" >
+        ENTRYDAY = #{entryday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="surveyor != null" >
+        SURVEYOR = #{surveyor,jdbcType=VARCHAR},
+      </if>
+      <if test="style != null" >
+        STYLE = #{style,jdbcType=VARCHAR},
+      </if>
+      <if test="data1 != null" >
+        DATA1 = #{data1,jdbcType=VARCHAR},
+      </if>
+      <if test="data2 != null" >
+        DATA2 = #{data2,jdbcType=VARCHAR},
+      </if>
+      <if test="data3 != null" >
+        DATA3 = #{data3,jdbcType=VARCHAR},
+      </if>
+      <if test="data4 != null" >
+        DATA4 = #{data4,jdbcType=VARCHAR},
+      </if>
+      <if test="data5 != null" >
+        DATA5 = #{data5,jdbcType=VARCHAR},
+      </if>
+      <if test="data6 != null" >
+        DATA6 = #{data6,jdbcType=VARCHAR},
+      </if>
+      <if test="data7 != null" >
+        DATA7 = #{data7,jdbcType=VARCHAR},
+      </if>
+      <if test="data8 != null" >
+        DATA8 = #{data8,jdbcType=VARCHAR},
+      </if>
+      <if test="data9 != null" >
+        DATA9 = #{data9,jdbcType=VARCHAR},
+      </if>
+      <if test="data10 != null" >
+        DATA10 = #{data10,jdbcType=VARCHAR},
+      </if>
+      <if test="data11 != null" >
+        DATA11 = #{data11,jdbcType=VARCHAR},
+      </if>
+      <if test="data12 != null" >
+        DATA12 = #{data12,jdbcType=VARCHAR},
+      </if>
+      <if test="data13 != null" >
+        DATA13 = #{data13,jdbcType=VARCHAR},
+      </if>
+      <if test="data14 != null" >
+        DATA14 = #{data14,jdbcType=VARCHAR},
+      </if>
+      <if test="data15 != null" >
+        DATA15 = #{data15,jdbcType=VARCHAR},
+      </if>
+      <if test="data16 != null" >
+        DATA16 = #{data16,jdbcType=VARCHAR},
+      </if>
+      <if test="data17 != null" >
+        DATA17 = #{data17,jdbcType=VARCHAR},
+      </if>
+      <if test="data18 != null" >
+        DATA18 = #{data18,jdbcType=VARCHAR},
+      </if>
+      <if test="data19 != null" >
+        DATA19 = #{data19,jdbcType=VARCHAR},
+      </if>
+      <if test="data20 != null" >
+        DATA20 = #{data20,jdbcType=VARCHAR},
+      </if>
+      <if test="data21 != null" >
+        DATA21 = #{data21,jdbcType=VARCHAR},
+      </if>
+      <if test="data22 != null" >
+        DATA22 = #{data22,jdbcType=VARCHAR},
+      </if>
+      <if test="data23 != null" >
+        DATA23 = #{data23,jdbcType=VARCHAR},
+      </if>
+      <if test="data24 != null" >
+        DATA24 = #{data24,jdbcType=VARCHAR},
+      </if>
+      <if test="data25 != null" >
+        DATA25 = #{data25,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where DETAILCODE = #{detailcode,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cn.zyrs.domain.CustomerDataZoon" >
+    update OD_OrderCustomerDataZoon
+    set ORDERCODE = #{ordercode,jdbcType=VARCHAR},
+      CUSTOMERID = #{customerid,jdbcType=VARCHAR},
+      CUSTONERCODE = #{custonercode,jdbcType=VARCHAR},
+      ENTRYDAY = #{entryday,jdbcType=TIMESTAMP},
+      SURVEYOR = #{surveyor,jdbcType=VARCHAR},
+      STYLE = #{style,jdbcType=VARCHAR},
+      DATA1 = #{data1,jdbcType=VARCHAR},
+      DATA2 = #{data2,jdbcType=VARCHAR},
+      DATA3 = #{data3,jdbcType=VARCHAR},
+      DATA4 = #{data4,jdbcType=VARCHAR},
+      DATA5 = #{data5,jdbcType=VARCHAR},
+      DATA6 = #{data6,jdbcType=VARCHAR},
+      DATA7 = #{data7,jdbcType=VARCHAR},
+      DATA8 = #{data8,jdbcType=VARCHAR},
+      DATA9 = #{data9,jdbcType=VARCHAR},
+      DATA10 = #{data10,jdbcType=VARCHAR},
+      DATA11 = #{data11,jdbcType=VARCHAR},
+      DATA12 = #{data12,jdbcType=VARCHAR},
+      DATA13 = #{data13,jdbcType=VARCHAR},
+      DATA14 = #{data14,jdbcType=VARCHAR},
+      DATA15 = #{data15,jdbcType=VARCHAR},
+      DATA16 = #{data16,jdbcType=VARCHAR},
+      DATA17 = #{data17,jdbcType=VARCHAR},
+      DATA18 = #{data18,jdbcType=VARCHAR},
+      DATA19 = #{data19,jdbcType=VARCHAR},
+      DATA20 = #{data20,jdbcType=VARCHAR},
+      DATA21 = #{data21,jdbcType=VARCHAR},
+      DATA22 = #{data22,jdbcType=VARCHAR},
+      DATA23 = #{data23,jdbcType=VARCHAR},
+      DATA24 = #{data24,jdbcType=VARCHAR},
+      DATA25 = #{data25,jdbcType=VARCHAR}
+    where DETAILCODE = #{detailcode,jdbcType=VARCHAR}
+  </update>
+</mapper>

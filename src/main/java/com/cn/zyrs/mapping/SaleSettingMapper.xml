@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.zyrs.mapper.SaleSettingMapper" >
+	<!--<resultMap id="BaseResultMap" type="com.cn.zyrs.domain.SaleSetting" >
+		<id column="SALESETCODE" property="salesetcode" jdbcType="VARCHAR" />
+		<id column="SALESETTYPE" property="salesettype" jdbcType="VARCHAR" />
+		<id column="OWERDEPTID" property="owerdeptid" jdbcType="VARCHAR" />
+		<result column="VALUEI" property="valuei" jdbcType="VARCHAR" />
+		<result column="VALUEII" property="valueii" jdbcType="VARCHAR" />
+		<result column="VALUEIII" property="valueiii" jdbcType="VARCHAR" />
+		<result column="VALUEIV" property="valueiv" jdbcType="VARCHAR" />
+		<result column="VALUEV" property="valuev" jdbcType="VARCHAR" />
+	</resultMap>-->
+	<sql id="Base_Column_List" >
+    SALESETTYPE, SALESETCODE, OWERDEPTID, VALUEI, VALUEII, VALUEIII, VALUEIV, VALUEV
+	</sql>
+	
+	<select id="selectByPrimaryKeySelective" resultType="com.cn.zyrs.domain.SaleSetting" parameterType="com.cn.zyrs.domain.SaleSetting" >
+    select 
+		<include refid="Base_Column_List" />
+    from SYS_SaleSetting
+    where 
+		<if test="salesetting.salesettype != null" >
+        SALESETTYPE = #{salesetting.salesettype,jdbcType=VARCHAR}
+		</if>
+		<if test="salesetting.salesetcode != null" >
+       and SALESETCODE = #{salesetting.salesetcode,jdbcType=VARCHAR}
+		</if>
+		<if test="salesetting.owerdeptid != null" >
+        and OWERDEPTID = #{salesetting.owerdeptid,jdbcType=VARCHAR}
+		</if>
+	</select>
+	
+	<select id="getStyleDiscount" resultType="java.lang.String" parameterType="map" >
+    select 
+    	VALUEI 
+    from 
+    	SYS_SaleSetting
+    where 
+		SALESETTYPE = 'SALLPRICE'
+    and SALESETCODE = #{ssc,jdbcType=VARCHAR}
+    <if test="di != null" >
+        and OWERDEPTID =(
+		SELECT 
+			ownerdept
+		FROM
+			US_DepartMent
+		WHERE
+			deptid = #{di,jdbcType=VARCHAR})
+	</if>
+	<if test="di == null" >
+        and OWERDEPTID ='SYS'
+	</if>
+	</select>
+</mapper>

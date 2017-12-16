@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.zyrs.mapper.BomInfoMapper" >
+	<resultMap id="BaseResultMap" type="com.cn.zyrs.domain.BomFabric" >
+		<id column="ID" property="id" jdbcType="VARCHAR" />
+		<result column="FABRICID" property="fabricid" jdbcType="VARCHAR" />
+		<result column="FABRICCODE" property="fabriccode" jdbcType="VARCHAR" />
+		<result column="FABRICNAME" property="fabricname" jdbcType="VARCHAR" />
+		<result column="BRAND" property="brand" jdbcType="VARCHAR" />
+		<result column="STYLEID" property="styleid" jdbcType="VARCHAR" />
+		<result column="MODEL" property="model" jdbcType="VARCHAR" />
+		<result column="STANDARD" property="standard" jdbcType="VARCHAR" />
+		<result column="UNIT" property="unit" jdbcType="VARCHAR" />
+		<result column="SELLPRICE" property="sellprice" jdbcType="DECIMAL" />
+		<result column="PICTURE" property="picture" jdbcType="VARCHAR" />
+		<result column="COMPOSITION" property="composition" jdbcType="VARCHAR" />
+		<result column="BOMNO" property="bomno" jdbcType="VARCHAR" />
+		<result column="WASHINGNOTICE" property="washingnotice" jdbcType="VARCHAR" />
+		<result column="COLOR" property="color" jdbcType="VARCHAR" />
+		<result column="OWNERDEPTID" property="ownerdeptid" jdbcType="INTEGER" />
+		<result column="COMPANY" property="company" jdbcType="VARCHAR" />
+		<result column="STATE" property="state" jdbcType="INTEGER" />
+		<result column="GIFT" property="gift" jdbcType="INTEGER" />
+		<result column="DELFLAG" property="delflag" jdbcType="INTEGER" />
+		<result column="SMALL_IMAGE" property="smallimage" jdbcType="VARCHAR" />
+		<result column="BIG_IMAGE" property="bigimage" jdbcType="VARCHAR" />
+		<result column="NORMAL_IMAGE" property="normalimage" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<resultMap id="FabricResultMap" type="com.cn.zyrs.domain.Fabric" >
+		<id column="FABRICID" property="fabricid" jdbcType="VARCHAR" />
+		<result column="FABRICCODE" property="fabriccode" jdbcType="VARCHAR" />
+		<result column="FABRICNAME" property="fabricname" jdbcType="VARCHAR" />
+		<result column="BRAND" property="brand" jdbcType="VARCHAR" />
+		<result column="BRANDNAME" property="brandname" jdbcType="VARCHAR" />
+		<result column="STYLEID" property="styleid" jdbcType="VARCHAR" />
+		<result column="MODEL" property="model" jdbcType="VARCHAR" />
+		<result column="STANDARD" property="standard" jdbcType="VARCHAR" />
+		<result column="UNIT" property="unit" jdbcType="VARCHAR" />
+		<result column="PRICE" property="price" jdbcType="DECIMAL" />
+		<result column="PICTURE" property="picture" jdbcType="VARCHAR" />
+		<result column="COMPOSITION" property="composition" jdbcType="VARCHAR" />
+		<result column="BOMNO" property="bomno" jdbcType="VARCHAR" />
+		<result column="ISSTOREWARN" property="isstorewarn" jdbcType="INTEGER" />
+		<result column="WASHINGNOTICE" property="washingnotice" jdbcType="VARCHAR" />
+		<result column="COLOR" property="color" jdbcType="VARCHAR" />
+		<result column="OWNERDEPTID" property="ownerdeptid" jdbcType="VARCHAR" />
+		<result column="ISVALID" property="isvalid" jdbcType="INTEGER" />
+		<result column="DELFLAG" property="delflag" jdbcType="INTEGER" />
+	</resultMap>
+  
+	<sql id="Base_Column_List" >
+    ID,fabricid, fabricCODE, fabricNAME, BRAND, STYLEID, MODEL, STANDARD, UNIT, SELLPRICE,GIFT,STATE,COMPANY ,OWNERDEPTID ,COLOR , PICTURE, DELFLAG, COMPOSITION, BOMNO, WASHINGNOTICE, SMALL_IMAGE, NORMAL_IMAGE, BIG_IMAGE
+	</sql>
+	
+	<sql id="Fabric_Column_List" >
+    FABRICID, FABRICCODE, FABRICNAME, BRAND, STYLEID, MODEL, STANDARD, UNIT, PRICE, PICTURE, 
+    COMPOSITION, BOMNO, ISSTOREWARN, WASHINGNOTICE, COLOR, OWNERDEPTID, ISVALID, DELFLAG
+	</sql>
+  
+	<select id="getBomInfoByID" resultMap="BaseResultMap" parameterType="java.lang.String" >
+	SELECT a.*,b.BRANDNAME AS BRANDNAME FROM (
+    select 
+		<include refid="Base_Column_List" />
+    from Bom_Fabric
+    where fabricid = #{fabricid,jdbcType=VARCHAR}
+    AND OWNERDEPTID = (
+	SELECT
+		ownerdept
+	FROM
+		US_DepartMent
+	WHERE
+		deptid = #{di,jdbcType=VARCHAR}))a LEFT JOIN BOM_BRAND b 
+		on a.BRAND = b.BRANDCODE 
+		and a.OWNERDEPTID = b.OWNERDETID 
+	</select>
+	<select id="getBomInfo" resultMap="BaseResultMap" parameterType="map" >
+    select top 13 
+		a.fabricid, a.fabricCODE, a.fabricNAME, a.BRAND, a.STYLEID, a.MODEL, a.STANDARD,a.UNIT, a.PRICE, a.PICTURE, a.DELFLAG, a.COMPOSITION, a.BOMNO, a.OWNERDEPTID ,a.COLOR ,a.WASHINGNOTICE
+ 	from (
+    select
+		a.fabricid, a.fabricCODE, a.fabricNAME, c.BRANDNAME AS BRAND, b.STYLENAME AS STYLE, a.MODEL, a.STANDARD,a.UNIT, a.SELLPRICE AS PRICE, a.PICTURE, a.DELFLAG, a.COMPOSITION, a.BOMNO, a.OWNERDEPTID ,a.COLOR ,a.WASHINGNOTICE
+ 	from Bom_Fabric a,BOM_STYLE b, BOM_BRAND c
+    where a.DELFLAG=0  and a.style = b.stylecode and a.brand = c.brandcode
+		<if test="fabriccode =='' or fabriccode == null">
+    and 1=1
+		</if>
+		<if test="fabriccode !='' and fabriccode != null">
+    and fabricCODE = #{fabriccode,jdbcType=VARCHAR} 
+		</if>
+		<if test="style !='' and style != null">
+    and STYLE = #{style,jdbcType=VARCHAR}
+		</if>
+	) a
+	where a.fabricid NOT IN (
+	select top  (#{num}) fabricid from Bom_Fabric
+    where
+		<if test="fabriccode =='' or fabriccode == null"> 
+    1=1
+		</if>
+		<if test="fabriccode !='' and fabriccode != null">
+    fabricCODE = #{fabriccode,jdbcType=VARCHAR} 
+		</if>
+		<if test="styleid !='' and styleid != null">
+    and STYLE = #{style,jdbcType=VARCHAR}
+		</if>
+	)
+	</select>
+	
+	<!-- 查询面料系统面料信息 -->
+	
+	<select id="getFabricInfo" resultMap="FabricResultMap" parameterType="map" >
+    select top 13 
+		a.fabricid, a.fabricCODE, a.fabricNAME, a.BRAND, a.STYLEID, a.MODEL, a.STANDARD,a.UNIT, a.PRICE, a.PICTURE, a.DELFLAG, a.COMPOSITION, a.BOMNO,a.OWNERDEPTID ,a.COLOR ,a.WASHINGNOTICE
+ 	from (
+    select
+		a.fabricid, a.fabricCODE, a.fabricNAME, c.BRANDNAME as BRAND, b.STYLENAME as STYLE, a.MODEL, a.STANDARD,a.UNIT, a.PRICE, a.PICTURE, a.DELFLAG, a.COMPOSITION, a.BOMNO,a.OWNERDEPTID ,a.COLOR ,a.WASHINGNOTICE
+    from STORE_FABRIC a, BASE_STYLE b, BASE_BRAND c
+    where a.DELFLAG=0  and a.style = b.stylecode and a.brand = c.brandcode
+		<if test="fabriccode =='' or fabriccode == null">
+    and 1=1
+		</if>
+		<if test="fabriccode !='' and fabriccode != null">
+    and fabricCODE = #{fabriccode,jdbcType=VARCHAR} 
+		</if>
+		<if test="styleid !='' and styleid != null">
+    and STYLEID = #{style,jdbcType=VARCHAR}
+		</if>
+	) a
+	where a.fabricid NOT IN (
+	select top  (#{num}) fabricid 
+	 from STORE_FABRIC a, BASE_STYLE b, BASE_BRAND c
+    where a.DELFLAG=0  and a.styleID = b.stylecode and a.brand = c.brandcode
+		<if test="fabriccode =='' or fabriccode == null"> 
+    and 1=1
+		</if>
+		<if test="fabriccode !='' and fabriccode != null">
+    and fabricCODE = #{fabriccode,jdbcType=VARCHAR} 
+		</if>
+		<if test="styleid !='' and styleid != null">
+    and STYLE = #{style,jdbcType=VARCHAR}
+		</if>
+	)
+	</select>
+	<!-- 查询款式类型名称 -->
+	<select id="getStyle"  resultType="java.lang.String">
+    select STYLENAME from BOM_Style where 1=1 and  DELFLAG = 0 and isvalid=1
+	</select>
+	<!-- 查询款式类型ID -->
+	<select id="getStyleCode"  resultType="java.lang.String">
+    select STYLECODE from BOM_Style where stylename=#{stylename,jdbcType=VARCHAR} and  DELFLAG = 0 and isvalid=1 
+	</select>
+	<!-- 查询是商品还是面料 -->
+	<select id="getSort"  resultType="java.lang.String">
+    select SORT from BOM_Style where stylecode=#{stylecode,jdbcType=VARCHAR} and  DELFLAG = 0 and isvalid=1 
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from Bom_Fabric
+    where fabricid = #{fabricid,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.cn.zyrs.domain.BomFabric" >
+    insert into Bom_Fabric (id, fabricid, fabricCODE, fabricNAME, 
+      BRAND, STYLEID, 
+      MODEL, STANDARD, UNIT, 
+      SELLPRICE, GIFT, PICTURE, 
+       DELFLAG, COMPOSITION, 
+      BOMNO, STATE,COMPANY ,OWNERDEPTID ,COLOR ,
+      WASHINGNOTICE
+      )
+    values (newid(),#{fabricid,jdbcType=VARCHAR}, #{fabriccode,jdbcType=VARCHAR}, #{fabricname,jdbcType=VARCHAR}, 
+      #{brand,jdbcType=VARCHAR}, #{style,jdbcType=VARCHAR}, 
+      #{model,jdbcType=VARCHAR}, #{standard,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, 
+      #{sellprice,jdbcType=DECIMAL}, #{gift,jdbcType=INTEGER}, #{picture,jdbcType=VARCHAR}, 
+      #{delflag,jdbcType=INTEGER}, #{composition,jdbcType=VARCHAR}, 
+      #{bomno,jdbcType=VARCHAR},#{state,jdbcType=VARCHAR},#{company,jdbcType=VARCHAR},#{ownerdeptid,jdbcType=VARCHAR},
+      #{color,jdbcType=VARCHAR},#{washingnotice,jdbcType=VARCHAR}
+      )
+	</insert>
+	<insert id="insertSelective" parameterType="com.cn.zyrs.domain.BomFabric" >
+    insert into Bom_Fabric
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="id != null" >
+        ID,
+			</if>
+			<if test="fabricid != null" >
+        fabricid,
+			</if>
+			<if test="fabriccode != null" >
+        fabricCODE,
+			</if>
+			<if test="fabricname != null" >
+        fabricNAME,
+			</if>
+			
+			<if test="brand != null" >
+        BRAND,
+			</if>
+			<if test="styleid != null" >
+        STYLEID,
+			</if>
+			<if test="model != null" >
+        MODEL,
+			</if>
+			<if test="standard != null" >
+        STANDARD,
+			</if>
+			<if test="unit != null" >
+        UNIT,
+			</if>
+			<if test="sellprice != null" >
+        SELLPRICE,
+			</if>
+			
+			<if test="gift != null" >
+        GIFT,
+			</if>
+			<if test="picture != null" >
+        PICTURE,
+			</if>
+			
+			<if test="delflag != null" >
+        DELFLAG,
+			</if>
+			<if test="composition != null" >
+        COMPOSITION,
+			</if>
+			<if test="bomno != null" >
+        BOMNO,
+			</if>
+			
+			<if test="washingnotice != null" >
+        WASHINGNOTICE,
+			</if>
+			<if test="score != null" >
+        SCORE,
+			</if>
+			<if test="storeplace != null" >
+        STOREPLACE,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="fabricid != null" >
+        #{fabricid,jdbcType=VARCHAR},
+			</if>
+			<if test="fabriccode != null" >
+        #{fabriccode,jdbcType=VARCHAR},
+			</if>
+			<if test="fabricname != null" >
+        #{fabricname,jdbcType=VARCHAR},
+			</if>
+			
+			<if test="brand != null" >
+        #{brand,jdbcType=VARCHAR},
+			</if>
+			<if test="style != null" >
+        #{style,jdbcType=VARCHAR},
+			</if>
+			<if test="model != null" >
+        #{model,jdbcType=VARCHAR},
+			</if>
+			<if test="standard != null" >
+        #{standard,jdbcType=VARCHAR},
+			</if>
+			<if test="unit != null" >
+        #{unit,jdbcType=VARCHAR},
+			</if>
+			<if test="sellprice != null" >
+        #{sellprice,jdbcType=DECIMAL},
+			</if>
+			
+			<if test="gift != null" >
+        #{gift,jdbcType=INTEGER},
+			</if>
+			<if test="picture != null" >
+        #{picture,jdbcType=VARCHAR},
+			</if>
+			
+			<if test="delflag != null" >
+        #{delflag,jdbcType=INTEGER},
+			</if>
+			<if test="composition != null" >
+        #{composition,jdbcType=VARCHAR},
+			</if>
+			<if test="bomno != null" >
+        #{bomno,jdbcType=VARCHAR},
+			</if>
+			
+			<if test="washingnotice != null" >
+        #{washingnotice,jdbcType=VARCHAR},
+			</if>
+			
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.cn.zyrs.domain.BomFabric" >
+    update Bom_Fabric
+		<set >
+			<if test="fabriccode != null" >
+        fabricCODE = #{fabriccode,jdbcType=VARCHAR},
+			</if>
+			<if test="fabricname != null" >
+        fabricNAME = #{fabricname,jdbcType=VARCHAR},
+			</if>
+			
+			<if test="brand != null" >
+        BRAND = #{brand,jdbcType=VARCHAR},
+			</if>
+			<if test="styleid != null" >
+        STYLEID = #{style,jdbcType=VARCHAR},
+			</if>
+			<if test="model != null" >
+        MODEL = #{model,jdbcType=VARCHAR},
+			</if>
+			<if test="standard != null" >
+        STANDARD = #{standard,jdbcType=VARCHAR},
+			</if>
+			<if test="unit != null" >
+        UNIT = #{unit,jdbcType=VARCHAR},
+			</if>
+			<if test="sellprice != null" >
+        SELLPRICE = #{sellprice,jdbcType=DECIMAL},
+			</if>
+			<if test="minstore != null" >
+        MINSTORE = #{minstore,jdbcType=DECIMAL},
+			</if>
+			<if test="maxstore != null" >
+        MAXSTORE = #{maxstore,jdbcType=DECIMAL},
+			</if>
+			<if test="store != null" >
+        STORE = #{store,jdbcType=DECIMAL},
+			</if>
+			<if test="gift != null" >
+        GIFT = #{gift,jdbcType=INTEGER},
+			</if>
+			<if test="picture != null" >
+        PICTURE = #{picture,jdbcType=VARCHAR},
+			</if>
+			
+			<if test="delflag != null" >
+        DELFLAG = #{delflag,jdbcType=INTEGER},
+			</if>
+			<if test="composition != null" >
+        COMPOSITION = #{composition,jdbcType=VARCHAR},
+			</if>
+			<if test="bomno != null" >
+        BOMNO = #{bomno,jdbcType=VARCHAR},
+			</if>
+			
+			<if test="washingnotice != null" >
+        WASHINGNOTICE = #{washingnotice,jdbcType=VARCHAR},
+			</if>
+			<if test="score != null" >
+        SCORE = #{score,jdbcType=DECIMAL},
+			</if>
+			<if test="storeplace != null" >
+        STOREPLACE = #{storeplace,jdbcType=VARCHAR},
+			</if>
+		</set>
+    where fabricid = #{fabricid,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.cn.zyrs.domain.BomFabric" >
+    update Bom_Fabric
+    set fabricCODE = #{fabriccode,jdbcType=VARCHAR},
+      fabricNAME = #{fabricname,jdbcType=VARCHAR},
+     
+      BRAND = #{brand,jdbcType=VARCHAR},
+      STYLE = #{style,jdbcType=VARCHAR},
+      MODEL = #{model,jdbcType=VARCHAR},
+      STANDARD = #{standard,jdbcType=VARCHAR},
+      UNIT = #{unit,jdbcType=VARCHAR},
+      SELLPRICE = #{sellprice,jdbcType=DECIMAL},
+      MINSTORE = #{minstore,jdbcType=DECIMAL},
+      MAXSTORE = #{maxstore,jdbcType=DECIMAL},
+      STORE = #{store,jdbcType=DECIMAL},
+      GIFT = #{gift,jdbcType=INTEGER},
+      PICTURE = #{picture,jdbcType=VARCHAR},
+ 
+      DELFLAG = #{delflag,jdbcType=INTEGER},
+      COMPOSITION = #{composition,jdbcType=VARCHAR},
+      BOMNO = #{bomno,jdbcType=VARCHAR},
+      
+      WASHINGNOTICE = #{washingnotice,jdbcType=VARCHAR},
+      SCORE = #{score,jdbcType=DECIMAL},
+      STOREPLACE = #{storeplace,jdbcType=VARCHAR}
+    where fabricid = #{bomid,jdbcType=VARCHAR}
+	</update>
+</mapper>

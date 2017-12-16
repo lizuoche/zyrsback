@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.zyrs.mapper.ImageCodeMapper" >
+  <resultMap id="BaseResultMap" type="com.cn.zyrs.domain.ImageCode" >
+    <id column="ID" property="id" jdbcType="VARCHAR" />
+    <result column="IMAGENAME" property="imagename" jdbcType="VARCHAR" />
+    <result column="IMAGECODE" property="imagecode" jdbcType="VARCHAR" />
+    <result column="unityCODE" property="unitycode" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, IMAGENAME, IMAGECODE, unityCODE
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from TAB_IMAGECODE
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+   <select id="getImageName" resultType="java.lang.String" parameterType="java.lang.String" >
+    select 
+    ImageName
+    from TAB_IMAGECODE
+    where unitycode = #{unitycode,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from TAB_IMAGECODE
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.cn.zyrs.domain.ImageCode" >
+    insert into TAB_IMAGECODE (ID, IMAGENAME, IMAGECODE, 
+      unityCODE)
+    values (#{id,jdbcType=VARCHAR}, #{imagename,jdbcType=VARCHAR}, #{imagecode,jdbcType=VARCHAR}, 
+      #{unitycode,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cn.zyrs.domain.ImageCode" >
+    insert into TAB_IMAGECODE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="imagename != null" >
+        IMAGENAME,
+      </if>
+      <if test="imagecode != null" >
+        IMAGECODE,
+      </if>
+      <if test="unitycode != null" >
+        unityCODE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="imagename != null" >
+        #{imagename,jdbcType=VARCHAR},
+      </if>
+      <if test="imagecode != null" >
+        #{imagecode,jdbcType=VARCHAR},
+      </if>
+      <if test="unitycode != null" >
+        #{unitycode,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn.zyrs.domain.ImageCode" >
+    update TAB_IMAGECODE
+    <set >
+      <if test="imagename != null" >
+        IMAGENAME = #{imagename,jdbcType=VARCHAR},
+      </if>
+      <if test="imagecode != null" >
+        IMAGECODE = #{imagecode,jdbcType=VARCHAR},
+      </if>
+      <if test="unitycode != null" >
+        unityCODE = #{unitycode,jdbcType=CHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cn.zyrs.domain.ImageCode" >
+    update TAB_IMAGECODE
+    set IMAGENAME = #{imagename,jdbcType=VARCHAR},
+      IMAGECODE = #{imagecode,jdbcType=VARCHAR},
+      unityCODE = #{unitycode,jdbcType=CHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

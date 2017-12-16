@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:p="http://www.springframework.org/schema/p" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/jee 
+	http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
+	http://www.springframework.org/schema/tx 
+	http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+	http://www.springframework.org/schema/aop 
+	http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+	http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context-4.0.xsd "
+	>
+	
+	<!-- 自动扫描 -->
+	<context:component-scan base-package="com.cn.zyrs" />
+	
+	<!-- 加载系统配置文件 -->
+	<context:property-placeholder location="classpath:/system-config.properties" />
+	
+	<!-- 配制c3p0连接池 -->
+	<bean id="dataSource1" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+		<property name="driverClass" value="${db.driverClassName}" />
+		<property name="jdbcUrl" value="${db.url}" />
+		<property name="user" value="${db.username}" />
+		<property name="password" value="${db.password}" />
+		<!-- 指定连接数据库连接池的最小连接数 -->
+		<property name="minPoolSize" value="${cp.minPoolSize}" />
+		<!-- 指定连接数据库连接池的最大连接数 -->
+		<property name="maxPoolSize" value="${cp.maxPoolSize}" />
+		<!-- 指定连接数据库连接池的连接的最大空闲时间 -->
+		<property name="maxIdleTime" value="${cp.maxIdleTime}" />
+		<!--当连接池中的连接耗尽的时候c3p0一次同时获取的连接数。Default: 3 -->
+		<property name="acquireIncrement" value="${cp.acquireIncrement}" />
+		<!--JDBC的标准参数，用以控制数据源内加载的PreparedStatements数量。但由于预缓存的statements属于单个connection而不是整个连接池。所以设置这个参数需要考虑到多方面的因素。如果maxStatements与maxStatementsPerConnection均为0，则缓存被关闭。Default：0 -->
+		<property name="maxStatements" value="${cp.maxStatements}" />
+		<!-- 指定连接数据库连接池的初始化连接数 -->
+		<property name="initialPoolSize" value="${cp.initialPoolSize}" />
+		<!--每60秒检查所有连接池中的空闲连接。Default: 0 -->
+		<property name="idleConnectionTestPeriod" value="${cp.idleConnectionTestPeriod}" />
+		<!--定义在从数据库获取新连接失败后重复尝试的次数。Default: 30 -->
+		<property name="acquireRetryAttempts" value="${cp.acquireRetryAttempts}" />
+		<!--获取连接失败将会引起所有等待连接池来获取连接的线程抛出异常。但是数据源仍有效保留，并在下次调用getConnection()的时候继续尝试获取连接。如果设为true，那么在尝试获取连接失败后该数据源将申明已断开并永久关闭。Default：false -->
+		<property name="breakAfterAcquireFailure" value="${cp.breakAfterAcquireFailure}" />
+		<!--因性能消耗大请只在需要的时候使用它。如果设为true那么在每个connection提交的时候都将校验其有效性。建议使用idleConnectionTestPeriod或automaticTestTable等方法来提升连接测试的性能。Default：false -->
+		<property name="testConnectionOnCheckout" value="${cp.testConnectionOnCheckout}" />
+		<!--如果设为true那么在取得连接的同时将校验连接的有效性。Default: false -->
+		<property name="testConnectionOnCheckin" value="${cp.testConnectionOnCheckin}" />
+	</bean>
+	
+	<bean id="dataSource2" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+		<property name="driverClass" value="${db1.driverClassName}" />
+		<property name="jdbcUrl" value="${db1.url}" />
+		<property name="user" value="${db1.username}" />
+		<property name="password" value="${db1.password}" />
+		<!-- 指定连接数据库连接池的最小连接数 -->
+		<property name="minPoolSize" value="${cp.minPoolSize}" />
+		<!-- 指定连接数据库连接池的最大连接数 -->
+		<property name="maxPoolSize" value="${cp.maxPoolSize}" />
+		<!-- 指定连接数据库连接池的连接的最大空闲时间 -->
+		<property name="maxIdleTime" value="${cp.maxIdleTime}" />
+		<!--当连接池中的连接耗尽的时候c3p0一次同时获取的连接数。Default: 3 -->
+		<property name="acquireIncrement" value="${cp.acquireIncrement}" />
+		<!--JDBC的标准参数，用以控制数据源内加载的PreparedStatements数量。但由于预缓存的statements属于单个connection而不是整个连接池。所以设置这个参数需要考虑到多方面的因素。如果maxStatements与maxStatementsPerConnection均为0，则缓存被关闭。Default：0 -->
+		<property name="maxStatements" value="${cp.maxStatements}" />
+		<!-- 指定连接数据库连接池的初始化连接数 -->
+		<property name="initialPoolSize" value="${cp.initialPoolSize}" />
+		<!--每60秒检查所有连接池中的空闲连接。Default: 0 -->
+		<property name="idleConnectionTestPeriod" value="${cp.idleConnectionTestPeriod}" />
+		<!--定义在从数据库获取新连接失败后重复尝试的次数。Default: 30 -->
+		<property name="acquireRetryAttempts" value="${cp.acquireRetryAttempts}" />
+		<!--获取连接失败将会引起所有等待连接池来获取连接的线程抛出异常。但是数据源仍有效保留，并在下次调用getConnection()的时候继续尝试获取连接。如果设为true，那么在尝试获取连接失败后该数据源将申明已断开并永久关闭。Default：false -->
+		<property name="breakAfterAcquireFailure" value="${cp.breakAfterAcquireFailure}" />
+		<!--因性能消耗大请只在需要的时候使用它。如果设为true那么在每个connection提交的时候都将校验其有效性。建议使用idleConnectionTestPeriod或automaticTestTable等方法来提升连接测试的性能。Default：false -->
+		<property name="testConnectionOnCheckout" value="${cp.testConnectionOnCheckout}" />
+		<!--如果设为true那么在取得连接的同时将校验连接的有效性。Default: false -->
+		<property name="testConnectionOnCheckin" value="${cp.testConnectionOnCheckin}" />
+	</bean>
+	
+	<bean id="dataSource" class="com.cn.zyrs.utils.DynamicDataSource">  
+		<property name="targetDataSources">  
+			<map key-type="java.lang.String">  
+				<entry value-ref="dataSource1" key="dataSource1"></entry>  
+				<entry value-ref="dataSource2" key="dataSource2"></entry>  
+			</map>  
+		</property>  
+		<property name="defaultTargetDataSource" ref="dataSource1"></property>      <!-- 默认使用ds1的数据源 -->
+	</bean>  
+	
+	<!-- <tx:annotation-driven/>标签是注解驱动的事务管理支持的核心。  -->
+	
+	<!-- <tx:annotation-driven/>标签的属性： 
+		transaction-manager：指定到现有的PlatformTransactionManager bean的引用，通知会使用该引用。default="transactionManager" 
+		mode：指定Spring事务管理框架创建通知bean的方式。可用的值有proxy和aspectj。前者是默认值，表示通知对象是个JDK代理；后者表示Spring AOP会使用AspectJ创建代理。 
+		order：指定创建的切面的顺序。只要目标对象有多个通知就可以使用该属性。 
+		proxy-target-class：该属性如果为true就表示你想要代理目标类而不是bean所实现的所有接口。default="false"  -->
+		
+	<!-- 使用基于注解的AOP事务管理     开启注解事务 只对当前配置文件有效 -->
+	<tx:annotation-driven transaction-manager="transactionManager" />
+
+	<!-- 开启AOP监听 只对当前配置文件有效 -->
+	<aop:aspectj-autoproxy expose-proxy="true" />
+	
+	<!-- 对数据源启用事务管理 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+
+	<!-- 探索@Transactional注解： 你可以指定传播、隔离级别、超时以及允许和不允许的异常。 
+			@Transactional注解的属性: 
+				propagation：指定事务定义中使用的传播 
+				isolation：设定事务的隔离级别 
+				timeout：指定事务的超市（秒） 
+				readOnly：指定事务的超时 
+				noRollbackFor：目标方法可抛出的异常所构成的数组，但通知仍会提交事务 
+				rollbackFor：异常所构成的数组，如果目标方法抛出了这些异常，通知就会回滚事务 
+
+		基于注解的事务管理小结： 
+			如果定义在类上，那么所有的方法都使用相同的方式，有些read就会抱怨给太多的东西了。 
+			如果在每个方法上都定义注解，那么就会很麻烦。 
+			可以使用XML AOP事务管理能更好的处理这种情况   -->
+	
+	<!-- tx:advice标签简介 
+		id是该advice bean的标识，而transaction-manager则必须引用一个PlatformTransactionManager bean。 
+		还可以通过<tx:attributes>标签定制<tx:advice>标签所创建的通知的行为。   -->
+			
+	<!-- 事务管理 、当使用spring为每个Controller注入属性时引用此bean、为其添加事务管理 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<!-- <tx:method/>标签的属性： 
+				name：方法名的匹配模式，通知根据该模式寻找匹配的方法。 
+				propagation：设定事务定义所用的传播级别。 
+				isolation：设置事务的隔离级别。 
+				timeout：指定事务的超时（秒）。 
+				read-only：该属性为true指示事务是只读的 
+				no-rollback-for：以逗号分隔的异常类的列表，目标方法可以跑出这些异常而不会导致通知执行回滚 
+				rollback-for：以逗号分隔的异常类的列表，当目标方法跑出这些异常时会导致通知执行回滚。默认情况下，该列表为空，因此不在no-rollback-for列表中的任何运行时异常都会导致回滚。   -->
+			<tx:method name="*" isolation="DEFAULT" propagation="REQUIRED" no-rollback-for="java.lang.RuntimeException" timeout="60"/>	
+			<tx:method name="save*" />
+			<tx:method name="add*" />
+			<tx:method name="create*" />
+			<tx:method name="insert*" />
+			<tx:method name="update*" />
+			<tx:method name="merge*" />
+			<tx:method name="del*" />
+			<tx:method name="remove*" />
+			<tx:method name="put*" />
+			<tx:method name="use*" />
+			<tx:method name="get*" read-only="true" />
+			<tx:method name="count*" read-only="true" />
+			<tx:method name="find*" read-only="true" />
+			<tx:method name="list*" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+	
+	<aop:config expose-proxy="true">
+		<!-- 只对业务逻辑层实施事务 -->
+		<aop:pointcut id="txPointcut"
+			expression="execution(* com.cms.zyrs.serviceimpl..*.*(..))" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut" />
+	</aop:config>
+
+	<!-- JdbcTemplate -->
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<!-- MyBatics sql语句工厂配置 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- 关联mybatis配置，可以不用配置 -->
+		<property name="configLocation" value="classpath:mybatis-config.xml" />
+		<property name="dataSource" ref="dataSource" />
+
+		<!-- mapper --> 
+		<property name="mapperLocations">
+			<list>
+				<!--包或以下所有目录中，以-resultmap.xml结尾所有文件 -->
+				<value>classpath:com/cn/zyrs/mapping/*.xml</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!--Mapper接口所在包名，Spring会自动查找其下的类 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.cn.zyrs.mapper" />
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+	</bean>
+	
+</beans>

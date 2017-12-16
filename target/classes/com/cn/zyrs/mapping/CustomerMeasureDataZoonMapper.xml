@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.zyrs.mapper.CustomerMeasureDataZoonMapper" >
+  <resultMap id="BaseResultMap" type="com.cn.zyrs.domain.CustomerMeasureDataZoon" >
+    <id column="MEASUREID" property="measureid" jdbcType="VARCHAR" />
+    <result column="CUSTOMERID" property="customerid" jdbcType="VARCHAR" />
+    <result column="CUSTONERCODE" property="custonercode" jdbcType="VARCHAR" />
+    <result column="ENTRYDAY" property="entryday" jdbcType="TIMESTAMP" />
+    <result column="SURVEYOR" property="surveyor" jdbcType="VARCHAR" />
+    <result column="STYLE" property="style" jdbcType="VARCHAR" />
+    <result column="DATA1" property="data1" jdbcType="VARCHAR" />
+    <result column="DATA2" property="data2" jdbcType="VARCHAR" />
+    <result column="DATA3" property="data3" jdbcType="VARCHAR" />
+    <result column="DATA4" property="data4" jdbcType="VARCHAR" />
+    <result column="DATA5" property="data5" jdbcType="VARCHAR" />
+    <result column="DATA6" property="data6" jdbcType="VARCHAR" />
+    <result column="DATA7" property="data7" jdbcType="VARCHAR" />
+    <result column="DATA8" property="data8" jdbcType="VARCHAR" />
+    <result column="DATA9" property="data9" jdbcType="VARCHAR" />
+    <result column="DATA10" property="data10" jdbcType="VARCHAR" />
+    <result column="DATA11" property="data11" jdbcType="VARCHAR" />
+    <result column="DATA12" property="data12" jdbcType="VARCHAR" />
+    <result column="DATA13" property="data13" jdbcType="VARCHAR" />
+    <result column="DATA14" property="data14" jdbcType="VARCHAR" />
+    <result column="DATA15" property="data15" jdbcType="VARCHAR" />
+    <result column="DATA16" property="data16" jdbcType="VARCHAR" />
+    <result column="DATA17" property="data17" jdbcType="VARCHAR" />
+    <result column="DATA18" property="data18" jdbcType="VARCHAR" />
+    <result column="DATA19" property="data19" jdbcType="VARCHAR" />
+    <result column="DATA20" property="data20" jdbcType="VARCHAR" />
+    <result column="DATA21" property="data21" jdbcType="VARCHAR" />
+    <result column="DATA22" property="data22" jdbcType="VARCHAR" />
+    <result column="DATA23" property="data23" jdbcType="VARCHAR" />
+    <result column="DATA24" property="data24" jdbcType="VARCHAR" />
+    <result column="DATA25" property="data25" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    MEASUREID, CUSTOMERID, CUSTONERCODE, ENTRYDAY, SURVEYOR, STYLE, DATA1, DATA2, DATA3, 
+    DATA4, DATA5, DATA6, DATA7, DATA8, DATA9, DATA10, DATA11, DATA12, DATA13, DATA14, 
+    DATA15, DATA16, DATA17, DATA18, DATA19, DATA20, DATA21, DATA22, DATA23, DATA24, DATA25
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from CUM_CustomerMeasureDataZoon
+    where MEASUREID = #{measureid,jdbcType=VARCHAR}
+  </select>
+   <select id="selectBySelective" resultMap="BaseResultMap" parameterType="map" >
+    select 
+    <include refid="Base_Column_List" />
+    from CUM_CustomerMeasureDataZoon
+    where CUSTOMERID = #{customerid,jdbcType=VARCHAR} 
+	<if test="style != null and style != ''" >
+     and STYLE = #{style,jdbcType=VARCHAR} 
+    </if>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from CUM_CustomerMeasureDataZoon
+    where MEASUREID = #{measureid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.cn.zyrs.domain.CustomerMeasureDataZoon" >
+    insert into CUM_CustomerMeasureDataZoon (MEASUREID, CUSTOMERID, CUSTONERCODE, 
+      ENTRYDAY, SURVEYOR, STYLE, 
+      DATA1, DATA2, DATA3, 
+      DATA4, DATA5, DATA6, 
+      DATA7, DATA8, DATA9, 
+      DATA10, DATA11, DATA12, 
+      DATA13, DATA14, DATA15, 
+      DATA16, DATA17, DATA18, 
+      DATA19, DATA20, DATA21, 
+      DATA22, DATA23, DATA24, 
+      DATA25)
+    values (#{measureid,jdbcType=VARCHAR}, #{customerid,jdbcType=VARCHAR}, #{custonercode,jdbcType=VARCHAR}, 
+      #{entryday,jdbcType=TIMESTAMP}, #{surveyor,jdbcType=VARCHAR}, #{style,jdbcType=VARCHAR}, 
+      #{data1,jdbcType=VARCHAR}, #{data2,jdbcType=VARCHAR}, #{data3,jdbcType=VARCHAR}, 
+      #{data4,jdbcType=VARCHAR}, #{data5,jdbcType=VARCHAR}, #{data6,jdbcType=VARCHAR}, 
+      #{data7,jdbcType=VARCHAR}, #{data8,jdbcType=VARCHAR}, #{data9,jdbcType=VARCHAR}, 
+      #{data10,jdbcType=VARCHAR}, #{data11,jdbcType=VARCHAR}, #{data12,jdbcType=VARCHAR}, 
+      #{data13,jdbcType=VARCHAR}, #{data14,jdbcType=VARCHAR}, #{data15,jdbcType=VARCHAR}, 
+      #{data16,jdbcType=VARCHAR}, #{data17,jdbcType=VARCHAR}, #{data18,jdbcType=VARCHAR}, 
+      #{data19,jdbcType=VARCHAR}, #{data20,jdbcType=VARCHAR}, #{data21,jdbcType=VARCHAR}, 
+      #{data22,jdbcType=VARCHAR}, #{data23,jdbcType=VARCHAR}, #{data24,jdbcType=VARCHAR}, 
+      #{data25,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cn.zyrs.domain.CustomerMeasureDataZoon" >
+    insert into CUM_CustomerMeasureDataZoon
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+        MEASUREID,
+      <if test="customermeasuredatazoon.customerid != null" >
+        CUSTOMERID,
+      </if>
+        CUSTONERCODE,
+        ENTRYDAY,
+      <if test="customermeasuredatazoon.surveyor != null" >
+        SURVEYOR,
+      </if>
+      <if test="customermeasuredatazoon.style != null" >
+        STYLE,
+      </if>
+      <if test="customermeasuredatazoon.data1 != null" >
+        DATA1,
+      </if>
+      <if test="customermeasuredatazoon.data2 != null" >
+        DATA2,
+      </if>
+      <if test="customermeasuredatazoon.data3 != null" >
+        DATA3,
+      </if>
+      <if test="customermeasuredatazoon.data4 != null" >
+        DATA4,
+      </if>
+      <if test="customermeasuredatazoon.data5 != null" >
+        DATA5,
+      </if>
+      <if test="customermeasuredatazoon.data6 != null" >
+        DATA6,
+      </if>
+      <if test="customermeasuredatazoon.data7 != null" >
+        DATA7,
+      </if>
+      <if test="customermeasuredatazoon.data8 != null" >
+        DATA8,
+      </if>
+      <if test="customermeasuredatazoon.data9 != null" >
+        DATA9,
+      </if>
+      <if test="customermeasuredatazoon.data10 != null" >
+        DATA10,
+      </if>
+      <if test="customermeasuredatazoon.data11 != null" >
+        DATA11,
+      </if>
+      <if test="customermeasuredatazoon.data12 != null" >
+        DATA12,
+      </if>
+      <if test="customermeasuredatazoon.data13 != null" >
+        DATA13,
+      </if>
+      <if test="customermeasuredatazoon.data14 != null" >
+        DATA14,
+      </if>
+      <if test="customermeasuredatazoon.data15 != null" >
+        DATA15,
+      </if>
+      <if test="customermeasuredatazoon.data16 != null" >
+        DATA16,
+      </if>
+      <if test="customermeasuredatazoon.data17 != null" >
+        DATA17,
+      </if>
+      <if test="customermeasuredatazoon.data18 != null" >
+        DATA18,
+      </if>
+      <if test="customermeasuredatazoon.data19 != null" >
+        DATA19,
+      </if>
+      <if test="customermeasuredatazoon.data20 != null" >
+        DATA20,
+      </if>
+      <if test="customermeasuredatazoon.data21 != null" >
+        DATA21,
+      </if>
+      <if test="customermeasuredatazoon.data22 != null" >
+        DATA22,
+      </if>
+      <if test="customermeasuredatazoon.data23 != null" >
+        DATA23,
+      </if>
+      <if test="customermeasuredatazoon.data24 != null" >
+        DATA24,
+      </if>
+      <if test="customermeasuredatazoon.data25 != null" >
+        DATA25,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      NEWID(),
+      <if test="customermeasuredatazoon.customerid != null" >
+        #{customermeasuredatazoon.customerid,jdbcType=VARCHAR},
+      </if>
+      NEWID(),
+   	  getdate(),
+      <if test="customermeasuredatazoon.surveyor != null" >
+        #{customermeasuredatazoon.surveyor,jdbcType=VARCHAR},
+      </if>
+      <if test="customermeasuredatazoon.style != null" >
+        #{customermeasuredatazoon.style,jdbcType=VARCHAR},
+      </if>
+      <if test="customermeasuredatazoon.data1 != null" >
+        #{customermeasuredatazoon.data1,jdbcType=VARCHAR},
+      </if>
+      <if test="customermeasuredatazoon.data2 != null" >
+        #{customermeasuredatazoon.data2,jdbcType=VARCHAR},
+      </if>
+      <if test="customermeasuredatazoon.data3 != null" >
+        #{customermeasuredatazoon.data3,jdbcType=VARCHAR},
+      </if>
+      <if test="customermeasuredatazoon.data4 != null" >
+        #{customermeasuredatazoon.data4,jdbcType=VARCHAR},
+      </if>
+      <if test="customermeasuredatazoon.data5 != null" >
+        #{customermeasuredatazoon.data5,jdbcType=VARCHAR},
+      </if>
+      <if test="customermeasuredatazoon.data6 != null" >
+        #{customermeasuredatazoon.data6,jdbcType=VARCHAR},
+      </if>
+      <if test="customermeasuredatazoon.data7 != null" >
+        #{customermeasuredatazoon.data7,jdbcType=VARCHAR},
+      </if>
+      <if test="customermeasuredatazoon.data8 != null" >
+        #{customermeasuredatazoon.data8,jdbcType=VARCHAR},
+      </if>
+      <if test="customermeasuredatazoon.data9 != null" >
+        #{customermeasuredatazoon.data9,jdbcType=VARCHAR},
+      </if>
+      <if test="customermeasuredatazoon.data10 != null" >
+        #{customermeasuredatazoon.data10,jdbcType=VARCHAR},
+      </if>
+      <if test="customermeasuredatazoon.data11 != null" >
+        #{customermeasuredatazoon.data11,jdbcType=VARCHAR},
+      </if>
+      <if test="customermeasuredatazoon.data12 != null" >
+        #{customermeasuredatazoon.data12,jdbcType=VARCHAR},
+      </if>
+      <if test="customermeasuredatazoon.data13 != null" >
+        #{customermeasuredatazoon.data13,jdbcType=VARCHAR},
+      </if>
+      <if test="customermeasuredatazoon.data14 != null" >
+        #{customermeasuredatazoon.data14,jdbcType=VARCHAR},
+      </if>
+      <if test="customermeasuredatazoon.data15 != null" >
+        #{customermeasuredatazoon.data15,jdbcType=VARCHAR},
+      </if>
+      <if test="customermeasuredatazoon.data16 != null" >
+        #{customermeasuredatazoon.data16,jdbcType=VARCHAR},
+      </if>
+      <if test="customermeasuredatazoon.data17 != null" >
+        #{customermeasuredatazoon.data17,jdbcType=VARCHAR},
+      </if>
+      <if test="customermeasuredatazoon.data18 != null" >
+        #{customermeasuredatazoon.data18,jdbcType=VARCHAR},
+      </if>
+      <if test="customermeasuredatazoon.data19 != null" >
+        #{customermeasuredatazoon.data19,jdbcType=VARCHAR},
+      </if>
+      <if test="customermeasuredatazoon.data20 != null" >
+        #{customermeasuredatazoon.data20,jdbcType=VARCHAR},
+      </if>
+      <if test="customermeasuredatazoon.data21 != null" >
+        #{customermeasuredatazoon.data21,jdbcType=VARCHAR},
+      </if>
+      <if test="customermeasuredatazoon.data22 != null" >
+        #{customermeasuredatazoon.data22,jdbcType=VARCHAR},
+      </if>
+      <if test="customermeasuredatazoon.data23 != null" >
+        #{customermeasuredatazoon.data23,jdbcType=VARCHAR},
+      </if>
+      <if test="customermeasuredatazoon.data24 != null" >
+        #{customermeasuredatazoon.data24,jdbcType=VARCHAR},
+      </if>
+      <if test="customermeasuredatazoon.data25 != null" >
+        #{customermeasuredatazoon.data25,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn.zyrs.domain.CustomerMeasureDataZoon" >
+    update CUM_CustomerMeasureDataZoon
+    <set >
+        ENTRYDAY =getdate(),
+      <if test="customermeasuredatazoon.surveyor != null" >
+        SURVEYOR = #{customermeasuredatazoon.surveyor,jdbcType=VARCHAR},
+      </if>
+      <if test="customermeasuredatazoon.style != null" >
+        STYLE = #{customermeasuredatazoon.style,jdbcType=VARCHAR},
+      </if>
+      <if test="customermeasuredatazoon.data1 != null" >
+        DATA1 = #{customermeasuredatazoon.data1,jdbcType=VARCHAR},
+      </if>
+      <if test="customermeasuredatazoon.data2 != null" >
+        DATA2 = #{customermeasuredatazoon.data2,jdbcType=VARCHAR},
+      </if>
+      <if test="customermeasuredatazoon.data3 != null" >
+        DATA3 = #{customermeasuredatazoon.data3,jdbcType=VARCHAR},
+      </if>
+      <if test="customermeasuredatazoon.data4 != null" >
+        DATA4 = #{customermeasuredatazoon.data4,jdbcType=VARCHAR},
+      </if>
+      <if test="customermeasuredatazoon.data5 != null" >
+        DATA5 = #{customermeasuredatazoon.data5,jdbcType=VARCHAR},
+      </if>
+      <if test="customermeasuredatazoon.data6 != null" >
+        DATA6 = #{customermeasuredatazoon.data6,jdbcType=VARCHAR},
+      </if>
+      <if test="customermeasuredatazoon.data7 != null" >
+        DATA7 = #{customermeasuredatazoon.data7,jdbcType=VARCHAR},
+      </if>
+      <if test="customermeasuredatazoon.data8 != null" >
+        DATA8 = #{customermeasuredatazoon.data8,jdbcType=VARCHAR},
+      </if>
+      <if test="customermeasuredatazoon.data9 != null" >
+        DATA9 = #{customermeasuredatazoon.data9,jdbcType=VARCHAR},
+      </if>
+      <if test="customermeasuredatazoon.data10 != null" >
+        DATA10 = #{customermeasuredatazoon.data10,jdbcType=VARCHAR},
+      </if>
+      <if test="customermeasuredatazoon.data11 != null" >
+        DATA11 = #{customermeasuredatazoon.data11,jdbcType=VARCHAR},
+      </if>
+      <if test="customermeasuredatazoon.data12 != null" >
+        DATA12 = #{customermeasuredatazoon.data12,jdbcType=VARCHAR},
+      </if>
+      <if test="customermeasuredatazoon.data13 != null" >
+        DATA13 = #{customermeasuredatazoon.data13,jdbcType=VARCHAR},
+      </if>
+      <if test="customermeasuredatazoon.data14 != null" >
+        DATA14 = #{customermeasuredatazoon.data14,jdbcType=VARCHAR},
+      </if>
+      <if test="customermeasuredatazoon.data15 != null" >
+        DATA15 = #{customermeasuredatazoon.data15,jdbcType=VARCHAR},
+      </if>
+      <if test="customermeasuredatazoon.data16 != null" >
+        DATA16 = #{customermeasuredatazoon.data16,jdbcType=VARCHAR},
+      </if>
+      <if test="customermeasuredatazoon.data17 != null" >
+        DATA17 = #{customermeasuredatazoon.data17,jdbcType=VARCHAR},
+      </if>
+      <if test="customermeasuredatazoon.data18 != null" >
+        DATA18 = #{customermeasuredatazoon.data18,jdbcType=VARCHAR},
+      </if>
+      <if test="customermeasuredatazoon.data19 != null" >
+        DATA19 = #{customermeasuredatazoon.data19,jdbcType=VARCHAR},
+      </if>
+      <if test="customermeasuredatazoon.data20 != null" >
+        DATA20 = #{customermeasuredatazoon.data20,jdbcType=VARCHAR},
+      </if>
+      <if test="customermeasuredatazoon.data21 != null" >
+        DATA21 = #{customermeasuredatazoon.data21,jdbcType=VARCHAR},
+      </if>
+      <if test="customermeasuredatazoon.data22 != null" >
+        DATA22 = #{customermeasuredatazoon.data22,jdbcType=VARCHAR},
+      </if>
+      <if test="customermeasuredatazoon.data23 != null" >
+        DATA23 = #{customermeasuredatazoon.data23,jdbcType=VARCHAR},
+      </if>
+      <if test="customermeasuredatazoon.data24 != null" >
+        DATA24 = #{customermeasuredatazoon.data24,jdbcType=VARCHAR},
+      </if>
+      <if test="customermeasuredatazoon.data25 != null" >
+        DATA25 = #{customermeasuredatazoon.data25,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CUSTOMERID = #{customermeasuredatazoon.customerid,jdbcType=VARCHAR} and STYLE = #{customermeasuredatazoon.style,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cn.zyrs.domain.CustomerMeasureDataZoon" >
+    update CUM_CustomerMeasureDataZoon
+    set CUSTOMERID = #{customerid,jdbcType=VARCHAR},
+      CUSTONERCODE = #{custonercode,jdbcType=VARCHAR},
+      ENTRYDAY = #{entryday,jdbcType=TIMESTAMP},
+      SURVEYOR = #{surveyor,jdbcType=VARCHAR},
+      STYLE = #{style,jdbcType=VARCHAR},
+      DATA1 = #{data1,jdbcType=VARCHAR},
+      DATA2 = #{data2,jdbcType=VARCHAR},
+      DATA3 = #{data3,jdbcType=VARCHAR},
+      DATA4 = #{data4,jdbcType=VARCHAR},
+      DATA5 = #{data5,jdbcType=VARCHAR},
+      DATA6 = #{data6,jdbcType=VARCHAR},
+      DATA7 = #{data7,jdbcType=VARCHAR},
+      DATA8 = #{data8,jdbcType=VARCHAR},
+      DATA9 = #{data9,jdbcType=VARCHAR},
+      DATA10 = #{data10,jdbcType=VARCHAR},
+      DATA11 = #{data11,jdbcType=VARCHAR},
+      DATA12 = #{data12,jdbcType=VARCHAR},
+      DATA13 = #{data13,jdbcType=VARCHAR},
+      DATA14 = #{data14,jdbcType=VARCHAR},
+      DATA15 = #{data15,jdbcType=VARCHAR},
+      DATA16 = #{data16,jdbcType=VARCHAR},
+      DATA17 = #{data17,jdbcType=VARCHAR},
+      DATA18 = #{data18,jdbcType=VARCHAR},
+      DATA19 = #{data19,jdbcType=VARCHAR},
+      DATA20 = #{data20,jdbcType=VARCHAR},
+      DATA21 = #{data21,jdbcType=VARCHAR},
+      DATA22 = #{data22,jdbcType=VARCHAR},
+      DATA23 = #{data23,jdbcType=VARCHAR},
+      DATA24 = #{data24,jdbcType=VARCHAR},
+      DATA25 = #{data25,jdbcType=VARCHAR}
+    where MEASUREID = #{measureid,jdbcType=VARCHAR}
+  </update>
+</mapper>

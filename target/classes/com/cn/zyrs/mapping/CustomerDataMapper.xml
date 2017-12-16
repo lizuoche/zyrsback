@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.zyrs.mapper.CustomerDataMapper" >
+	<resultMap id="BaseResultMap" type="com.cn.zyrs.domain.CustomerData" >
+		<id column="DETAILCODE" property="detailcode" jdbcType="VARCHAR" />
+		<result column="ORDERCODE" property="ordercode" jdbcType="VARCHAR" />
+		<result column="CUSTOMERID" property="customerid" jdbcType="VARCHAR" />
+		<result column="CUSTONERCODE" property="custonercode" jdbcType="VARCHAR" />
+		<result column="ENTRYDAY" property="entryday" jdbcType="TIMESTAMP" />
+		<result column="SURVEYOR" property="surveyor" jdbcType="VARCHAR" />
+		<result column="STYLE" property="style" jdbcType="VARCHAR" />
+		<result column="DATA1" property="data1" jdbcType="VARCHAR" />
+		<result column="DATA2" property="data2" jdbcType="VARCHAR" />
+		<result column="DATA3" property="data3" jdbcType="VARCHAR" />
+		<result column="DATA4" property="data4" jdbcType="VARCHAR" />
+		<result column="DATA5" property="data5" jdbcType="VARCHAR" />
+		<result column="DATA6" property="data6" jdbcType="VARCHAR" />
+		<result column="DATA7" property="data7" jdbcType="VARCHAR" />
+		<result column="DATA8" property="data8" jdbcType="VARCHAR" />
+		<result column="DATA9" property="data9" jdbcType="VARCHAR" />
+		<result column="DATA10" property="data10" jdbcType="VARCHAR" />
+		<result column="DATA11" property="data11" jdbcType="VARCHAR" />
+		<result column="DATA12" property="data12" jdbcType="VARCHAR" />
+		<result column="DATA13" property="data13" jdbcType="VARCHAR" />
+		<result column="DATA14" property="data14" jdbcType="VARCHAR" />
+		<result column="DATA15" property="data15" jdbcType="VARCHAR" />
+		<result column="DATA16" property="data16" jdbcType="VARCHAR" />
+		<result column="DATA17" property="data17" jdbcType="VARCHAR" />
+		<result column="DATA18" property="data18" jdbcType="VARCHAR" />
+		<result column="DATA19" property="data19" jdbcType="VARCHAR" />
+		<result column="DATA20" property="data20" jdbcType="VARCHAR" />
+		<result column="DATA21" property="data21" jdbcType="VARCHAR" />
+		<result column="DATA22" property="data22" jdbcType="VARCHAR" />
+		<result column="DATA23" property="data23" jdbcType="VARCHAR" />
+		<result column="DATA24" property="data24" jdbcType="VARCHAR" />
+		<result column="DATA25" property="data25" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List" >
+    DETAILCODE, ORDERCODE, CUSTOMERID, CUSTONERCODE, ENTRYDAY, SURVEYOR, STYLE, DATA1, 
+    DATA2, DATA3, DATA4, DATA5, DATA6, DATA7, DATA8, DATA9, DATA10, DATA11, DATA12, DATA13, 
+    DATA14, DATA15,DATA16,DATA17,DATA18,DATA19,DATA20,DATA21,DATA22,DATA23,DATA24,DATA25
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+		<include refid="Base_Column_List" />
+    from OD_OrderCustomerData
+    where DETAILCODE = #{detailcode,jdbcType=VARCHAR}
+	</select>
+	<select id="selectByCustomerid" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select TOP 1
+		<include refid="Base_Column_List" />
+    from OD_OrderCustomerData
+    where CUSTOMERID = #{customerid,jdbcType=VARCHAR} order by ENTRYDAY desc
+	</select>
+	<select id="getCustomerData" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+		<include refid="Base_Column_List" />
+    from OD_OrderCustomerData
+    where ORDERCODE = #{ordercode,jdbcType=VARCHAR}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from OD_OrderCustomerData
+    where DETAILCODE = #{detailcode,jdbcType=VARCHAR}
+	</delete>
+	<insert id="insert" parameterType="com.cn.zyrs.domain.CustomerData" >
+    insert into OD_OrderCustomerData (DETAILCODE, ORDERCODE, CUSTOMERID, 
+      CUSTONERCODE, ENTRYDAY, SURVEYOR, 
+      STYLE, DATA1, DATA2, 
+      DATA3, DATA4, DATA5, 
+      DATA6, DATA7, DATA8, 
+      DATA9, DATA10, DATA11, 
+      DATA12, DATA13, DATA14, 
+      DATA16,DATA17,DATA18,DATA19,DATA20,DATA21,DATA22)
+    values (#{detailcode,jdbcType=VARCHAR}, #{ordercode,jdbcType=VARCHAR}, #{customerid,jdbcType=VARCHAR}, 
+      #{custonercode,jdbcType=VARCHAR}, #{entryday,jdbcType=TIMESTAMP}, #{surveyor,jdbcType=VARCHAR}, 
+      #{style,jdbcType=VARCHAR}, #{data1,jdbcType=VARCHAR}, #{data2,jdbcType=VARCHAR}, 
+      #{data3,jdbcType=VARCHAR}, #{data4,jdbcType=VARCHAR}, #{data5,jdbcType=VARCHAR}, 
+      #{data6,jdbcType=VARCHAR}, #{data7,jdbcType=VARCHAR}, #{data8,jdbcType=VARCHAR}, 
+      #{data9,jdbcType=VARCHAR}, #{data10,jdbcType=VARCHAR}, #{data11,jdbcType=VARCHAR}, 
+      #{data12,jdbcType=VARCHAR}, #{data13,jdbcType=VARCHAR}, #{data14,jdbcType=VARCHAR}, 
+      #{data15,jdbcType=VARCHAR},#{data16,jdbcType=VARCHAR},#{data17,jdbcType=VARCHAR},
+      #{data18,jdbcType=VARCHAR},#{data19,jdbcType=VARCHAR},#{data20,jdbcType=VARCHAR},
+      #{data21,jdbcType=VARCHAR},#{data22,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.cn.zyrs.domain.CustomerData" >
+    insert into OD_OrderCustomerData
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="customerdata.detailcode != null" >
+        DETAILCODE,
+			</if>
+			<if test="customerdata.ordercode != null" >
+        ORDERCODE,
+			</if>
+			<if test="customerdata.customerid != null" >
+        CUSTOMERID,
+			</if>
+        CUSTONERCODE,
+        ENTRYDAY,
+			<if test="customerdata.surveyor != null" >
+        SURVEYOR,
+			</if>
+			<if test="customerdata.style != null" >
+        STYLE,
+			</if>
+			<if test="customerdata.data1 != null" >
+        DATA1,
+			</if>
+			<if test="customerdata.data2 != null" >
+        DATA2,
+			</if>
+			<if test="customerdata.data3 != null" >
+        DATA3,
+			</if>
+			<if test="customerdata.data4 != null" >
+        DATA4,
+			</if>
+			<if test="customerdata.data5 != null" >
+        DATA5,
+			</if>
+			<if test="customerdata.data6 != null" >
+        DATA6,
+			</if>
+			<if test="customerdata.data7 != null" >
+        DATA7,
+			</if>
+			<if test="customerdata.data8 != null" >
+        DATA8,
+			</if>
+			<if test="customerdata.data9 != null" >
+        DATA9,
+			</if>
+			<if test="customerdata.data10 != null" >
+        DATA10,
+			</if>
+			<if test="customerdata.data11 != null" >
+        DATA11,
+			</if>
+			<if test="customerdata.data12 != null" >
+        DATA12,
+			</if>
+			<if test="customerdata.data13 != null" >
+        DATA13,
+			</if>
+			<if test="customerdata.data14 != null" >
+        DATA14,
+			</if>
+			<if test="customerdata.data15 != null" >
+        DATA15,
+			</if>
+			<if test="customerdata.data16 != null" >
+        DATA16,
+			</if>
+			<if test="customerdata.data17 != null" >
+        DATA17,
+			</if>
+			<if test="customerdata.data18 != null" >
+        DATA18,
+			</if>
+			<if test="customerdata.data19 != null" >
+        DATA19,
+			</if>
+			<if test="customerdata.data20 != null" >
+        DATA20,
+			</if>
+			<if test="customerdata.data21 != null" >
+        DATA21,
+			</if>
+			<if test="customerdata.data22 != null" >
+        DATA22
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+			<if test="customerdata.detailcode != null" >
+        #{customerdata.detailcode,jdbcType=VARCHAR},
+			</if>
+			<if test="customerdata.ordercode != null" >
+        #{customerdata.ordercode,jdbcType=VARCHAR},
+			</if>
+			<if test="customerdata.customerid != null" >
+        #{customerdata.customerid,jdbcType=VARCHAR},
+			</if>
+		NEWID(),
+		getdate(),
+			<if test="customerdata.surveyor != null" >
+        #{customerdata.surveyor,jdbcType=VARCHAR},
+			</if>
+			<if test="customerdata.style != null" >
+        #{customerdata.style,jdbcType=VARCHAR},
+			</if>
+			<if test="customerdata.data1 != null" >
+        #{customerdata.data1,jdbcType=VARCHAR},
+			</if>
+			<if test="customerdata.data2 != null" >
+        #{customerdata.data2,jdbcType=VARCHAR},
+			</if>
+			<if test="customerdata.data3 != null" >
+        #{customerdata.data3,jdbcType=VARCHAR},
+			</if>
+			<if test="customerdata.data4 != null" >
+        #{customerdata.data4,jdbcType=VARCHAR},
+			</if>
+			<if test="customerdata.data5 != null" >
+        #{customerdata.data5,jdbcType=VARCHAR},
+			</if>
+			<if test="customerdata.data6 != null" >
+        #{customerdata.data6,jdbcType=VARCHAR},
+			</if>
+			<if test="customerdata.data7 != null" >
+        #{customerdata.data7,jdbcType=VARCHAR},
+			</if>
+			<if test="customerdata.data8 != null" >
+        #{customerdata.data8,jdbcType=VARCHAR},
+			</if>
+			<if test="customerdata.data9 != null" >
+        #{customerdata.data9,jdbcType=VARCHAR},
+			</if>
+			<if test="customerdata.data10 != null" >
+        #{customerdata.data10,jdbcType=VARCHAR},
+			</if>
+			<if test="customerdata.data11 != null" >
+        #{customerdata.data11,jdbcType=VARCHAR},
+			</if>
+			<if test="customerdata.data12 != null" >
+        #{customerdata.data12,jdbcType=VARCHAR},
+			</if>
+			<if test="customerdata.data13 != null" >
+        #{customerdata.data13,jdbcType=VARCHAR},
+			</if>
+			<if test="customerdata.data14 != null" >
+        #{customerdata.data14,jdbcType=VARCHAR},
+			</if>
+			<if test="customerdata.data15 != null" >
+        #{customerdata.data15,jdbcType=VARCHAR},
+			</if>
+			<if test="customerdata.data16 != null" >
+        #{customerdata.data16,jdbcType=VARCHAR},
+			</if>
+			<if test="customerdata.data17 != null" >
+        #{customerdata.data17,jdbcType=VARCHAR},
+			</if>
+			<if test="customerdata.data18 != null" >
+        #{customerdata.data18,jdbcType=VARCHAR},
+			</if>
+			<if test="customerdata.data19 != null" >
+        #{customerdata.data19,jdbcType=VARCHAR},
+			</if>
+			<if test="customerdata.data20 != null" >
+        #{customerdata.data20,jdbcType=VARCHAR},
+			</if>
+			<if test="customerdata.data21 != null" >
+        #{customerdata.data21,jdbcType=VARCHAR},
+			</if>
+			<if test="customerdata.data22 != null" >
+        #{customerdata.data22,jdbcType=VARCHAR}
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.cn.zyrs.domain.CustomerData" >
+    update OD_OrderCustomerData
+		<set >
+			<if test="ordercode != null" >
+        ORDERCODE = #{ordercode,jdbcType=VARCHAR},
+			</if>
+			<if test="customerid != null" >
+        CUSTOMERID = #{customerid,jdbcType=VARCHAR},
+			</if>
+			<if test="custonercode != null" >
+        CUSTONERCODE = #{custonercode,jdbcType=VARCHAR},
+			</if>
+			<if test="entryday != null" >
+        ENTRYDAY = #{entryday,jdbcType=TIMESTAMP},
+			</if>
+			<if test="surveyor != null" >
+        SURVEYOR = #{surveyor,jdbcType=VARCHAR},
+			</if>
+			<if test="style != null" >
+        STYLE = #{style,jdbcType=VARCHAR},
+			</if>
+			<if test="data1 != null" >
+        DATA1 = #{data1,jdbcType=VARCHAR},
+			</if>
+			<if test="data2 != null" >
+        DATA2 = #{data2,jdbcType=VARCHAR},
+			</if>
+			<if test="data3 != null" >
+        DATA3 = #{data3,jdbcType=VARCHAR},
+			</if>
+			<if test="data4 != null" >
+        DATA4 = #{data4,jdbcType=VARCHAR},
+			</if>
+			<if test="data5 != null" >
+        DATA5 = #{data5,jdbcType=VARCHAR},
+			</if>
+			<if test="data6 != null" >
+        DATA6 = #{data6,jdbcType=VARCHAR},
+			</if>
+			<if test="data7 != null" >
+        DATA7 = #{data7,jdbcType=VARCHAR},
+			</if>
+			<if test="data8 != null" >
+        DATA8 = #{data8,jdbcType=VARCHAR},
+			</if>
+			<if test="data9 != null" >
+        DATA9 = #{data9,jdbcType=VARCHAR},
+			</if>
+			<if test="data10 != null" >
+        DATA10 = #{data10,jdbcType=VARCHAR},
+			</if>
+			<if test="data11 != null" >
+        DATA11 = #{data11,jdbcType=VARCHAR},
+			</if>
+			<if test="data12 != null" >
+        DATA12 = #{data12,jdbcType=VARCHAR},
+			</if>
+			<if test="data13 != null" >
+        DATA13 = #{data13,jdbcType=VARCHAR},
+			</if>
+			<if test="data14 != null" >
+        DATA14 = #{data14,jdbcType=VARCHAR},
+			</if>
+			<if test="data15 != null" >
+        DATA15 = #{data15,jdbcType=VARCHAR},
+			</if>
+		</set>
+    where DETAILCODE = #{detailcode,jdbcType=VARCHAR}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.cn.zyrs.domain.CustomerData" >
+    update OD_OrderCustomerData
+    set ORDERCODE = #{ordercode,jdbcType=VARCHAR},
+      CUSTOMERID = #{customerid,jdbcType=VARCHAR},
+      CUSTONERCODE = #{custonercode,jdbcType=VARCHAR},
+      ENTRYDAY = #{entryday,jdbcType=TIMESTAMP},
+      SURVEYOR = #{surveyor,jdbcType=VARCHAR},
+      STYLE = #{style,jdbcType=VARCHAR},
+      DATA1 = #{data1,jdbcType=VARCHAR},
+      DATA2 = #{data2,jdbcType=VARCHAR},
+      DATA3 = #{data3,jdbcType=VARCHAR},
+      DATA4 = #{data4,jdbcType=VARCHAR},
+      DATA5 = #{data5,jdbcType=VARCHAR},
+      DATA6 = #{data6,jdbcType=VARCHAR},
+      DATA7 = #{data7,jdbcType=VARCHAR},
+      DATA8 = #{data8,jdbcType=VARCHAR},
+      DATA9 = #{data9,jdbcType=VARCHAR},
+      DATA10 = #{data10,jdbcType=VARCHAR},
+      DATA11 = #{data11,jdbcType=VARCHAR},
+      DATA12 = #{data12,jdbcType=VARCHAR},
+      DATA13 = #{data13,jdbcType=VARCHAR},
+      DATA14 = #{data14,jdbcType=VARCHAR},
+      DATA15 = #{data15,jdbcType=VARCHAR}
+    where DETAILCODE = #{detailcode,jdbcType=VARCHAR}
+	</update>
+</mapper>

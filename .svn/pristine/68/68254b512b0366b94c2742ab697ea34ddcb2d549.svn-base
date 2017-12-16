@@ -1,0 +1,50 @@
+### ====== system config ====== ###
+
+### server ###
+server.ip=114.55.138.73
+#server.ip=192.168.1.33
+server.uploadBasePath=D:/
+
+### database1 ###
+db.driverClassName=com.microsoft.sqlserver.jdbc.SQLServerDriver
+#db.url=jdbc:sqlserver://192.168.1.10:1433;databaseName=ZYRS_ManageSystem_DataBase
+db.url=jdbc:sqlserver://114.55.138.73:1433;databaseName=ZYRS_ManageSystem_DataBase
+#db.url=jdbc:sqlserver://127.0.0.1:1433;databaseName=ZYRS_ManageSystem_DataBase_backUp
+db.username=sa
+#db.password=111111
+db.password=ZYRScrljsyc060822
+
+#db.url=jdbc:mysql://192.168.0.228:3306/yc?useUnicode=true&characterEncoding=utf8 
+#db.username=root
+#db.password=root
+
+### database2 ###
+db1.driverClassName=com.microsoft.sqlserver.jdbc.SQLServerDriver
+#db1.url=jdbc:sqlserver://192.168.1.10:1433;databaseName=ZYRS_FabricSystem_DataBase
+db1.url=jdbc:sqlserver://114.55.138.73:1433;databaseName=ZYRS_FabricSystem_DataBase
+#db1.url=jdbc:sqlserver://127.0.0.1:1433;databaseName=ZYRS_ManageSystem_DataBase_backUp
+db1.username=sa
+#db1.password=111111
+db1.password=ZYRScrljsyc060822
+
+#db.url=jdbc:mysql://192.168.0.228:3306/yc?useUnicode=true&characterEncoding=utf8 
+#db.username=root
+#db.password=root
+
+### c3p0 settings ###
+cp.minPoolSize=5
+cp.maxPoolSize=100
+cp.minIdle=5
+cp.maxIdle=100
+cp.maxIdleTime=1800
+cp.acquireIncrement=3
+cp.maxStatements=100
+cp.initialPoolSize=5
+cp.idleConnectionTestPeriod=60
+cp.acquireRetryAttempts=30
+cp.breakAfterAcquireFailure=false
+cp.testConnectionOnCheckout=false
+cp.testConnectionOnCheckin=true
+
+### file upload max size -- 50M ###
+maxUploadSize=52428800

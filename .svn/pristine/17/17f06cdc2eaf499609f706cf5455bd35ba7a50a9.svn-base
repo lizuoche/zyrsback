@@ -1,0 +1,15 @@
+.table{
+	margin-left:10px;
+	width:880px;
+	border:solid #ccc 1px;BORDER-COLLAPSE: collapse
+}
+.table td{border:solid #ccc 1px; padding:10px 0px;}
+.lable{
+	background-color: #e5f2f5;
+}
+.table input {
+	margin-left: 10px;
+}
+.table select {
+	margin-left: 10px;
+}

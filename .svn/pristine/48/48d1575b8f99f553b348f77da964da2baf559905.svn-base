@@ -1,0 +1,132 @@
+* {
+	font-family: '微软雅黑'
+}
+
+body {
+	width: 1100px;
+}
+
+.title {
+	font-size: 20px;
+	color: #323232;
+	height: 30px;
+	line-height: 30px;
+	margin: 20px 0px;
+	vertical-align: middle;
+}
+
+.title img {
+	display: inline-block;
+	height: 30px;
+	line-height: 30px;
+	vertical-align: middle;
+}
+
+.hr {
+	border-bottom: 1px solid #B1C2D6;
+}
+
+.search {
+	margin: 20px 0px;
+	font-size: 16px;
+	color: #646464;
+}
+
+.search div {
+	float: left;
+	margin-right: 20px;
+}
+
+.search input[type~="text"], .search select {
+	line-height: 30px;
+	height: 30px;
+	border: 1px solid black;
+	width: 200px;
+	padding-left: 5px;
+}
+
+.search input[type~="button"], .search input[type~="submit"] {
+	background-image: url("../images/button_small.png");
+	width: 82px;
+	height: 32px;
+	border: 1px;
+	color: white;
+	margin-right: 20px;
+	cursor: pointer;
+}
+
+input[type~="text"]:FOCUS, input[type~="password"]:FOCUS {
+	border-color: red;
+}
+
+.search .selectc {
+	width: 82px;
+	height: 32px;
+	border: 1px;
+	margin-right: 20px;
+	border: 1px solid black;
+}
+
+.body {
+	margin: 20px 0px;
+	width: 100%;
+	height: 472px;
+	border-bottom: 5px solid #82949e;
+}
+
+.body td {
+	line-height: 40px;
+	height: 40px;
+	width: 600px;
+	text-align: center;
+	border-bottom: 1px solid #d2d2d2;
+}
+
+.body tbody tr:HOVER {
+	background-color: #d3e4ea;
+}
+
+.body thead {
+	background-color: #82949e;
+	color: white;
+}
+
+.body tbody {
+	color: black;
+}
+
+.index {
+	text-align: right;
+	margin-top: 20px;
+	color: #646464;
+	padding-right: 5px;
+}
+
+.index a, .index select {
+	margin-right: 12px;
+}
+
+.index select {
+	border: 1px solid #82949e;
+}
+
+a {
+	color: #22a0d8;
+}
+
+a:HOVER {
+	color: #646464;
+}
+
+a:ACTIVE {
+	color: #22a0d8;
+}
+
+.hidden {
+	display: none;
+}
+
+.tip {
+	color: red;
+	width: 200px;
+}
